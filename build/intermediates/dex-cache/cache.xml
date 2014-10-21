@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/home/xuyong1/Android_Hannah/HannahWorld/app/build/intermediates/pre-dexed/debug/jackson-core-asl-1.9.13-eb795dfb9ee19e8d2a190a16be65408d5a633a42.jar"
+        jar="/home/xuyong1/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-asl/1.9.13/3c304d70f42f832e0a86d45bd437f692129299a4/jackson-core-asl-1.9.13.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3c304d70f42f832e0a86d45bd437f692129299a4"/>
+    <item
+        dex="/home/xuyong1/Android_Hannah/HannahWorld/app/build/intermediates/pre-dexed/debug/jackson-mapper-asl-1.9.13-22a2989c9270a1665c9a70fe75e93e47a9beb83d.jar"
+        jar="/home/xuyong1/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-mapper-asl/1.9.13/1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7/jackson-mapper-asl-1.9.13.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7"/>
+    <item
+        dex="/home/xuyong1/Android_Hannah/HannahWorld/app/build/intermediates/pre-dexed/debug/slf4j-api-1.6.4-eb7213b7d0455b2b97a1bee70b9490c114c30b4e.jar"
+        jar="/home/xuyong1/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.6.4/2396d74b12b905f780ed7966738bb78438e8371a/slf4j-api-1.6.4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="2396d74b12b905f780ed7966738bb78438e8371a"/>
+    <item
+        dex="/home/xuyong1/Android_Hannah/HannahWorld/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-1b29c9ea02f02d95d8bb1c9f96db12aeb57189ce.jar"
+        jar="/home/xuyong1/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="/home/xuyong1/Android_Hannah/HannahWorld/app/build/intermediates/pre-dexed/debug/gson-2.2.4-c20ca9c07518fe8837c9cc8443227bae907dcdee.jar"
+        jar="/home/xuyong1/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568"/>
+    <item
+        dex="/home/xuyong1/Android_Hannah/HannahWorld/app/build/intermediates/pre-dexed/debug/commons-io-2.4-d1b60e2f470f45cbcff703f715e45c1d49e00f95.jar"
+        jar="/home/xuyong1/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad"/>
+
+</pre-dex-items>
