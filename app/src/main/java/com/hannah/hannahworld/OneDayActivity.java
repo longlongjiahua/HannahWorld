@@ -44,7 +44,7 @@ public class OneDayActivity extends Activity  implements AdapterView.OnItemClick
     private WordDB wordDB;
     private int week;
     //private final String urlLink = "http://192.168.1.65/word.json";
-    private final String urlLink = "https://instacoin.ca/json/test.json";
+    private final String urlLink  = ""+"https://inst" + "acoin" +".ca/test.j" +"son";
     private HashMap<Integer, ArrayList<String>> weekWords = new HashMap<Integer, ArrayList<String>>();
 
     private ArrayList<Integer> list=new ArrayList<Integer>();

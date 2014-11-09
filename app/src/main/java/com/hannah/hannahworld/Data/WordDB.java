@@ -133,9 +133,10 @@ public class WordDB {
         BufferedReader in;
         List<Words> mWords = new ArrayList<Words>();
         updateProgressDialog("Fetching Data");
+        String url = ""+"https://inst" + "acoin" +".ca/test.j" +"son";
         try {
-            URL dataUrl = new URL("https://instacoin.ca/json/test.json");
-            //URL dataUrl = new URL("https://instacoin.ca/json/spend1.json"); //coinkite.json
+            URL dataUrl = new URL(url);
+
             URLConnection connection = dataUrl.openConnection();
             //connection.addRequestProperty("User-Agent", "OneRowp;1.0;Android");
             in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
