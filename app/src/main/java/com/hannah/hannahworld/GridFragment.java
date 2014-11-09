@@ -39,7 +39,7 @@ public final class GridFragment extends Fragment {
                     TextView tv = (TextView) v.findViewById(R.id.aword);
                     int week = 0;
                     try {
-                        week = Integer.parseInt(tv.getText().toString());
+                        week = Integer.parseInt(tv.getText().toString().replaceAll("[\\D]", ""));
                     } catch(NumberFormatException nfe) {
                         System.out.println("Could not parse " + nfe);
                     }

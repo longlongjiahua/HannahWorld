@@ -7,12 +7,12 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Words {
     private int week;
-    private List<String> wordList;
+    private List<String> words;
     public int getWeek() {
         return week;
     }
-    public List<String> getWordList() {
-        return wordList;
+    public List<String> getWords() {
+        return words;
     }
 }
 

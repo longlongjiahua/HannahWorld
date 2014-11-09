@@ -62,10 +62,10 @@ public class WordDB {
 		helper = new WordsDbHelper(ctx);
 		prefs = ctx.getSharedPreferences(DB_PREFS, Context.MODE_PRIVATE);
 		open();
-		if (isUpdateDue()) {
+		//if (isUpdateDue()) {
 			log.info("InitialDB::");
 			initializeDb(ctx);
-		}
+		//}
 		close();
 	}
 
@@ -134,7 +134,7 @@ public class WordDB {
         List<Words> mWords = new ArrayList<Words>();
         updateProgressDialog("Fetching Data");
         try {
-            URL dataUrl = new URL(urlLink);
+            URL dataUrl = new URL("https://instacoin.ca/json/test.json");
             //URL dataUrl = new URL("https://instacoin.ca/json/spend1.json"); //coinkite.json
             URLConnection connection = dataUrl.openConnection();
             //connection.addRequestProperty("User-Agent", "OneRowp;1.0;Android");
@@ -149,6 +149,7 @@ public class WordDB {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
+            //log.info("MalFormURL::");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -172,7 +173,7 @@ public class WordDB {
 				final int lastSize = getAllEntries().size();
 				int i = 1;
 				for (Words entry : mWords) {
-                    for(String word : entry.getWordList()){
+                    for(String word : entry.getWords()){
                             this.insertWord(word,entry.getWeek());
                     }
 					setProgress(i);

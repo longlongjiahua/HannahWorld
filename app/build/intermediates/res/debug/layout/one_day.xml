@@ -1,50 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:text="This_Week_Vocabulary"
-        android:textSize="28dp"
-        android:layout_gravity="center_horizontal"
-        />
-<ScrollView
+<TextView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <TableLayout
-        android:id="@+id/table_vocabulary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.7"
-        android:layout_centerHorizontal="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        />
-</ScrollView>
-    <Button android:id="@+id/button_save"
-        android:layout_width="wrap_content"
-        android:layout_weight="0"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:textColor="#ffffff"
-        android:background="#00aec7"
-        android:text="@string/button_save"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:onClick="save"
-        />
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:text="This_Week_Vocabulary"
+    android:textSize="28dp"
+    android:layout_gravity="center_horizontal"
+    />
 
-
-
-
+<ListView
+    android:id="@+id/listView_oneday"
+    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:smoothScrollbar="true" >
+</ListView>
+<Button android:id="@+id/words_save"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.2"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:textColor="#ffffff"
+    android:background="#00aec7"
+    android:text="@string/button_save"
+    android:layout_gravity="center"
+    android:textStyle="bold"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:onClick="save"
+    />
 
 </LinearLayout><!-- From: file:/home/xuyong1/Android_Hannah/HannahWorld/app/src/main/res/layout/one_day.xml -->
