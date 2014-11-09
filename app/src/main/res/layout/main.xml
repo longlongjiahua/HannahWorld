@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animationCache="false"
+        android:scrollingCache="false"
+        android:smoothScrollbar="true" >
+    </ListView>
+    <Button android:id="@+id/words_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="#ffffff"
+        android:background="#00aec7"
+        android:text="@string/button_save"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:onClick="save"
+        />
+
+</LinearLayout>
