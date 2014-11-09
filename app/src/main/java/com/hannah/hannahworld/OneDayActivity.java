@@ -38,6 +38,7 @@ import java.util.Locale;
 public class OneDayActivity extends Activity  implements AdapterView.OnItemClickListener,OnInitListener {
     private ProgressDialog progressDialog;
     private final String RTTAG = "WKWRODS";
+    
     static  final  int TOTAL_ROW = 12;
     private boolean dbRightAge = true;
     private static final Logger log = LoggerFactory.getLogger(OneDayActivity.class);
