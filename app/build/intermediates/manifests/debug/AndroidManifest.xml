@@ -28,9 +28,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.hannah.hannahworld.MainActivity"
-            android:label="EditActivity"
-            android:windowSoftInputMode="adjustPan" >
+            android:name="com.hannah.hannahworld.SplashScreenActivity"
+            android:noHistory="true"
+            android:theme="@style/My.Theme.Start" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,9 +38,40 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.hannah.hannahworld.MainActivity"
+            android:label="EditActivity"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.hannah.hannahworld.OneDayActivity"
             android:label="OneDay"
             android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name="com.hannah.hannahworld.AlarmActivity"
+            android:label="alarmTest" >
+        </activity>
+
+        <receiver android:name="com.hannah.hannahworld.AlarmNotificationReceiver" >
+        </receiver>
+        <receiver android:name="com.hannah.hannahworld.AlarmLoggerReceiver" >
+        </receiver>
+
+        <activity
+            android:name="com.hannah.hannahworld.PostDataActivity"
+            android:label="PostData" >
+        </activity>
+        <activity
+            android:name="com.hannah.hannahworld.WhiteboardActivity"
+            android:label="@string/title_activity_whiteboard" >
+        </activity>
+        <activity
+            android:name="com.hannah.hannahworld.GraphyAniminationActivity"
+            android:label="@string/title_activity_graphy_animination" >
+        </activity>
     </application>
 
 </manifest>

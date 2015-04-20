@@ -25,9 +25,14 @@ import android.widget.Toast;
 
 import com.hannah.hannahworld.Data.OneRow;
 import com.hannah.hannahworld.Data.WordDB;
+import com.hannah.hannahworld.json_reader.AsyncResult;
+import com.hannah.hannahworld.json_reader.DownloadWebpageTask;
+import com.hannah.hannahworld.json_reader.Team;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,13 +46,12 @@ public class OneDayActivity extends Activity  implements AdapterView.OnItemClick
     
     static  final  int TOTAL_ROW = 12;
     private boolean dbRightAge = true;
-    private static final Logger log = LoggerFactory.getLogger(OneDayActivity.class);
+    //private static final Logger log = LoggerFactory.getLogger(OneDayActivity.class);
     private WordDB wordDB;
     private int week;
-    //private final String urlLink = "http://192.168.1.65/word.json";
-    private final String urlLink  = ""+"https://inst" + "acoin" +".ca/test.j" +"son";
+    private final String urlLink = "http://192.168.1.65/word.json";
+   // private final String urlLink  = ""+"https://inst" + "acoin" +".ca/test.j" +"son";
     private HashMap<Integer, ArrayList<String>> weekWords = new HashMap<Integer, ArrayList<String>>();
-
     private ArrayList<Integer> list=new ArrayList<Integer>();
     private ListView lv;
     private LvAdapter adapter;
@@ -127,15 +131,51 @@ protected void onResume() {
         }
     }
 
-   private void loadWords(final String urlLink,final String dbName,final String tableName){
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getResources().getString(R.string.load_data));
-        if(dbRightAge){
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
+   private void loadWords(final String urlLink,final String dbName,final String tableName) {
+       progressDialog = new ProgressDialog(this);
+       progressDialog.setMessage(getResources().getString(R.string.load_data));
+       if (dbRightAge) {
+           progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+           progressDialog.setCancelable(false);
+           progressDialog.show();
+       }
+       new DownloadWebpageTask(new AsyncResult() {
+           @Override
 
+           public void onResult(JSONObject object) {
+               processJson(object);
+
+           }
+       }).execute("https://docs.google.com/spreadsheets/d/1onnIEllDdnts89nPIqhATsQ5EokpM5_ZFqERPOiG_5U/gviz/tq");
+
+
+
+   }
+    private void processJson(JSONObject object) {
+
+        try {
+            JSONArray rows = object.getJSONArray("rows");
+
+            for (int r = 0; r < rows.length(); ++r) {
+                JSONObject row = rows.getJSONObject(r);
+                JSONArray columns = row.getJSONArray("c");
+
+                int id = columns.getJSONObject(0).getInt("v");
+                int week = columns.getJSONObject(1).getInt("v");
+                String word = columns.getJSONObject(2).getString("v");
+
+                Team team = new Team(id, week, word);
+                teams.add(team);
+            }
+
+            // final TeamsAdapter adapter = new TeamsAdapter(this, R.layout.team, teams);
+            //listview.setAdapter(adapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+/*
         new AsyncTask<Void, String, Void>() {
             private OneRow[] tmp;
             private List<OneRow> listWords;
@@ -152,7 +192,7 @@ protected void onResume() {
             @Override
             protected void onPostExecute(Void aVoid) {
                 for(OneRow one : listWords){
-                    log.info("week::" + week + one.word);
+                    //log.info("week::" + week + one.word);
                     if(weekWords.get(one.week)==null){
                         weekWords.put(one.week, new ArrayList<String>());
                     }
@@ -168,7 +208,7 @@ protected void onResume() {
         }.execute();
 
    }
-
+*/
 
 public void init() {
     if(weekWords.get(week)==null) {

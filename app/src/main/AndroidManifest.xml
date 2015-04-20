@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hannah.hannahworld" >
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -10,36 +11,63 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
+        <activity android:name=".SplashScreenActivity"
+            android:noHistory="true"
+            android:theme="@style/My.Theme.Start">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="android.intent.category.LAUNCHER"></category>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="EditActivity"
-
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+               <!-- <category android:name="android.intent.category.LAUNCHER" />  -->
             </intent-filter>
         </activity>
-
         <activity
             android:name=".OneDayActivity"
             android:label="OneDay"
-            android:windowSoftInputMode="adjustPan|adjustResize"
-          />
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".AlarmActivity"
+            android:label="alarmTest" >
+        </activity>
+        <activity
+            android:name=".json_reader.TestActivity"
+            android:label="jsonTest" >
+        </activity>
+        TestActivity
 
+        <receiver android:name=".AlarmNotificationReceiver" >
+        </receiver>
+        <receiver android:name=".AlarmLoggerReceiver" >
+        </receiver>
+        <activity
+            android:name=".PostDataActivity"
+            android:label="PostData" >
+        </activity>
+        <activity
+            android:name=".WhiteboardActivity"
+            android:label="@string/title_activity_whiteboard" >
+        </activity>
+        <activity
+            android:name=".GraphyAniminationActivity"
+            android:label="@string/title_activity_graphy_animination" >
+        </activity>
     </application>
 
 </manifest>

@@ -36,4 +36,4 @@ android:orientation="vertical" >
     android:onClick="save"
     />
 
-</LinearLayout><!-- From: file:/home/xuyong1/Android_Hannah/HannahWorld/app/src/main/res/layout/one_day.xml -->
+</LinearLayout><!-- From: file:/home/xuyong1/myProject/HannahWorld/app/src/main/res/layout/one_day.xml -->

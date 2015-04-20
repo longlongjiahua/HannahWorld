@@ -1,6 +1,7 @@
 package com.hannah.hannahworld;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,13 +12,30 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hannah.hannahworld.json_reader.TestActivity;
+
+import org.codehaus.jackson.map.HandlerInstantiator;
+
 
 public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        runOnUiThread(new  Runnable() {
+            @Override
+            public  void  run() {
+                try {
+                    Thread.sleep(1*1000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -34,13 +52,34 @@ public class MainActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_alarm) {
+            startActivity(new Intent(this, AlarmActivity.class));
+            return true;
+        }
+        if (id == R.id.graph_animation) {
+            startActivity(new Intent(this, GraphyAniminationActivity.class));
+            return true;
+        }
+        if (id == R.id. white_board) {
+            startActivity(new Intent(this, WhiteboardActivity.class));
+            return true;
+        }
+        if (id == R.id.post_data) {
+            startActivity(new Intent(this, PostDataActivity.class));
+            return true;
+        }
+        if (id == R.id.testjson) {
+            startActivity(new Intent(this, TestActivity.class));
+            return true;
+        }
+
         return false;
     }
 
     @Override
     protected void onResume() {
-       super.onResume();
+        super.onResume();
 
     }
 
-    }
+}

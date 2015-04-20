@@ -6,8 +6,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Words {
-    private int week;
-    private List<String> words;
+    public int week;
+    public List<String> words;
     public int getWeek() {
         return week;
     }

@@ -5,5 +5,20 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item android:id="@+id/action_alarm"
+        android:title="action_alarm"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/graph_animation"
+        android:title="animation"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/white_board"
+        android:title="White Board"
+        android:showAsAction="never"/>
+    <item android:id="@+id/post_data"
+        android:title="Post Data"
+        android:showAsAction="never"/>
+    <item android:id="@+id/testjson"
+        android:title="Test Json"
+        android:showAsAction="never"/>
 </menu>
-<!-- From: file:/home/xuyong1/Android_Hannah/HannahWorld/app/src/main/res/menu/main.xml -->
+<!-- From: file:/home/xuyong1/myProject/HannahWorld/app/src/main/res/menu/main.xml -->
