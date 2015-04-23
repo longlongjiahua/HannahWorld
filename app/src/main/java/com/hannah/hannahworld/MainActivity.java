@@ -12,7 +12,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hannah.hannahworld.json_reader.TestActivity;
 
 import org.codehaus.jackson.map.HandlerInstantiator;
 
@@ -69,7 +68,7 @@ public class MainActivity extends Activity {
             return true;
         }
         if (id == R.id.testjson) {
-            startActivity(new Intent(this, TestActivity.class));
+
             return true;
         }
 

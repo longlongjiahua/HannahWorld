@@ -1,4 +1,4 @@
-package com.hannah.hannahworld.Data;
+package com.hannah.hannahworld.data;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hannah.hannahworld.json_reader.Team;
+import com.hannah.hannahworld.util.ProcessGoogleSpreadSheet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -132,87 +132,16 @@ public class WordDB {
 				}
 				});
 	}
-    private String downloadUrl(String urlString) throws IOException {
-        InputStream is = null;
-
-        try {
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            // Starts the query
-            conn.connect();
-            int responseCode = conn.getResponseCode();
-            is = conn.getInputStream();
-
-            String contentAsString = convertStreamToString(is);
-            return contentAsString;
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
-    }
-
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-    private void processJson(JSONObject object) {
-
-        try {
-            JSONArray rows = object.getJSONArray("rows");
-
-            for (int r = 0; r < rows.length(); ++r) {
-                JSONObject row = rows.getJSONObject(r);
-                JSONArray columns = row.getJSONArray("c");
-
-                int id = columns.getJSONObject(0).getInt("v");
-                int week = columns.getJSONObject(1).getInt("v");
-                String word = columns.getJSONObject(2).getString("v");
-
-                Team team = new Team(id, week, word);
-                teams.add(team);
-            }
-
-            // final TeamsAdapter adapter = new TeamsAdapter(this, R.layout.team, teams);
-            //listview.setAdapter(adapter);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 	private void fetchAndParseData(final Context ctx, Handler toastHandler) {
         StringBuilder builder = new StringBuilder();
         BufferedReader in;
         List<Words> mWords = new ArrayList<Words>();
         updateProgressDialog("Fetching Data");
 
-
-        try {
-             downloadUrl(urlLink);
-    } catch (IOException e) {
-             "Unable to download the requested page.";
-        }
-
+	ProcessGoogleSpreadSheet mOutput = new ProcessGoogleSpreadSheet(urlLink);
+	mOutput.Output();
+	mWords = mOutput.getOutput();
+	
 
         /*
         //String url = ""+"https://localhost/test.json";
@@ -303,8 +232,8 @@ public class WordDB {
 	}
 
 	public void deleteWords(OneRow aword) {
-		int week = aword.week;
-        String word = aword.word;
+		int week = aword.getWeek();
+        String word = aword.getWord();
 		database.delete(tableName, COLUMN_WEEK
 				+ " = " + week + " and " + COLUMN_WORD+ "=" + word, null);
 	}

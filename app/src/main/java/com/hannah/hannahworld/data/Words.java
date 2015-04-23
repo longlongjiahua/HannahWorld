@@ -1,4 +1,4 @@
-package com.hannah.hannahworld.Data;
+package com.hannah.hannahworld.data;
 import org.codehaus.jackson.annotate.JsonProperty;
         import org.codehaus.jackson.annotate.JsonIgnoreProperties;
         import java.util.List;
@@ -14,6 +14,12 @@ public class Words {
     public List<String> getWords() {
         return words;
     }
+	public void setWeek(int week) {
+	this.week = week;
+	}
+	public void setWords(List<String> words){
+		this.words = words;
+	}
 }
 
 

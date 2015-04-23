@@ -46,10 +46,6 @@
             android:name=".AlarmActivity"
             android:label="alarmTest" >
         </activity>
-        <activity
-            android:name=".json_reader.TestActivity"
-            android:label="jsonTest" >
-        </activity>
         TestActivity
 
         <receiver android:name=".AlarmNotificationReceiver" >

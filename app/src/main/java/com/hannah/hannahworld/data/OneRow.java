@@ -1,8 +1,9 @@
-package com.hannah.hannahworld.Data;
+package com.hannah.hannahworld.data;
 public class OneRow{
-    private String word;
-    private int id;
-    private int week;
+    public String word;
+    public int id;
+    public int week;
+    public OneRow(){;}
 
     public OneRow(int id, int week, String word)
     {

@@ -24,8 +24,8 @@ public final class GridFragment extends Fragment {
         this.activity = (MainActivity) activity;
     }
         @Override
-        public View onCreateView ( final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState)
-        {
+        public View onCreateView ( final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState){
+
             weeks.clear();
             for(int i=1; i<13; i++){
                 weeks.add("Week" + i);
