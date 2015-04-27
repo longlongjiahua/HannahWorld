@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class KeepDataFragment extends Fragment {
         // data object we want to retain
         private HashMap<Integer, ArrayList<String>> wkWords = new HashMap<Integer, ArrayList<String>>();
+        public int week;
   @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);

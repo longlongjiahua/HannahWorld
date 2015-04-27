@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hannah.hannahworld.OneDayActivity" >
+    <item android:id="@+id/wordtest"
+        android:title="Have a test"
+        android:orderInCategory="10"
+        android:showAsAction="always" />
+</menu>
