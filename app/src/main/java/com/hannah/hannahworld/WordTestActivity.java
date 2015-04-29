@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -21,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,14 +38,22 @@ import java.util.Locale;
 public class WordTestActivity extends AbstractSpeakActivity {
     private ArrayList<String> words = new ArrayList<String>();
     private int nth=0;
+    private List<EditText> editTextList = new ArrayList<EditText>();
+     private Button btnStart;
+    Button btnDisplay;
+    ImageButton btnAdd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test_word);
+        btnAdd = (ImageButton) findViewById(R.id.btnAdd);
+        btnDisplay = (Button) findViewById(R.id.btnDisplay);
+        MyLayoutOperation.add(this, btnAdd);
+        MyLayoutOperation.display(this, btnDisplay);
         Bundle extra = getIntent().getBundleExtra("extra");
         words = (ArrayList<String>) extra.getSerializable(OneDayActivity.ONEDAY_WORDS);
-        setContentView()
-        btn start test;
+       // btnStart = (Button) findViewById(R.id.btn_starttest);
     }
     @Override
     protected void onResume(){

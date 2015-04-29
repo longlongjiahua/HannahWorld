@@ -100,7 +100,7 @@ public class OneDayActivity extends AbstractSpeakActivity  implements AdapterVie
         if (id == R.id.wordtest) {
             Intent i = new Intent(this, WordTestActivity.class);
             Bundle extra = new Bundle();
-            extra.putSerializable(ONEDAY_WORDS, rtFragment.getWkWords());
+            extra.putSerializable(ONEDAY_WORDS, rtFragment.getWkWords().get(week));
             i.putExtra("extra", extra);
             startActivity(i);
             return true;

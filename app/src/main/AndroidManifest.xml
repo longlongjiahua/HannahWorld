@@ -43,6 +43,12 @@
             android:label="OneDay"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
+            android:name=".WordTestActivity"
+            android:label="Test"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+
+        <activity
             android:name=".AlarmActivity"
             android:label="alarmTest" >
         </activity>
