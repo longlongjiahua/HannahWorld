@@ -3,8 +3,7 @@
     android:id="@+id/layoutTeste"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
