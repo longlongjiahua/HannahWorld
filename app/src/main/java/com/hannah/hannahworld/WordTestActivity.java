@@ -23,6 +23,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,9 +50,7 @@ public class WordTestActivity extends AbstractSpeakActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_word);
         btnAdd = (ImageButton) findViewById(R.id.btnAdd);
-        btnDisplay = (Button) findViewById(R.id.btnDisplay);
         add(this, btnAdd);
-        display(this, btnDisplay);
         Bundle extra = getIntent().getBundleExtra("extra");
         words = (ArrayList<String>) extra.getSerializable(OneDayActivity.ONEDAY_WORDS);
        // btnStart = (Button) findViewById(R.id.btn_starttest);
@@ -63,6 +62,24 @@ public class WordTestActivity extends AbstractSpeakActivity {
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showInputMethodPicker();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.testactivity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.test_check) {
+   markTest();
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -88,13 +105,8 @@ public class WordTestActivity extends AbstractSpeakActivity {
         myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
     }
 
-        private void display(final Activity activity, Button btn)
-        {
-            btn.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    LinearLayout scrollViewlinerLayout = (LinearLayout) activity.findViewById(R.id.linearLayoutForm);
+ private void markTest(){
+                    LinearLayout scrollViewlinerLayout = (LinearLayout) findViewById(R.id.linearLayoutForm);
 
                     java.util.ArrayList<String> msg = new ArrayList<String>();
 
@@ -102,15 +114,19 @@ public class WordTestActivity extends AbstractSpeakActivity {
                     {
                         LinearLayout innerLayout = (LinearLayout) scrollViewlinerLayout.getChildAt(i);
                         EditText edit = (EditText) innerLayout.findViewById(R.id.editDescricao);
+                        String mWord = edit.getText().toString();
+                        ImageView image = (ImageView) innerLayout.findViewById(R.id.evaluate_img);
+                        if(words.get(i).toLowerCase().equals(mWord.toLowerCase())) {
+                            image.setImageResource(R.drawable.greentick);
+                        }
+                        image.setVisibility(View.VISIBLE);
 
                         msg.add(edit.getText().toString());
 
                     }
-
-                    Toast t = Toast.makeText(activity.getApplicationContext(), msg.toString(), Toast.LENGTH_SHORT);
+                    Toast t = Toast.makeText(getApplicationContext(), msg.toString(), Toast.LENGTH_SHORT);
                     t.show();
-                }
-            });
+
         }
 
         private void add(final Activity activity, ImageButton btn)
@@ -127,18 +143,7 @@ public class WordTestActivity extends AbstractSpeakActivity {
                     }
                     nth++;
                     final LinearLayout newView = (LinearLayout)activity.getLayoutInflater().inflate(R.layout.rowdetail, null);
-
                     newView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                    ImageButton btnRemove = (ImageButton) newView.findViewById(R.id.btnRemove);
-                    btnRemove.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            linearLayoutForm.removeView(newView);
-                        }
-                    });
-
                     linearLayoutForm.addView(newView);
                 }
             });

@@ -21,8 +21,8 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="instacoin" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="INFO" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.hannah.hannahworld" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51c13a38-c4ac-4db3-8c84-ee93e8b1c07a" name="Default" comment="" />
@@ -57,30 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyLayoutOperation.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/MyLayoutOperation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.703703" vertical-offset="473" max-vertical-offset="1095">
-              <caret line="67" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#523#1189#0" expanded="true" />
-                <element signature="e#755#763#0" expanded="true" />
-                <element signature="e#1184#1185#0" expanded="true" />
-                <element signature="e#1396#2014#0" expanded="true" />
-                <element signature="e#1822#1963#0" expanded="true" />
-                <element signature="e#1956#1957#0" expanded="true" />
-                <element signature="e#2009#2010#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_test_word.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="activity_test_word.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test_word.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.31770834" vertical-offset="288" max-vertical-offset="870">
-              <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+            <state vertical-scroll-proportion="-17.538462" vertical-offset="219" max-vertical-offset="795">
+              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -92,8 +73,8 @@
       <file leaf-file-name="rowdetail.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/rowdetail.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.692307" vertical-offset="0" max-vertical-offset="465">
-              <caret line="22" column="42" selection-start-line="22" selection-start-column="42" selection-end-line="22" selection-end-column="42" />
+            <state vertical-scroll-proportion="-10.384615" vertical-offset="0" max-vertical-offset="450">
+              <caret line="18" column="37" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -102,22 +83,52 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WordTestActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="WordTestActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/WordTestActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="27.666666" vertical-offset="1347" max-vertical-offset="2265">
-              <caret line="40" column="12" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
+            <state vertical-scroll-proportion="10.428572" vertical-offset="1551" max-vertical-offset="2340">
+              <caret line="118" column="82" selection-start-line="118" selection-start-column="82" selection-end-line="118" selection-end-column="82" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1293#1301#0" expanded="true" />
-                <element signature="e#1383#1393#0" expanded="true" />
-                <element signature="e#3283#4152#0" expanded="true" />
-                <element signature="e#3571#3579#0" expanded="true" />
-                <element signature="e#4137#4138#0" expanded="true" />
-                <element signature="e#4391#5427#0" expanded="true" />
-                <element signature="e#5106#5337#0" expanded="true" />
-                <element signature="e#5314#5315#0" expanded="true" />
-                <element signature="e#5412#5413#0" expanded="true" />
+                <element signature="e#1326#1334#0" expanded="true" />
+                <element signature="e#1416#1426#0" expanded="true" />
+                <element signature="e#3773#3781#0" expanded="true" />
+                <element signature="e#4959#5613#0" expanded="true" />
+                <element signature="e#5598#5599#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testactivity.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/testactivity.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="onedayactivity.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/onedayactivity.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+              <caret line="3" column="35" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OneDayActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/OneDayActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1201" max-vertical-offset="3630">
+              <caret line="108" column="5" selection-start-line="88" selection-start-column="3" selection-end-line="108" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1660#1688#0" expanded="true" />
+                <element signature="e#1744#1753#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1242,7 +1253,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/AlarmLoggerReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/AlarmNotificationReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/AlarmActivity.java" />
@@ -1288,11 +1298,12 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_wordtest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/TestWord.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/MyLayoutOperation.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/rowdetail.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/OneDayActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/WordTestActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_test_word.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/testactivity.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/rowdetail.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/WordTestActivity.java" />
       </list>
     </option>
   </component>
@@ -1839,7 +1850,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1848,19 +1859,19 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750398" sideWeight="0.49960285" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3990461" sideWeight="0.4988086" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.90754515" sideWeight="0.083287366" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22081016" sideWeight="0.3681592" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27958697" sideWeight="0.2892562" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.68044513" sideWeight="0.50119144" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28019857" sideWeight="0.098987624" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27958697" sideWeight="0.2892562" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.49960285" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.91671264" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8600954" sideWeight="0.91671264" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.49960285" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32883242" sideWeight="0.49918434" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27958697" sideWeight="0.9051724" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27958697" sideWeight="0.7107438" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.03974563" sideWeight="0.5837967" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1879,7 +1890,7 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28019857" sideWeight="0.098987624" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.68044513" sideWeight="0.50119144" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.49960285" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27958697" sideWeight="0.9051724" order="4" side_tool="false" content_ui="combo" />
@@ -2296,6 +2307,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test_word.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.538462" vertical-offset="219" max-vertical-offset="795">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/OneDayActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1201" max-vertical-offset="3630">
+          <caret line="108" column="5" selection-start-line="88" selection-start-column="3" selection-end-line="108" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1660#1688#0" expanded="true" />
+            <element signature="e#1744#1753#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/onedayactivity.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
@@ -2304,75 +2338,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/OneDayActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/testactivity.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.0370371" vertical-offset="1448" max-vertical-offset="3630">
-          <caret line="102" column="82" selection-start-line="102" selection-start-column="82" selection-end-line="102" selection-end-column="82" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1660#1688#0" expanded="true" />
-            <element signature="e#1744#1753#0" expanded="true" />
-            <element signature="e#4387#4431#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/rowdetail.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.692307" vertical-offset="0" max-vertical-offset="465">
-          <caret line="22" column="42" selection-start-line="22" selection-start-column="42" selection-end-line="22" selection-end-column="42" />
+        <state vertical-scroll-proportion="-10.384615" vertical-offset="0" max-vertical-offset="450">
+          <caret line="18" column="37" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="37" />
           <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/MyLayoutOperation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.703703" vertical-offset="473" max-vertical-offset="1095">
-          <caret line="67" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#523#1189#0" expanded="true" />
-            <element signature="e#755#763#0" expanded="true" />
-            <element signature="e#1184#1185#0" expanded="true" />
-            <element signature="e#1396#2014#0" expanded="true" />
-            <element signature="e#1822#1963#0" expanded="true" />
-            <element signature="e#1956#1957#0" expanded="true" />
-            <element signature="e#2009#2010#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hannah/hannahworld/WordTestActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="27.666666" vertical-offset="1347" max-vertical-offset="2265">
-          <caret line="40" column="12" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="12" />
+        <state vertical-scroll-proportion="10.428572" vertical-offset="1551" max-vertical-offset="2340">
+          <caret line="118" column="82" selection-start-line="118" selection-start-column="82" selection-end-line="118" selection-end-column="82" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1293#1301#0" expanded="true" />
-            <element signature="e#1383#1393#0" expanded="true" />
-            <element signature="e#3283#4152#0" expanded="true" />
-            <element signature="e#3571#3579#0" expanded="true" />
-            <element signature="e#4137#4138#0" expanded="true" />
-            <element signature="e#4391#5427#0" expanded="true" />
-            <element signature="e#5106#5337#0" expanded="true" />
-            <element signature="e#5314#5315#0" expanded="true" />
-            <element signature="e#5412#5413#0" expanded="true" />
+            <element signature="e#1326#1334#0" expanded="true" />
+            <element signature="e#1416#1426#0" expanded="true" />
+            <element signature="e#3773#3781#0" expanded="true" />
+            <element signature="e#4959#5613#0" expanded="true" />
+            <element signature="e#5598#5599#0" expanded="true" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test_word.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.31770834" vertical-offset="288" max-vertical-offset="870">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
   </component>

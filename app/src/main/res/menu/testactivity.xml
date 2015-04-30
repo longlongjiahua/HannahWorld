@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hannah.hannahworld.WordTestActivity" >
+    <item android:id="@+id/test_check"
+        android:title="Mark"
+        android:orderInCategory="10"
+        android:showAsAction="always" />
+</menu>
