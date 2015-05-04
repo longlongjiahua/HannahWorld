@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.hannah.hannahworld.draw.PaintDrawActivity;
+
 import org.codehaus.jackson.map.HandlerInstantiator;
 
 
@@ -59,15 +61,12 @@ public class MainActivity extends Activity {
             startActivity(new Intent(this, GraphyAniminationActivity.class));
             return true;
         }
-        if (id == R.id. white_board) {
-            startActivity(new Intent(this, WhiteboardActivity.class));
-            return true;
-        }
         if (id == R.id.post_data) {
             startActivity(new Intent(this, PostDataActivity.class));
             return true;
         }
-        if (id == R.id.testjson) {
+        if (id == R.id.draw_activity) {
+            startActivity(new Intent(this, PaintDrawActivity.class));
 
             return true;
         }

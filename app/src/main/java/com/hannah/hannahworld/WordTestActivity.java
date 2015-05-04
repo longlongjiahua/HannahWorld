@@ -8,10 +8,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
@@ -44,12 +51,14 @@ public class WordTestActivity extends AbstractSpeakActivity {
      private Button btnStart;
     Button btnDisplay;
     ImageButton btnAdd;
+    private ScrollView svView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_word);
         btnAdd = (ImageButton) findViewById(R.id.btnAdd);
+        svView = (ScrollView) findViewById(R.id.scrollView1);
         add(this, btnAdd);
         Bundle extra = getIntent().getBundleExtra("extra");
         words = (ArrayList<String>) extra.getSerializable(OneDayActivity.ONEDAY_WORDS);
@@ -61,6 +70,7 @@ public class WordTestActivity extends AbstractSpeakActivity {
         InputMethodManager imm = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showInputMethodPicker();
+         //List<InputMethodInfo> getInputMethodList ()
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,6 +129,17 @@ public class WordTestActivity extends AbstractSpeakActivity {
                         if(words.get(i).toLowerCase().equals(mWord.toLowerCase())) {
                             image.setImageResource(R.drawable.greentick);
                         }
+                        else{
+                            String str1 = mWord;
+                            String str =str1+"/"+words.get(i);
+                            SpannableString span1 = new SpannableString(str);
+                            //span1.setSpan(new RelativeSizeSpan(0.75f), 0, str1.length(), 0);
+                            span1.setSpan(new ForegroundColorSpan(Color.RED),0, str1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            span1.setSpan(new ForegroundColorSpan(Color.GREEN), str1.length()+1, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            //span1.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), str1.length(), str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            edit.setText(span1);
+
+                        }
                         image.setVisibility(View.VISIBLE);
 
                         msg.add(edit.getText().toString());
@@ -140,12 +161,30 @@ public class WordTestActivity extends AbstractSpeakActivity {
                     if(nth < words.size()) {
                         String mWord = words.get(nth);
                         speakWords(mWord);
+
+                        nth++;
+                        final LinearLayout newView = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.rowdetail, null);
+                        newView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        linearLayoutForm.addView(newView);
+                        focusOnView(newView);
+
                     }
-                    nth++;
-                    final LinearLayout newView = (LinearLayout)activity.getLayoutInflater().inflate(R.layout.rowdetail, null);
-                    newView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    linearLayoutForm.addView(newView);
+                    else{
+                        Toast.makeText(getApplicationContext(), "Finished, Please mark your job",Toast.LENGTH_SHORT ).show();
+                    }
+                    if(nth==words.size()-1){
+                        btnAdd.setEnabled(false);
+                        btnAdd.setClickable(false);
+                    }
                 }
             });
         }
+    private final void focusOnView(final LinearLayout mLLview){
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                svView.scrollTo(0, svView.getBottom());
+            }
+        });
+    }
     }

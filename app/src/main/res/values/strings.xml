@@ -13,5 +13,12 @@
     <string name="title_activity_whiteboard">WhiteboardActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_graphy_animination">GraphyAniminationActivity</string>
-
+	<string name="start_new">New</string>
+	<string name="brush">Brush</string>
+	<string name="erase">Erase</string>
+	<string name="save">Save</string>
+	<string name="paint">Paint</string>
+	<string name="sml">Small</string>
+	<string name="med">Medium</string>
+	<string name="lrg">Large</string>
 </resources>
