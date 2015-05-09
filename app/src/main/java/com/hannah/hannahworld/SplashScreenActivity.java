@@ -25,7 +25,7 @@ public class SplashScreenActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		 //setContentView(R.layout.activity_splash_animination);
 		//setContentView(R.layout.splash_screen);
-		startActivity(new Intent(SplashScreenActivity.this,MainActivity.class));
+		startActivity(new Intent(SplashScreenActivity.this,MainPageViewActivity.class));
 	}
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

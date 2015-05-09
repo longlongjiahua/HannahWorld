@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+      <LinearLayout
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:id="@+id/map_container"
+        android:layout_width="match_parent">
+      <android.support.v4.view.ViewPager
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.PagerTitleStrip android:id="@+id/pager_title_strip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="#33b5e5"
+        android:textColor="#fff"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp" />
+
+     </android.support.v4.view.ViewPager>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_gravity="center"
+            android:id="@+id/grid_view"
+            android:numColumns="4"
+            android:gravity="center"
+            android:columnWidth="80dp"
+            android:stretchMode="columnWidth"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+            <!--
+           <Button android:text="1" />
+          <Button android:text="2" />
+          <Button android:text="3" />
+          <Button android:text="*" />
+          <Button android:text="4" />
+          <Button android:text="5" />
+          <Button android:text="6" />
+          <Button android:text="-" />
+          <Button android:text="7" />
+          <Button android:text="8" />
+          <Button android:text="9" />
+          <Button android:text="+" />
+          <Button android:text="0" />
+          <Button android:text="clear" />
+          <Button android:text="undo" />
+          <Button android:text="/" />
+
+          <Button
+              android:layout_columnSpan="3"
+              android:layout_gravity="fill"
+              android:text="=" />
+              -->
+
+        </GridView>
+         </LinearLayout>
+
+
+    </LinearLayout>
