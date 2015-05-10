@@ -54,7 +54,7 @@ public class MathActivity extends FragmentActivity {
      */
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
 
-    private static String filenames[] = {"1", "2", "3", "*",
+    private static String keys[] = {"1", "2", "3", "*",
             "4", "5", "6", "-",
             "7", "8", "9", "+",
             "0", "start", "X", "/",
@@ -75,6 +75,7 @@ public class MathActivity extends FragmentActivity {
     private int rightN;
     private static final String FORMAT = "%02d:%02d:%02d";
     private Intent broadcastIntent;
+    private ButtonAdapter  mBtAdapter;
 
     /**
      * The {@link android.support.v4.view.ViewPager} that will display the object collection.
@@ -92,17 +93,20 @@ public class MathActivity extends FragmentActivity {
         tvScore = (TextView) findViewById(R.id.tv_your_score);
         tvTimeCountDown = (TextView) findViewById(R.id.tv_time_countdown);
         GridView gridView = (GridView) findViewById(R.id.grid_view);
-        gridView.setAdapter(new ButtonAdapter(this));
+        mBtAdapter = new ButtonAdapter(this, keys);
+        gridView.setAdapter(mBtAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
                                     View v, int position, long id) {
                 String pre = mathFragments[currentPageNo].mTv5.getText().toString();
-                char add = filenames[position].charAt(0);
+                char add = keys[position].charAt(0);
                 String cur = pre;
                 if(add=='s') {
                     final Intent mServiceIntent = new Intent(getApplicationContext(), BroadcastTimeCountService.class);
                     mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, 1);
                     MathActivity.this.startService(mServiceIntent);
+                    keys[13]="Done";
+                    mBtAdapter.notifyDataSetChanged();
                 }
                 if (add == 'X' || (add >= '0' && add <= '9')) {
 
@@ -264,29 +268,22 @@ public class MathActivity extends FragmentActivity {
         }
     }
 
-    /**
-     * A dummy fragment representing a section of the app, but that simply displays dummy text.
-     */
-
     public class ButtonAdapter extends BaseAdapter {
         private Context context;
-
-        public ButtonAdapter(Context c) {
+        private String[] keys;
+        public ButtonAdapter(Context c, String[] keys) {
             context = c;
+            this.keys= keys;
         }
-
         public int getCount() {
-            return filenames.length;
+            return keys.length;
         }
-
         public Object getItem(int position) {
             return position;
         }
-
         public long getItemId(int position) {
             return position;
         }
-
         public View getView(int position, View convertView, ViewGroup parent) {
             Button btn;
             if (convertView == null) {
@@ -298,7 +295,7 @@ public class MathActivity extends FragmentActivity {
             } else {
                 btn = (Button) convertView;
             }
-            btn.setText(filenames[position]);
+            btn.setText(keys[position]);
             btn.setTextColor(Color.WHITE);
             btn.setId(position);
             return btn;
