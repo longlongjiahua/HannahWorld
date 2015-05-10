@@ -64,6 +64,7 @@
             android:label="Math">
         </activity>
 
+        <service android:name=".BroadcastTimeCountService" />
 
         <receiver android:name=".AlarmNotificationReceiver" >
         </receiver>
