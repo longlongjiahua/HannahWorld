@@ -12,7 +12,7 @@ public class BroadcastTimeCountService extends Service {
     public static final String BROADCAST_ACTION = "displayUI";
     public static final String TIMELEFT = "time left";
     private int mStartID;
-    private static final String FORMAT = "%02d:%02d:%02d";
+    private static final String FORMAT = "%02d:%02d";
     private Intent intent;
 
     int minutes;
@@ -32,19 +32,17 @@ public class BroadcastTimeCountService extends Service {
         mMillSecond = minutes * 60 * 1000;
         if (minutes == 0) mMillSecond = 5 * 60 * 1000;
         // Don't automatically restart this Service if it is killed
-        Log.i("COUNTTIME::","yyy"+minutes);
-
         new CountDownTimer(mMillSecond, 1000) { // adjust the milli seconds here
 
             public void onTick(long millisUntilFinished) {
                 Log.i("COUNTTIME::",""+ millisUntilFinished);
-
                 broadcastToUI(millisUntilFinished);
             }
-
             public void onFinish() {
                 // stop Service if it was started with this ID
                 // Otherwise let other start commands proceed
+                Log.i("COUNTTIME::","yyyfinished");
+                broadcastToUI(0L);
                 stopSelf(mStartID);
             }
         }.start();
@@ -59,16 +57,12 @@ public class BroadcastTimeCountService extends Service {
     // Can't bind to this Service
     @Override
     public IBinder onBind(Intent intent) {
-
         return null;
-
     }
     private void broadcastToUI(long millisUntilFinished) {
         String text = "";
         text += "" + String.format(FORMAT,
-                TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
-                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
                 TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
                 ));

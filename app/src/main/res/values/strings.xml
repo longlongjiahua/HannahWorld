@@ -24,6 +24,7 @@
 
     <string name="time_source">  times </string>
     <string-array name="time_source_array">
+        <item>1 min</item>
         <item>2 mins</item>
         <item>3 mins</item>
         <item>4 mins</item>

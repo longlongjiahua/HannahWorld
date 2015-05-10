@@ -3,6 +3,7 @@
     <!-- From: file:/home/xuyong1/myProject/HannahWorld/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="time_source_array">
+        <item>1 min</item>
         <item>2 mins</item>
         <item>3 mins</item>
         <item>4 mins</item>
