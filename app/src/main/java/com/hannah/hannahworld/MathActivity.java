@@ -38,6 +38,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +77,10 @@ public class MathActivity extends FragmentActivity {
     private static final String FORMAT = "%02d:%02d:%02d";
     private Intent broadcastIntent;
     private ButtonAdapter  mBtAdapter;
+    private int selectedTime;
+    private int selectedTimePos=1;
+    private Spinner spTimeResource;
+
 
     /**
      * The {@link android.support.v4.view.ViewPager} that will display the object collection.
@@ -92,6 +97,9 @@ public class MathActivity extends FragmentActivity {
         setContentView(R.layout.activity_math);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
         tvTimeCountDown = (TextView) findViewById(R.id.tv_time_countdown);
+        spTimeResource = (Spinner) findViewById(R.id.sp_timesource);
+        spTimeResource.setSelection(selectedTimePos);
+        spTimeResource.setOnItemSelectedListener(new CustomOnItemSelectedListener());
         GridView gridView = (GridView) findViewById(R.id.grid_view);
         mBtAdapter = new ButtonAdapter(this, keys);
         gridView.setAdapter(mBtAdapter);
@@ -103,9 +111,9 @@ public class MathActivity extends FragmentActivity {
                 String cur = pre;
                 if(add=='s') {
                     final Intent mServiceIntent = new Intent(getApplicationContext(), BroadcastTimeCountService.class);
-                    mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, 1);
+                    mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, selectedTime);
                     MathActivity.this.startService(mServiceIntent);
-                    keys[13]="Done";
+                    keys[13]="done";
                     mBtAdapter.notifyDataSetChanged();
                 }
                 if (add == 'X' || (add >= '0' && add <= '9')) {
@@ -288,8 +296,8 @@ public class MathActivity extends FragmentActivity {
             Button btn;
             if (convertView == null) {
                 btn = new Button(context);
-                btn.setLayoutParams(new GridView.LayoutParams(80, 80));
-                btn.setPadding(5, 5, 5, 5);
+                btn.setLayoutParams(new GridView.LayoutParams(75, 75));
+                btn.setPadding(3, 4, 3, 4);
                 btn.setFocusable(false);
                 btn.setClickable(false);
             } else {
@@ -301,5 +309,22 @@ public class MathActivity extends FragmentActivity {
             return btn;
         }
     }
+   private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+       private int[] times = {2,3,4};
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+            Toast.makeText(parent.getContext(),
+                    "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+                    Toast.LENGTH_SHORT).show();
+            selectedTime = times[pos];
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+        }
+
+    }
+
 
 }

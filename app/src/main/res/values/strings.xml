@@ -21,4 +21,11 @@
 	<string name="sml">Small</string>
 	<string name="med">Medium</string>
 	<string name="lrg">Large</string>
+
+    <string name="time_source">  times </string>
+    <string-array name="time_source_array">
+        <item>2 mins</item>
+        <item>3 mins</item>
+        <item>4 mins</item>
+    </string-array>
 </resources>
