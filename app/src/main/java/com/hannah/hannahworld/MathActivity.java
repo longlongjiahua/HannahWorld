@@ -2,11 +2,14 @@ package com.hannah.hannahworld;
 
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -31,7 +34,7 @@ import java.text.DecimalFormat;
 public class MathActivity extends FragmentActivity {
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
 
-    private static String keys[] = {"1", "2", "3", "*",
+    private  String keys[] = {"1", "2", "3", "*",
             "4", "5", "6", "-",
             "7", "8", "9", "+",
             "0", "start", "X", "/",
@@ -50,12 +53,15 @@ public class MathActivity extends FragmentActivity {
 
     public int currentPageNo = 0;
     private int rightN;
-    private static final String FORMAT = "%02d:%02d:%02d";
     private Intent broadcastIntent;
     private ButtonAdapter  mBtAdapter;
     private int selectedTime;
     private int selectedTimePos=1;
     private Spinner spTimeResource;
+    private GridView gridView;
+    private boolean unRegistered = false;
+    private static final String TAG = "MathActivity::";
+    private boolean mServiceBound =false;
 
 
     /**
@@ -63,6 +69,21 @@ public class MathActivity extends FragmentActivity {
      */
     ViewPager mViewPager;
     public TextView tvScore,tvTimeCountDown;
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mServiceBound = false;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MyBinder myBinder = (MyBinder) service;
+            mBoundService = myBinder.getService();
+            mServiceBound = true;
+        }
+    };
+}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +97,7 @@ public class MathActivity extends FragmentActivity {
         spTimeResource = (Spinner) findViewById(R.id.sp_timesource);
         spTimeResource.setSelection(selectedTimePos);
         spTimeResource.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-        GridView gridView = (GridView) findViewById(R.id.grid_view);
+        gridView = (GridView) findViewById(R.id.grid_view);
         mBtAdapter = new ButtonAdapter(this, keys);
         gridView.setAdapter(mBtAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,17 +107,22 @@ public class MathActivity extends FragmentActivity {
                 char add = keys[position].charAt(0);
                 String cur = pre;
                 if(add=='s') {
-                    final Intent mServiceIntent = new Intent(getApplicationContext(), BroadcastTimeCountService.class);
+                    final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
                     mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, selectedTime);
                     MathActivity.this.startService(mServiceIntent);
                     keys[13]="done";
                     mBtAdapter.notifyDataSetChanged();
                 }
                 if(add=='d'){
+                    if(!unRegistered) {
+                        gridView.setEnabled(false);
+                        unregisterReceiver(broadcastReceiver);
+                        stopService(broadcastIntent);
+                        unRegistered = true;
+                    }
 
                 }
                 if (add == 'X' || (add >= '0' && add <= '9')) {
-
                 } else return;
                 if (add == 'X') {
                     cur = removeLastChar(cur);
@@ -111,19 +137,16 @@ public class MathActivity extends FragmentActivity {
                     mNums[currentPageNo][2] = curNum;
 //Toast.makeText(getBaseContext(),"Cselected" +curNum +" "+(mNums[currentPageNo][0] * mNums[currentPageNo][1]),Toast.LENGTH_SHORT).show();
 
-                    if (operation == 0 && curNum == mNums[currentPageNo][0] * mNums[currentPageNo][1]) {
+                    if ((operation == 0 && curNum == mNums[currentPageNo][0] * mNums[currentPageNo][1])
+                    ||(operation == 1 && curNum == mNums[currentPageNo][0] / mNums[currentPageNo][1] &&
+                            mNums[currentPageNo][0] % mNums[currentPageNo][1] == 0)){
                         mathFragments[currentPageNo].mTv5.setBackgroundResource(R.drawable.rectangle_back2);
                         rightN++;
                         DecimalFormat df = new DecimalFormat("#.0");
                         tvScore.setText("Score: " + df.format(100.00 * rightN / NQS));
-                        //Toast.makeText(getBaseContext(), "pic" + (position + 1) + " selected", Toast.LENGTH_SHORT).show();
-                    }
-                    if (operation == 1 && curNum == mNums[currentPageNo][0] / mNums[currentPageNo][1] &&
-                            mNums[currentPageNo][0] % mNums[currentPageNo][1] == 0) {
-                        mathFragments[currentPageNo].mTv5.setBackgroundResource(R.drawable.rectangle_back2);
-                        rightN++;
-                        DecimalFormat df = new DecimalFormat("#.0");
-                       tvScore.setText("Score: " + df.format(100.00 * rightN / NQS));
+                        if(currentPageNo!=NQS) {
+                            mViewPager.setCurrentItem(currentPageNo + 1);
+                        }
                     }
 
                 }
@@ -140,6 +163,7 @@ public class MathActivity extends FragmentActivity {
         // Set up the ViewPager, attaching the adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        Log.i(TAG, "ONCREATE::");
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int arg0) {
@@ -157,6 +181,7 @@ public class MathActivity extends FragmentActivity {
     }
     public void onResume() {
         super.onResume();
+        Log.i(TAG, "ONRESUME");
        // startService(intent);
         registerReceiver(broadcastReceiver, new IntentFilter(BroadcastTimeCountService.BROADCAST_ACTION));
     }
@@ -164,15 +189,33 @@ public class MathActivity extends FragmentActivity {
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(broadcastReceiver);
-        stopService(broadcastIntent);
+        Log.i(TAG, "ONPAUSE");
+        if(!unRegistered) {
+            unregisterReceiver(broadcastReceiver);
+            stopService(broadcastIntent);
+            unRegistered = true;
+        }
     }
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.i(TAG, "ONSTOP");
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "ONDESTROY");
+    }
+
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             String time = intent.getStringExtra(BroadcastTimeCountService.TIMELEFT);
             Log.i("BroadcastReceiver:::", time);
+            if(time.equals("00:00")){
+                gridView.setEnabled(false);
+            }
             //mathFragments[currentPageNo].tvTimeCountDown.setText(time);
            tvTimeCountDown.setText(time);
         }

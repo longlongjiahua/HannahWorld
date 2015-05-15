@@ -30,7 +30,7 @@ public class BroadcastTimeCountService extends Service {
         Log.i("COUNTTIME::","xxxxxxx");
         minutes = intent.getIntExtra(MathActivity.INTENT_EXTRA_MINUTES, 0);
         mMillSecond = minutes * 60 * 1000;
-        if (minutes == 0) mMillSecond = 5 * 60 * 1000;
+        if (minutes == 0) mMillSecond = 3 * 60 * 1000;
         // Don't automatically restart this Service if it is killed
         new CountDownTimer(mMillSecond, 1000) { // adjust the milli seconds here
 
