@@ -62,6 +62,8 @@ public class MathActivity extends FragmentActivity {
     private boolean unRegistered = false;
     private static final String TAG = "MathActivity::";
     private boolean mServiceBound =false;
+    private BroadcastTimeCountService mService;
+    private boolean mBound = false;
 
 
     /**
@@ -69,21 +71,23 @@ public class MathActivity extends FragmentActivity {
      */
     ViewPager mViewPager;
     public TextView tvScore,tvTimeCountDown;
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mServiceBound = false;
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            BroadcastTimeCountService.MathBinder binder = (BroadcastTimeCountService.MathBinder) service;
+            mService = binder.getService();
+            mBound = true;
         }
-
         @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            MyBinder myBinder = (MyBinder) service;
-            mBoundService = myBinder.getService();
-            mServiceBound = true;
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
         }
     };
-}
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,7 +113,8 @@ public class MathActivity extends FragmentActivity {
                 if(add=='s') {
                     final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
                     mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, selectedTime);
-                    MathActivity.this.startService(mServiceIntent);
+                    MathActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+                    //MathActivity.this.startServce(mServiceIntent);
                     keys[13]="done";
                     mBtAdapter.notifyDataSetChanged();
                 }
@@ -298,7 +303,7 @@ public class MathActivity extends FragmentActivity {
         }
     }
 
-    public class ButtonAdapter extends BaseAdapter {
+    public  class ButtonAdapter extends BaseAdapter {
         private Context context;
         private String[] keys;
         public ButtonAdapter(Context c, String[] keys) {

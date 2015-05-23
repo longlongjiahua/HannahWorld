@@ -2,6 +2,7 @@ package com.hannah.hannahworld;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
@@ -14,6 +15,7 @@ public class BroadcastTimeCountService extends Service {
     private int mStartID;
     private static final String FORMAT = "%02d:%02d";
     private Intent intent;
+    private final IBinder mBinder = new MathBinder();
 
     int minutes;
     long mMillSecond;
@@ -70,5 +72,11 @@ public class BroadcastTimeCountService extends Service {
 
         intent.putExtra(TIMELEFT, text);
         sendBroadcast(intent);
+    }
+    public class MathBinder extends Binder {
+       BroadcastTimeCountService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return BroadcastTimeCountService.this;
+        }
     }
 }
