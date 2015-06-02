@@ -27,8 +27,8 @@ public class AlarmNotificationReceiver extends BroadcastReceiver {
 	private PendingIntent mContentIntent;
 
 	// Notification Sound and Vibration on Arrival
-	private final Uri soundURI  = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-	private final long[] mVibratePattern = { 0, 200, 200, 300 };
+	private final Uri soundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+	private final long[] mVibratePattern = {0, 200, 200, 300};
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
