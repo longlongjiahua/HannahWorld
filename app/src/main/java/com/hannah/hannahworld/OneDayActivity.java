@@ -42,7 +42,7 @@ public class OneDayActivity extends AbstractSpeakActivity  implements AdapterVie
     private WordDB wordDB;
     private int week=-1;
     //private final String urlLink = "http://192.168.1.65/word.json";
-    private final String urlLink = "https://docs.google.com/spreadsheets/d/1onnIEllDdnts89nPIqhATsQ5EokpM5_ZFqERPOiG_5U/gviz/tq";
+    private final String urlLink = Constants.GOOGLEDOCLINK;
     private HashMap<Integer, ArrayList<String>> weekWords = new HashMap<Integer, ArrayList<String>>();
 
     private ArrayList<Integer> list = new ArrayList<Integer>();
