@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 
@@ -26,9 +27,7 @@ public class AlarmNotificationReceiver extends BroadcastReceiver {
 	private PendingIntent mContentIntent;
 
 	// Notification Sound and Vibration on Arrival
-	private final Uri soundURI = Uri
-			.parse("android.resource://com.hannah.hannahworld/"
-					+ R.raw.alarm_rooster);
+	private final Uri soundURI  = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 	private final long[] mVibratePattern = { 0, 200, 200, 300 };
 
 	@Override

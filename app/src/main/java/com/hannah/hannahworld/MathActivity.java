@@ -84,9 +84,18 @@ public class MathActivity extends FragmentActivity {
         }
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+            mService = null;
+
             mBound = false;
         }
     };
+    void doUnbindService() {
+        if (mBound) {
+            // Detach our existing connection.
+            unbindService(mConnection);
+            mBound = false;
+        }
+    }
 
 
     @Override
@@ -113,6 +122,7 @@ public class MathActivity extends FragmentActivity {
                 if(add=='s') {
                     final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
                     mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, selectedTime);
+                    Log.i("Time", ""+selectedTime);
                     MathActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
                     //MathActivity.this.startServce(mServiceIntent);
                     keys[13]="done";
@@ -195,9 +205,11 @@ public class MathActivity extends FragmentActivity {
     public void onPause() {
         super.onPause();
         Log.i(TAG, "ONPAUSE");
+        stopService(broadcastIntent);
+        unbindService(mConnection);
         if(!unRegistered) {
             unregisterReceiver(broadcastReceiver);
-            stopService(broadcastIntent);
+            //stopService(broadcastIntent);
             unRegistered = true;
         }
     }
