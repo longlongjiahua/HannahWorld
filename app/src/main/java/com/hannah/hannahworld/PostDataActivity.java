@@ -96,7 +96,7 @@ public class PostDataActivity extends Activity implements OnClickListener {
     }
 
     void mPost(){
-        String path = "https://instacoin.net/json/get_post_data.php";
+        String path = "";
 
         HttpClient client = new DefaultHttpClient();
         HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
