@@ -25,4 +25,5 @@ public class FormulaConvertTest extends AndroidTestCase {
         fConvert.setString("1+2(1+3) + 2/1");
         assertEquals(fConvert.getOutput(), "3 2 + 5 *");
     }
+
 }
