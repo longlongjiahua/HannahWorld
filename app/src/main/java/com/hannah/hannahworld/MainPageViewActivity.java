@@ -181,6 +181,15 @@ public class MainPageViewActivity extends FragmentActivity implements ActionBar.
                             startActivity(intent);
                         }
                     });
+            rootView.findViewById(R.id.bt_makenumber)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), MathActivity.class);
+                            intent.putExtra(MATHOPERATION, 2);
+                            startActivity(intent);
+                        }
+                    });
 
             return rootView;
         }

@@ -33,6 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Division" />
+        <Button android:id="@+id/bt_makenumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Make Number" />
 
     </LinearLayout>
 

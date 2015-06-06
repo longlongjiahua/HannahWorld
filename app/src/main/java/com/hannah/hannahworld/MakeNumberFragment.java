@@ -18,7 +18,7 @@ import android.os.CountDownTimer;
  * Created by xuyong1 on 06/05/15.
  */
 
-    public class MathFragment extends AbstractMathFragment {
+    public class MakeNumberFragment extends AbstractMathFragment {
     TextView mTv1, mTv2, mTv3, mTv5;
     private MathActivity activity;
     private int pageNo;

@@ -32,7 +32,7 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 
 public class MathActivity extends FragmentActivity {
-    DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
+    private MathPagerAdapter mMathPagerAdapter;
 
     private  String keys[] = {"1", "2", "3", "*",
             "4", "5", "6", "-",
@@ -167,7 +167,7 @@ public class MathActivity extends FragmentActivity {
                 }
             }
         });
-        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
+        mMathPagerAdapter = new MathPagerAdapter(getSupportFragmentManager());
         // Set up action bar.
         final ActionBar actionBar = getActionBar();
 
@@ -177,7 +177,7 @@ public class MathActivity extends FragmentActivity {
 
         // Set up the ViewPager, attaching the adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        mViewPager.setAdapter(mMathPagerAdapter);
         Log.i(TAG, "ONCREATE::");
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -284,35 +284,6 @@ public class MathActivity extends FragmentActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A {@link android.support.v4.app.FragmentStatePagerAdapter} that returns a fragment
-     * representing an object in the collection.
-     */
-    public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
-
-        public DemoCollectionPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            Fragment fragment = MathFragment.instance(i);
-            mathFragments[i] = (MathFragment) fragment;
-            return fragment;
-        }
-
-        @Override
-        public int getCount() {
-            // For this contrived example, we have a 100-object collection.
-            return NQS;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "q " + (position + 1);
-        }
     }
 
     public  class ButtonAdapter extends BaseAdapter {

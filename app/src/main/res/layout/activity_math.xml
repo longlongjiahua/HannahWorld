@@ -2,128 +2,120 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-      <LinearLayout
-        android:layout_weight="0.5"
-        android:layout_height="0dp"
-        android:id="@+id/map_container"
-        android:layout_width="match_parent">
-      <android.support.v4.view.ViewPager
-    android:id="@+id/pager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <android.support.v4.view.PagerTitleStrip android:id="@+id/pager_title_strip"
+    <LinearLayout
+        android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="#33b5e5"
-        android:textColor="#fff"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp" />
-     </android.support.v4.view.ViewPager>
+        android:layout_height="0dp"
+        android:layout_weight="0.4">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.PagerTitleStrip
+                android:id="@+id/pager_title_strip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="#33b5e5"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:textColor="#fff" />
+        </android.support.v4.view.ViewPager>
     </LinearLayout>
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
+
     <LinearLayout
-        android:layout_weight="0.2"
-        android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.15"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="15dp"
-            android:text="Score"
-            android:textStyle="bold"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-        <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:text="Score"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/sp_timesource"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="0.5"
-                android:layout_height="wrap_content"
-                android:text="Time"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-            <Spinner
-                android:id="@+id/sp_timesource"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:entries="@array/time_source_array"
-                android:prompt="@string/time_source"/>
-            </LinearLayout>
+            android:entries="@array/time_source_array"
+            android:prompt="@string/time_source" />
+
     </LinearLayout>
 
     <LinearLayout
-        android:layout_weight="0.2"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="15dp"
-        android:layout_width="match_parent"
         android:id="@+id/your_score"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.15"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_your_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            android:textSize="28dp"
-            android:text=""
-            android:textStyle="bold"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-              <TextView
+
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:text=""
+            android:textSize="28dp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/tv_time_countdown"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
             android:text=""
             android:textSize="28dp"
-            android:textStyle="bold"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
     <LinearLayout
-        android:layout_weight="0.7"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="0.8"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_width="match_parent">
+        android:orientation="vertical">
 
 
         <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_gravity="center"
             android:id="@+id/grid_view"
-            android:numColumns="4"
-            android:gravity="center"
-            android:columnWidth="80dp"
-            android:stretchMode="columnWidth"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-         </GridView>
-         </LinearLayout>
-
-
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:columnWidth="80dp"
+            android:gravity="center"
+            android:numColumns="4"
+            android:stretchMode="columnWidth"></GridView>
     </LinearLayout>
+
+
+</LinearLayout>
