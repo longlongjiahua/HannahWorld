@@ -4,3 +4,5 @@
 .DS_Store
 /build
 /app/build/
+.idea/workspace.xml
+app/app.iml

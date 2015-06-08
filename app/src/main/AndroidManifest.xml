@@ -63,6 +63,14 @@
             android:name=".MathActivity"
             android:label="Math">
         </activity>
+        <activity
+            android:name=".MakeNumberActivity"
+            android:label="Make Number">
+        </activity>
+        <activity
+            android:name=".DrapandDropActivity"
+            android:label="Make Number">
+        </activity>
 
         <service android:name=".BroadcastTimeCountService" />
 
