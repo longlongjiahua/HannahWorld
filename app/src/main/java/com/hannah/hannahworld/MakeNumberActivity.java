@@ -96,13 +96,10 @@ public class MakeNumberActivity extends Activity {
             // TODO Auto-generated method stub
 
             // create it from the object's tag
-            ClipData.Item item = new ClipData.Item((CharSequence)view.getTag());
-
-            String[] mimeTypes = { ClipDescription.MIMETYPE_TEXT_PLAIN };
-            ClipData data = new ClipData(view.getTag().toString(), mimeTypes, item);
+            String str = ((TextView) view).getText().toString();
+            ClipData data = ClipData.newPlainText("text", str);
             DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-
-            view.startDrag( data, //data to be dragged
+                 view.startDrag( data, //data to be dragged
                     shadowBuilder, //drag shadow
                     view, //local data about the drag and drop operation
                     0   //no needed flags
@@ -113,7 +110,7 @@ public class MakeNumberActivity extends Activity {
     }
 
     class MyDragListener implements OnDragListener {
-        Drawable normalShape = getResources().getDrawable(R.drawable.normal_shape);
+        //Drawable normalShape = getResources().getDrawable(R.drawable.normal_shape);
         Drawable targetShape = getResources().getDrawable(R.drawable.rectangle_back2);
 
         @Override
@@ -152,9 +149,13 @@ public class MakeNumberActivity extends Activity {
                         //TextView text = (TextView) v.findViewById(R.id.text);
                         //text.setText("The item is dropped");
 
-                        LinearLayout containView = (LinearLayout) v;
-                        containView.addView(view);
-                        view.setVisibility(View.VISIBLE);
+                        //LinearLayout containView = (LinearLayout) v;
+                        ClipData.Item item = event.getClipData().getItemAt(0);
+                       String inputNum = item.getText().toString();
+                        mFormElements.add(inputNum);
+                        mFormulaAdapter.notifyDataSetChanged();
+
+                        //view.setVisibility(View.VISIBLE);
                     } else {
                         View view = (View) event.getLocalState();
                         view.setVisibility(View.VISIBLE);
