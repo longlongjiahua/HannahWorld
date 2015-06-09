@@ -1,4 +1,3 @@
-
 package com.hannah.hannahworld;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -15,9 +15,12 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -26,26 +29,19 @@ public class DragDropHelp {
 
     LinearLayout targetLayout;
     GridView listSource, listTarget;
-    TextView comments;
-
-    String commentMsg;
-
     MyDragEventListener myDragEventListener = new MyDragEventListener();
     ArrayList<String> listData;
-    String[] month = {
-            "December"};
-
     Activity activity;
     List<String> droppedList;
     ArrayAdapter<String> droppedAdapter;
-    public DragDropHelp(GridView targetView, GridView sourceView, Activity activity,ArrayList<String> listData){
+    public DragDropHelp(GridView targetView, GridView sourceView, Activity activity, ArrayList<String> listData) {
         this.listTarget = targetView;
         this.listSource = sourceView;
         this.activity = activity;
         this.listData = listData;
-        
     }
-   public void init(){
+
+    public void init() {
         final String SOURCELIST_TAG = "listSource";
         final String TARGETLIST_TAG = "listTarget";
         final String TARGETLAYOUT_TAG = "targetLayout";
@@ -53,9 +49,7 @@ public class DragDropHelp {
         listSource.setTag(SOURCELIST_TAG);
         listTarget.setTag(TARGETLIST_TAG);
         targetLayout.setTag(TARGETLAYOUT_TAG);
-
-        listSource.setAdapter(new ArrayAdapter<String>(activity,
-                android.R.layout.simple_list_item_1, listData));
+        listSource.setAdapter(new TextViewAdapter(activity, listData));
         listSource.setOnItemLongClickListener(listSourceItemLongClickListener);
 
 
@@ -77,7 +71,7 @@ public class DragDropHelp {
                                        int position, long id) {
 
             //Selected item is passed as item in dragData
-            ClipData.Item item = new ClipData.Item(month[position]);
+            ClipData.Item item = new ClipData.Item(listData.get(position));
 
             String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
             ClipData dragData = new ClipData((CharSequence) v.getTag(),
@@ -89,9 +83,6 @@ public class DragDropHelp {
                     myShadow,  //View.DragShadowBuilder
                     month[position],  //Object myLocalState
                     0);    //flags
-
-            commentMsg = v.getTag() + " : onLongClick.\n";
-            comments.setText(commentMsg);
 
             return true;
         }
@@ -133,69 +124,75 @@ public class DragDropHelp {
                     //All involved view accept ACTION_DRAG_STARTED for MIMETYPE_TEXT_PLAIN
                     if (event.getClipDescription()
                             .hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                        commentMsg += v.getTag()
-                                + " : ACTION_DRAG_STARTED accepted.\n";
-                        comments.setText(commentMsg);
                         return true; //Accept
                     } else {
-                        commentMsg += v.getTag()
-                                + " : ACTION_DRAG_STARTED rejected.\n";
-                        comments.setText(commentMsg);
                         return false; //reject
                     }
                 case DragEvent.ACTION_DRAG_ENTERED:
-                    commentMsg += v.getTag() + " : ACTION_DRAG_ENTERED.\n";
-                    comments.setText(commentMsg);
                     return true;
                 case DragEvent.ACTION_DRAG_LOCATION:
-                    commentMsg += v.getTag() + " : ACTION_DRAG_LOCATION - "
-                            + event.getX() + " : " + event.getY() + "\n";
-                    comments.setText(commentMsg);
+                    //commentMsg += v.getTag() + " : ACTION_DRAG_LOCATION - " + event.getX() + " : " + event.getY() + "\n";
                     return true;
                 case DragEvent.ACTION_DRAG_EXITED:
-                    commentMsg += v.getTag() + " : ACTION_DRAG_EXITED.\n";
-                    comments.setText(commentMsg);
                     return true;
                 case DragEvent.ACTION_DROP:
                     // Gets the item containing the dragged data
                     ClipData.Item item = event.getClipData().getItemAt(0);
-
-                    commentMsg += v.getTag() + " : ACTION_DROP" + "\n";
-                    comments.setText(commentMsg);
-
                     //If apply only if drop on buttonTarget
                     if (v == targetLayout) {
                         String droppedItem = item.getText().toString();
-
-                        commentMsg += "Dropped item - "
-                                + droppedItem + "\n";
-                        comments.setText(commentMsg);
-
+                        //Here a callback
                         droppedList.add(droppedItem);
                         droppedAdapter.notifyDataSetChanged();
-
                         return true;
                     } else {
                         return false;
                     }
-
-
                 case DragEvent.ACTION_DRAG_ENDED:
                     if (event.getResult()) {
-                        commentMsg += v.getTag() + " : ACTION_DRAG_ENDED - success.\n";
-                        comments.setText(commentMsg);
                     } else {
-                        commentMsg += v.getTag() + " : ACTION_DRAG_ENDED - fail.\n";
-                        comments.setText(commentMsg);
                     }
-                    ;
                     return true;
                 default: //unknown case
-                    commentMsg += v.getTag() + " : UNKNOWN !!!\n";
-                    comments.setText(commentMsg);
                     return false;
-
             }
+        }
+    }
+
+    public class TextViewAdapter extends BaseAdapter {
+        private Context context;
+        private ArrayList<String> texts;
+
+        public TextViewAdapter(Context c, ArrayList<String> texts) {
+           this.context = c;
+            this.texts = texts;
+        }
+        public int getCount() {
+            return texts.size();
+        }
+        public Object getItem(int position) {
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView textview;
+            if (convertView == null) {
+                textview = new Button(context);
+                textview.setLayoutParams(new GridView.LayoutParams(75, 75));
+                textview.setPadding(1, 1, 1, 1);
+                textview.setFocusable(false);
+                textview.setClickable(false);
+            } else {
+                textview = (Button) convertView;
+            }
+            textview.setText(texts.get(position));
+            textview.setTextColor(Color.GREEN);
+            textview.setId(position);
+            return textview;
         }
     }
 }
