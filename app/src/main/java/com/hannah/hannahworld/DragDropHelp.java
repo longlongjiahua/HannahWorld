@@ -25,20 +25,33 @@ import android.widget.LinearLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.hannah.hannahworld.TextViewAdapter;
+/*
+requirement analysis
+four way drop: number-><-formula
+               operator-><-formula
+ the fifth way drop: switch strings within formula
+
+if drop to the formula line, insert position dependent on the drop site
+if drop to number line, always add the number to the end(append)
+if drop to operator line, the operator keep same;
+the common part is to drag and drop
+ */
+
 public class DragDropHelp {
 
     LinearLayout targetLayout;
     GridView listSource, listTarget;
     MyDragEventListener myDragEventListener = new MyDragEventListener();
-    ArrayList<String> listData;
+    ArrayList<String> listSourceData;
     Activity activity;
     List<String> droppedList;
     ArrayAdapter<String> droppedAdapter;
-    public DragDropHelp(GridView targetView, GridView sourceView, Activity activity, ArrayList<String> listData) {
+    public DragDropHelp(GridView targetView, GridView sourceView, Activity activity, ArrayList<String> listSourceData) {
         this.listTarget = targetView;
         this.listSource = sourceView;
         this.activity = activity;
-        this.listData = listData;
+        this.listSourceData = listSourceData;
     }
 
     public void init() {
@@ -49,7 +62,7 @@ public class DragDropHelp {
         listSource.setTag(SOURCELIST_TAG);
         listTarget.setTag(TARGETLIST_TAG);
         targetLayout.setTag(TARGETLAYOUT_TAG);
-        listSource.setAdapter(new TextViewAdapter(activity, listData));
+        listSource.setAdapter(new TextViewAdapter(activity, listSourceData));
         listSource.setOnItemLongClickListener(listSourceItemLongClickListener);
 
 
@@ -71,7 +84,7 @@ public class DragDropHelp {
                                        int position, long id) {
 
             //Selected item is passed as item in dragData
-            ClipData.Item item = new ClipData.Item(listData.get(position));
+            ClipData.Item item = new ClipData.Item(listSourceData.get(position));
 
             String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
             ClipData dragData = new ClipData((CharSequence) v.getTag(),
@@ -81,7 +94,7 @@ public class DragDropHelp {
 
             v.startDrag(dragData, //ClipData
                     myShadow,  //View.DragShadowBuilder
-                    month[position],  //Object myLocalState
+                    listSourceData.get(position),  //Object myLocalState
                     0);    //flags
 
             return true;
@@ -130,7 +143,7 @@ public class DragDropHelp {
                     }
                 case DragEvent.ACTION_DRAG_ENTERED:
                     return true;
-                case DragEvent.ACTION_DRAG_LOCATION:
+                case DragEvent.ACTION_DRAG_LOCATION:  //
                     //commentMsg += v.getTag() + " : ACTION_DRAG_LOCATION - " + event.getX() + " : " + event.getY() + "\n";
                     return true;
                 case DragEvent.ACTION_DRAG_EXITED:
@@ -159,40 +172,5 @@ public class DragDropHelp {
         }
     }
 
-    public class TextViewAdapter extends BaseAdapter {
-        private Context context;
-        private ArrayList<String> texts;
 
-        public TextViewAdapter(Context c, ArrayList<String> texts) {
-           this.context = c;
-            this.texts = texts;
-        }
-        public int getCount() {
-            return texts.size();
-        }
-        public Object getItem(int position) {
-            return position;
-        }
-
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textview;
-            if (convertView == null) {
-                textview = new Button(context);
-                textview.setLayoutParams(new GridView.LayoutParams(75, 75));
-                textview.setPadding(1, 1, 1, 1);
-                textview.setFocusable(false);
-                textview.setClickable(false);
-            } else {
-                textview = (Button) convertView;
-            }
-            textview.setText(texts.get(position));
-            textview.setTextColor(Color.GREEN);
-            textview.setId(position);
-            return textview;
-        }
-    }
 }
