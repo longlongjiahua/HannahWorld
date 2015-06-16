@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
@@ -44,14 +45,21 @@ public class DragDropHelp {
     GridView listSource, listTarget;
     MyDragEventListener myDragEventListener = new MyDragEventListener();
     ArrayList<String> listSourceData;
+    ArrayList<String> listTargetData;
     Activity activity;
     List<String> droppedList;
-    ArrayAdapter<String> droppedAdapter;
-    public DragDropHelp(GridView targetView, GridView sourceView, Activity activity, ArrayList<String> listSourceData) {
+    TextViewAdapter droppedAdapter;
+    TextViewAdapter sourceAdapter;
+    private static final  String TAG = "DragDropHelp";
+
+    public DragDropHelp(GridView sourceView, GridView targetView, Activity activity,
+                        ArrayList<String> listSourceData, ArrayList<String> listTargetData) {
         this.listTarget = targetView;
         this.listSource = sourceView;
         this.activity = activity;
         this.listSourceData = listSourceData;
+        this.listTargetData = listTargetData;
+        init();
     }
 
     public void init() {
@@ -61,18 +69,14 @@ public class DragDropHelp {
 
         listSource.setTag(SOURCELIST_TAG);
         listTarget.setTag(TARGETLIST_TAG);
-        targetLayout.setTag(TARGETLAYOUT_TAG);
-        listSource.setAdapter(new TextViewAdapter(activity, listSourceData));
+        sourceAdapter = new TextViewAdapter(activity, listSourceData);
+        listSource.setAdapter(sourceAdapter);
         listSource.setOnItemLongClickListener(listSourceItemLongClickListener);
 
-
-        droppedList = new ArrayList<String>();
-        droppedAdapter = new ArrayAdapter<String>(activity,
-                android.R.layout.simple_list_item_1, droppedList);
+        droppedAdapter = new TextViewAdapter(activity, listTargetData);
         listTarget.setAdapter(droppedAdapter);
-
         listSource.setOnDragListener(myDragEventListener);
-        targetLayout.setOnDragListener(myDragEventListener);
+       // targetLayout.setOnDragListener(myDragEventListener);
 
     }
 
@@ -84,6 +88,7 @@ public class DragDropHelp {
                                        int position, long id) {
 
             //Selected item is passed as item in dragData
+            Log.i(TAG,listSourceData.get(position)+"fromsource" );
             ClipData.Item item = new ClipData.Item(listSourceData.get(position));
 
             String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
@@ -152,8 +157,10 @@ public class DragDropHelp {
                     // Gets the item containing the dragged data
                     ClipData.Item item = event.getClipData().getItemAt(0);
                     //If apply only if drop on buttonTarget
-                    if (v == targetLayout) {
+                    if (v == listTarget) {
+
                         String droppedItem = item.getText().toString();
+                        Log.i(TAG, droppedItem+"xxx");
                         //Here a callback
                         droppedList.add(droppedItem);
                         droppedAdapter.notifyDataSetChanged();

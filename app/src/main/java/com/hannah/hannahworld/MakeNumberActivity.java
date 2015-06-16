@@ -35,22 +35,21 @@ public class MakeNumberActivity extends Activity {
     public GridView numberGridView;
     public GridView formulaGridView;
     public GridView operatorGridView;
-    public ArrayList<String> mFormulaList = new ArrayList<String>();
+    public ArrayList<String> mFormulaList = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
     public ArrayList<String> mNumberList = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
     public ArrayList<String> mOperatorList = new ArrayList<String>(Arrays.asList("+", "-", "*","/"));
+    private DragDropHelp number2Formula;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_makenumberactivity);
-        myCard = (TextView) findViewById(R.id.card0);
-
-        findViewById(R.id.toplinear).setOnDragListener(new MyDragListener());
-        findViewById(R.id.grid_view_formula).setOnDragListener(new MyDragListener());
-        gridView = (GridView) findViewById(R.id.grid_view_formula);
-
-
-    }
+        numberGridView = (GridView) findViewById(R.id.gv_numbers);
+        formulaGridView = (GridView) findViewById(R.id.grid_view_formula);
+        operatorGridView = (GridView) findViewById(R.id.gv_operators);
+        number2Formula = new DragDropHelp(numberGridView, formulaGridView, this, mNumberList, mFormulaList);
+     }
 
 }
