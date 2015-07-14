@@ -40,6 +40,9 @@ public class MakeNumberActivity extends Activity {
     public ArrayList<String> mFormulaList = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
     public ArrayList<String> mNumberList = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
     public ArrayList<String> mOperatorList = new ArrayList<String>(Arrays.asList("+", "-", "*","/"));
+    public TextViewAdapter numberAdapter;
+    public TextViewAdapter formulaAdapter;
+    public TextViewAdapter operatorAdapter;
     private DragDropHelp number2Formula;
     private DragDropHelp formula2Number;
     private DragDropHelp operator2Formula;
@@ -54,20 +57,48 @@ public class MakeNumberActivity extends Activity {
         numberGridView = (GridView) findViewById(R.id.gv_numbers);
         formulaGridView = (GridView) findViewById(R.id.grid_view_formula);
         operatorGridView = (GridView) findViewById(R.id.gv_operators);
-        number2Formula = new DragDropHelp(numberGridView, formulaGridView, this, mNumberList, mFormulaList, new DragDropIt() {
+        init();
+        number2Formula = new DragDropHelp(numberGridView, formulaGridView, this, mNumberList, mFormulaList, numberAdapter,formulaAdapter, new DragDropIt() {
             @Override
             public void handleSourceData(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
-                listData.remove(clickPos);
-                sourceAdapter.notifyDataSetChanged();
+                deleteSource(sourceAdapter,clickPos,listData);
             }
             @Override
             public void handleTargetData(GridView mGridView,float x,String str,TextViewAdapter targetAdapter, ArrayList<String> listData) {
-                int insertPos = Utils.getInsertPosition(mGridView, x);
-                Log.i("handleTargetData", "POS:"+insertPos);
-                listData.add(insertPos, str);
-                targetAdapter.notifyDataSetChanged();
-             }
+                insertIntoTarget(mGridView, x, str, targetAdapter, listData);
+            }
         });
      }
 
+
+    private void init() {
+        final String SOURCELIST_TAG = "listSource";
+        final String TARGETLIST_TAG = "listTarget";
+        final String TARGETLAYOUT_TAG = "targetLayout";
+
+       // listSource.setTag(SOURCELIST_TAG);
+        //listTarget.setTag(TARGETLIST_TAG);
+        numberAdapter = new TextViewAdapter(this, mNumberList);
+        formulaAdapter = new TextViewAdapter(this, mFormulaList);
+        operatorAdapter = new TextViewAdapter(this, mOperatorList);
+        numberGridView.setAdapter(numberAdapter);
+        operatorGridView.setAdapter(operatorAdapter);
+        formulaGridView.setAdapter(formulaAdapter);
+        //listSource.setAdapter(sourceAdapter);
+        //listSource.setOnItemLongClickListener(listSourceItemLongClickListener);
+       // droppedAdapter = new TextViewAdapter(activity, listTargetData);
+       // listTarget.setAdapter(droppedAdapter);
+       // listSource.setOnDragListener(myDragEventListener);
+       // listTarget.setOnDragListener(myDragEventListener);
+    }
+    private void deleteSource(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
+        listData.remove(clickPos);
+        sourceAdapter.notifyDataSetChanged();
+    }
+    private void insertIntoTarget(GridView mGridView,float x,String str,TextViewAdapter targetAdapter, ArrayList<String> listData) {
+        int insertPos = Utils.getInsertPosition(mGridView, x);
+        Log.i("handleTargetData", "POS:"+insertPos);
+        listData.add(insertPos, str);
+        targetAdapter.notifyDataSetChanged();
+    }
 }

@@ -57,32 +57,19 @@ public class DragDropHelp {
     private int clickPos;
 
     public DragDropHelp(GridView sourceView, GridView targetView, Activity activity,
-                        ArrayList<String> listSourceData, ArrayList<String> listTargetData, DragDropIt mDragDropIt) {
+                        ArrayList<String> listSourceData, ArrayList<String> listTargetData,
+                        TextViewAdapter sourceAdapter, TextViewAdapter droppedAdapter, DragDropIt mDragDropIt) {
         this.listTarget = targetView;
         this.listSource = sourceView;
         this.activity = activity;
         this.listSourceData = listSourceData;
         this.listTargetData = listTargetData;
         this.mDragDropIt = mDragDropIt;
-        init();
-    }
-
-    public void init() {
-        final String SOURCELIST_TAG = "listSource";
-        final String TARGETLIST_TAG = "listTarget";
-        final String TARGETLAYOUT_TAG = "targetLayout";
-
-        listSource.setTag(SOURCELIST_TAG);
-        listTarget.setTag(TARGETLIST_TAG);
-        sourceAdapter = new TextViewAdapter(activity, listSourceData);
-        listSource.setAdapter(sourceAdapter);
+        this.sourceAdapter = sourceAdapter;
+        this.droppedAdapter = droppedAdapter;
         listSource.setOnItemLongClickListener(listSourceItemLongClickListener);
-
-        droppedAdapter = new TextViewAdapter(activity, listTargetData);
-        listTarget.setAdapter(droppedAdapter);
         listSource.setOnDragListener(myDragEventListener);
         listTarget.setOnDragListener(myDragEventListener);
-
     }
 
     OnItemLongClickListener listSourceItemLongClickListener
