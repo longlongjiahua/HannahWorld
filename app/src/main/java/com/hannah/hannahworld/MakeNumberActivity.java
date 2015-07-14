@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
 
+import com.hannah.hannahworld.util.Utils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +41,9 @@ public class MakeNumberActivity extends Activity {
     public ArrayList<String> mNumberList = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
     public ArrayList<String> mOperatorList = new ArrayList<String>(Arrays.asList("+", "-", "*","/"));
     private DragDropHelp number2Formula;
+    private DragDropHelp formula2Number;
+    private DragDropHelp operator2Formula;
+    private DragDropHelp formula2Operator;
 
 
     @Override
@@ -49,7 +54,20 @@ public class MakeNumberActivity extends Activity {
         numberGridView = (GridView) findViewById(R.id.gv_numbers);
         formulaGridView = (GridView) findViewById(R.id.grid_view_formula);
         operatorGridView = (GridView) findViewById(R.id.gv_operators);
-        number2Formula = new DragDropHelp(numberGridView, formulaGridView, this, mNumberList, mFormulaList);
+        number2Formula = new DragDropHelp(numberGridView, formulaGridView, this, mNumberList, mFormulaList, new DragDropIt() {
+            @Override
+            public void handleSourceData(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
+                listData.remove(clickPos);
+                sourceAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void handleTargetData(GridView mGridView,float x,String str,TextViewAdapter targetAdapter, ArrayList<String> listData) {
+                int insertPos = Utils.getInsertPosition(mGridView, x);
+                Log.i("handleTargetData", "POS:"+insertPos);
+                listData.add(insertPos, str);
+                targetAdapter.notifyDataSetChanged();
+             }
+        });
      }
 
 }

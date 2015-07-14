@@ -37,28 +37,33 @@ if drop to the formula line, insert position dependent on the drop site
 if drop to number line, always add the number to the end(append)
 if drop to operator line, the operator keep same;
 the common part is to drag and drop
+
+using an interface DragDropIt as callback;
  */
+// this is a base class
 
 public class DragDropHelp {
 
-    LinearLayout targetLayout;
-    GridView listSource, listTarget;
-    MyDragEventListener myDragEventListener = new MyDragEventListener();
-    ArrayList<String> listSourceData;
-    ArrayList<String> listTargetData;
-    Activity activity;
-    List<String> droppedList;
-    TextViewAdapter droppedAdapter;
-    TextViewAdapter sourceAdapter;
-    private static final  String TAG = "DragDropHelp";
+    protected LinearLayout targetLayout;
+    protected GridView listSource, listTarget;
+    protected MyDragEventListener myDragEventListener = new MyDragEventListener();
+    protected ArrayList<String> listSourceData;
+    protected ArrayList<String> listTargetData;
+    protected Activity activity;
+    protected TextViewAdapter droppedAdapter;
+    protected TextViewAdapter sourceAdapter;
+    protected DragDropIt mDragDropIt;
+    private static final String TAG = "DragDropHelp";
+    private int clickPos;
 
     public DragDropHelp(GridView sourceView, GridView targetView, Activity activity,
-                        ArrayList<String> listSourceData, ArrayList<String> listTargetData) {
+                        ArrayList<String> listSourceData, ArrayList<String> listTargetData, DragDropIt mDragDropIt) {
         this.listTarget = targetView;
         this.listSource = sourceView;
         this.activity = activity;
         this.listSourceData = listSourceData;
         this.listTargetData = listTargetData;
+        this.mDragDropIt = mDragDropIt;
         init();
     }
 
@@ -76,7 +81,7 @@ public class DragDropHelp {
         droppedAdapter = new TextViewAdapter(activity, listTargetData);
         listTarget.setAdapter(droppedAdapter);
         listSource.setOnDragListener(myDragEventListener);
-       // targetLayout.setOnDragListener(myDragEventListener);
+        listTarget.setOnDragListener(myDragEventListener);
 
     }
 
@@ -88,8 +93,9 @@ public class DragDropHelp {
                                        int position, long id) {
 
             //Selected item is passed as item in dragData
-            Log.i(TAG,listSourceData.get(position)+"fromsource" );
-            ClipData.Item item = new ClipData.Item(listSourceData.get(position));
+            Log.i(TAG, listSourceData.get(position) + "fromsource");
+            clickPos = position;
+            ClipData.Item item = new ClipData.Item("" + listSourceData.get(position));
 
             String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
             ClipData dragData = new ClipData((CharSequence) v.getTag(),
@@ -136,16 +142,10 @@ public class DragDropHelp {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             final int action = event.getAction();
-
             switch (action) {
                 case DragEvent.ACTION_DRAG_STARTED:
-                    //All involved view accept ACTION_DRAG_STARTED for MIMETYPE_TEXT_PLAIN
-                    if (event.getClipDescription()
-                            .hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                        return true; //Accept
-                    } else {
-                        return false; //reject
-                    }
+
+                    return true;
                 case DragEvent.ACTION_DRAG_ENTERED:
                     return true;
                 case DragEvent.ACTION_DRAG_LOCATION:  //
@@ -155,15 +155,18 @@ public class DragDropHelp {
                     return true;
                 case DragEvent.ACTION_DROP:
                     // Gets the item containing the dragged data
+                    Log.i(TAG, "dropxxx");
                     ClipData.Item item = event.getClipData().getItemAt(0);
                     //If apply only if drop on buttonTarget
+                    float x = event.getX();
                     if (v == listTarget) {
 
                         String droppedItem = item.getText().toString();
-                        Log.i(TAG, droppedItem+"xxx");
-                        //Here a callback
-                        droppedList.add(droppedItem);
-                        droppedAdapter.notifyDataSetChanged();
+                        Log.i(TAG, droppedItem + "xxx");
+                        mDragDropIt.handleSourceData(sourceAdapter, clickPos, listSourceData);
+                        mDragDropIt.handleTargetData(listTarget, x, droppedItem,droppedAdapter, listTargetData);
+                        //listTargetData.add(droppedItem);
+                        //droppedAdapter.notifyDataSetChanged();
                         return true;
                     } else {
                         return false;
@@ -178,6 +181,4 @@ public class DragDropHelp {
             }
         }
     }
-
-
 }
