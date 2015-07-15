@@ -68,6 +68,35 @@ public class MakeNumberActivity extends Activity {
                 insertIntoTarget(mGridView, x, str, targetAdapter, listData);
             }
         });
+        formula2Number = new DragDropHelp(formulaGridView,numberGridView, this, mFormulaList,mNumberList, formulaAdapter, numberAdapter, new DragDropIt() {
+            @Override
+            public void handleSourceData(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
+                deleteSource(sourceAdapter,clickPos,listData);
+            }
+            @Override
+            public void handleTargetData(GridView mGridView,float x,String str,TextViewAdapter targetAdapter, ArrayList<String> listData) {
+                insertIntoTarget(mGridView, x, str, targetAdapter, listData);
+            }
+        });
+        formula2Operator = new DragDropHelp(formulaGridView,operatorGridView, this, mFormulaList,mOperatorList, formulaAdapter,operatorAdapter, new DragDropIt() {
+            @Override
+            public void handleSourceData(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
+                deleteSource(sourceAdapter,clickPos,listData);
+            }
+            @Override
+            public void handleTargetData(GridView mGridView,float x,String str,TextViewAdapter targetAdapter, ArrayList<String> listData) {
+            }
+        });
+        operator2Formula = new DragDropHelp(operatorGridView,formulaGridView, this,mOperatorList, mFormulaList,operatorAdapter, formulaAdapter, new DragDropIt() {
+            @Override
+            public void handleSourceData(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
+
+            }
+            @Override
+            public void handleTargetData(GridView mGridView,float x,String str,TextViewAdapter targetAdapter, ArrayList<String> listData) {
+                insertIntoTarget(mGridView, x, str, targetAdapter, listData);
+            }
+        });
      }
 
 
@@ -75,21 +104,12 @@ public class MakeNumberActivity extends Activity {
         final String SOURCELIST_TAG = "listSource";
         final String TARGETLIST_TAG = "listTarget";
         final String TARGETLAYOUT_TAG = "targetLayout";
-
-       // listSource.setTag(SOURCELIST_TAG);
-        //listTarget.setTag(TARGETLIST_TAG);
         numberAdapter = new TextViewAdapter(this, mNumberList);
         formulaAdapter = new TextViewAdapter(this, mFormulaList);
         operatorAdapter = new TextViewAdapter(this, mOperatorList);
         numberGridView.setAdapter(numberAdapter);
         operatorGridView.setAdapter(operatorAdapter);
         formulaGridView.setAdapter(formulaAdapter);
-        //listSource.setAdapter(sourceAdapter);
-        //listSource.setOnItemLongClickListener(listSourceItemLongClickListener);
-       // droppedAdapter = new TextViewAdapter(activity, listTargetData);
-       // listTarget.setAdapter(droppedAdapter);
-       // listSource.setOnDragListener(myDragEventListener);
-       // listTarget.setOnDragListener(myDragEventListener);
     }
     private void deleteSource(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
         listData.remove(clickPos);

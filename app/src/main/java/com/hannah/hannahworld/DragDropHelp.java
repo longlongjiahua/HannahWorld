@@ -46,7 +46,7 @@ public class DragDropHelp {
 
     protected LinearLayout targetLayout;
     protected GridView listSource, listTarget;
-    protected MyDragEventListener myDragEventListener = new MyDragEventListener();
+    public MyDragEventListener myDragEventListener = new MyDragEventListener();
     protected ArrayList<String> listSourceData;
     protected ArrayList<String> listTargetData;
     protected Activity activity;
@@ -68,11 +68,10 @@ public class DragDropHelp {
         this.sourceAdapter = sourceAdapter;
         this.droppedAdapter = droppedAdapter;
         listSource.setOnItemLongClickListener(listSourceItemLongClickListener);
-        listSource.setOnDragListener(myDragEventListener);
-        listTarget.setOnDragListener(myDragEventListener);
+
     }
 
-    OnItemLongClickListener listSourceItemLongClickListener
+     public  OnItemLongClickListener listSourceItemLongClickListener
             = new OnItemLongClickListener() {
 
         @Override
@@ -80,6 +79,8 @@ public class DragDropHelp {
                                        int position, long id) {
 
             //Selected item is passed as item in dragData
+            listSource.setOnDragListener(myDragEventListener);
+            listTarget.setOnDragListener(myDragEventListener);
             Log.i(TAG, listSourceData.get(position) + "fromsource");
             clickPos = position;
             ClipData.Item item = new ClipData.Item("" + listSourceData.get(position));
@@ -94,8 +95,9 @@ public class DragDropHelp {
                     myShadow,  //View.DragShadowBuilder
                     listSourceData.get(position),  //Object myLocalState
                     0);    //flags
-
+            //return true will be prevent click event to be continue. It will be perform only OnItemLongClickListener.
             return true;
+
         }
     };
 
