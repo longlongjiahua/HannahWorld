@@ -59,7 +59,6 @@ public class FormulaConvertImpl  {
             }
             opStack.pop();
         }
-        //System.out.println(outStr);
     }
 
     public String getOutput() {
@@ -99,11 +98,11 @@ public class FormulaConvertImpl  {
         }
     }
     public boolean valideInputForm(){
-
+        //TODO
         return true;
     }
 
-    public void calResult(){
+    public double calResult(){
         int length = outStr.length();
         Stack<Double> numStack= new Stack<Double>();
         for(int i=0; i<length; i++){
@@ -132,12 +131,20 @@ public class FormulaConvertImpl  {
             }
         }
         double outResults = numStack.pop();
-        System.out.println("result: " + outResults);
+        return outResults;
+        //System.out.println("result: " + outResults);
     }
 
-    public  boolean almostEqual(double a){
+    public  boolean almostEqual(double a, int c){
         double b = (double) ((int) (a+0.5));
-        return Math.abs(a-b)<eps;
+        if(Math.abs(a-b)<eps){
+            int around = (int) (a+0.5);
+            if(around ==c){
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
 /*

@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <Button android:id="@+id/bt_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Answer" />
+
     <LinearLayout
         android:id="@+id/toplinear"
         android:layout_width="match_parent"

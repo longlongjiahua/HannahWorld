@@ -7,7 +7,7 @@ import java.util.List;
  * give n number, generate all possible formulas with four operators" +. - * /;
  * two step: first generate full binary tree( this is the catalan number) 1/(n+1) * C 2n n;
  * then add four operators
- * for example, if input is for numbers, then there are 5 * 4^3 = 320 formulas
+ * for example, if the input are  numbers, then there are 5 * 4^3 = 320 formulas
  */
 public class FullTree {
     //private List<String> numbers;
@@ -35,19 +35,5 @@ public class FullTree {
             return tList;
         }
     }
-    public static void main(String args[]){
-        FullTree fullTree = new FullTree();
-        List<String> t1 = new ArrayList<String>(Arrays.asList("1","2","3","4"));
-        //System.out.println(t1.toString());
-        for(String s :  fullTree.makeTree(t1)){
-            System.out.println(s);
-            FormulaConvertImpl t = new FormulaConvertImpl();
-            t.setString(s);
-
-            String out = t.getOutput();
-            System.out.println(out);
-            t.calResult();
-
-        }
-    }
+   
 }

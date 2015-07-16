@@ -1,35 +1,21 @@
 package com.hannah.hannahworld;
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipDescription;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.DragEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnDragListener;
-import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.util.Log;
 
+import com.hannah.hannahworld.makenumber.QuesionAndAnswerUtils;
 import com.hannah.hannahworld.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class MakeNumberActivity extends Activity {
+public class MakeNumberActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "MakeNumberActivity";
 
     private TextView myCard;
@@ -38,6 +24,7 @@ public class MakeNumberActivity extends Activity {
     public GridView formulaGridView;
     public GridView operatorGridView;
     public ArrayList<String> mFormulaList = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
+    private  ArrayList<String> questionNumbers;
     public ArrayList<String> mNumberList = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
     public ArrayList<String> mOperatorList = new ArrayList<String>(Arrays.asList("+", "-", "*","/"));
     public TextViewAdapter numberAdapter;
@@ -47,6 +34,7 @@ public class MakeNumberActivity extends Activity {
     private DragDropHelp formula2Number;
     private DragDropHelp operator2Formula;
     private DragDropHelp formula2Operator;
+    private Button btAnswer;
 
 
     @Override
@@ -57,6 +45,11 @@ public class MakeNumberActivity extends Activity {
         numberGridView = (GridView) findViewById(R.id.gv_numbers);
         formulaGridView = (GridView) findViewById(R.id.grid_view_formula);
         operatorGridView = (GridView) findViewById(R.id.gv_operators);
+        btAnswer = (Button) findViewById(R.id.bt_answer);
+        btAnswer.setOnClickListener(this);
+        questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.fourRandomInt();
+        mNumberList = new ArrayList<String> (questionNumbers);
+
         init();
         number2Formula = new DragDropHelp(numberGridView, formulaGridView, this, mNumberList, mFormulaList, numberAdapter,formulaAdapter, new DragDropIt() {
             @Override
@@ -110,6 +103,26 @@ public class MakeNumberActivity extends Activity {
         numberGridView.setAdapter(numberAdapter);
         operatorGridView.setAdapter(operatorAdapter);
         formulaGridView.setAdapter(formulaAdapter);
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_answer:
+                String answer = QuesionAndAnswerUtils.giveAnswer(questionNumbers);
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create(); //Read Update
+                alertDialog.setTitle("Answer");
+                alertDialog.setMessage(answer);
+
+                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // here you can add functions
+                    }
+                });
+
+                alertDialog.show();  //<-- See This!
+                //Toast.makeText(this, answer, Toast.LENGTH_LONG ).show();
+                break;
+        }
     }
     private void deleteSource(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
         listData.remove(clickPos);
