@@ -10,9 +10,9 @@
         android:text="Answer" />
 
     <LinearLayout
-        android:id="@+id/toplinear"
+        android:id="@+id/lv_number"
         android:layout_width="match_parent"
-        android:layout_height="132dp"
+        android:layout_height="45dp"
         android:layout_weight="1"
         android:layout_marginBottom="10dp">
         <GridView
@@ -29,9 +29,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/bottomlinear"
+        android:id="@+id/lv_formula"
         android:layout_width="fill_parent"
-        android:layout_height="170dp"
+        android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_weight="1">
@@ -47,13 +47,13 @@
         </GridView>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/opertors"
+        android:id="@+id/lv_operator"
         android:layout_width="fill_parent"
         android:layout_weight="1"
-        android:layout_height="79dp">
+        android:layout_height="50dp">
         <GridView
             android:id="@+id/gv_operators"
-            android:numColumns="4"
+            android:numColumns="6"
             android:gravity="center"
             android:columnWidth="30dp"
             android:layout_marginTop="5dp"

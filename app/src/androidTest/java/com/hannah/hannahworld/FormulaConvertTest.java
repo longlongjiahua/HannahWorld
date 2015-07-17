@@ -1,7 +1,7 @@
 package com.hannah.hannahworld;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
-import com.hannah.hannahworld.makenumber.FormulaConvertImpl;
+import com.hannah.hannahworld.makenumberalgorithm.FormulaConvertImpl;
 
 
 public class FormulaConvertTest extends AndroidTestCase {

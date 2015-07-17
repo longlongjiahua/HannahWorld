@@ -1,4 +1,4 @@
-package com.hannah.hannahworld.makenumber;
+package com.hannah.hannahworld.makenumberalgorithm;
 
 
 interface FormulaConvert {

@@ -65,6 +65,7 @@
         </activity>
         <activity
             android:name=".MakeNumberActivity"
+            android:screenOrientation="landscape"
             android:label="Make Number">
         </activity>
         <activity

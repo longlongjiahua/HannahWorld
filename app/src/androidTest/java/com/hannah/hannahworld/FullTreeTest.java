@@ -3,8 +3,8 @@ package com.hannah.hannahworld;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import com.hannah.hannahworld.makenumber.FormulaConvertImpl;
-import com.hannah.hannahworld.makenumber.FullTree;
+import com.hannah.hannahworld.makenumberalgorithm.FormulaConvertImpl;
+import com.hannah.hannahworld.makenumberalgorithm.FullTree;
 
 import java.util.ArrayList;
 import java.util.Arrays;

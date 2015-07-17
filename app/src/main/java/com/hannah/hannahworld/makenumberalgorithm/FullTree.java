@@ -1,4 +1,4 @@
-package com.hannah.hannahworld.makenumber;
+package com.hannah.hannahworld.makenumberalgorithm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,5 +35,5 @@ public class FullTree {
             return tList;
         }
     }
-   
+
 }
