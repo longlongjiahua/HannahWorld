@@ -118,7 +118,7 @@ public class FormulaConvertImpl  {
                         numStack.push(a+b);
                         break;
                     case '-':
-                        numStack.push(a-b);
+                        numStack.push(b-a);
                         break;
                     case '*':
                         numStack.push(a*b);
