@@ -39,6 +39,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     private DragDropHelp formula2NumberOrOperator;
     private DragDropHelp operator2Formula;
     private Button btAnswer;
+    private Button btNextQuestion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,10 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_makenumberactivity);
 
         btAnswer = (Button) findViewById(R.id.bt_answer);
+        btNextQuestion = (Button) findViewById(R.id.bt_submit);
         btAnswer.setOnClickListener(this);
-        questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.fourRandomInt();
+        btNextQuestion.setOnClickListener(this);
+        questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provide24GameQuestion();
         mNumberList = new ArrayList<String> (questionNumbers);
         init();
         number2Formula = new DragDropHelp(numberGridView, formulaGridView,lvFormula, this, mNumberList, mFormulaList, numberAdapter,formulaAdapter, new DragDropIt() {
@@ -108,18 +111,49 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                 AlertDialog alertDialog = new AlertDialog.Builder(this).create(); //Read Update
                 alertDialog.setTitle("Answer");
                 alertDialog.setMessage(answer);
-
                 alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //  add functions
                     }
                 });
-
                 alertDialog.show();
                 //Toast.makeText(this, answer, Toast.LENGTH_LONG ).show();
                 break;
+            case R.id.bt_submit:
+                if(btNextQuestion.getText().toString().equals("Submit")) {
+                    if (judgeAnswer()) {
+
+                    } else {
+                        String correctString = QuesionAndAnswerUtils.giveAnswer(questionNumbers);
+                        mFormulaList.clear();
+                       for(String str:Arrays.asList(correctString.split("(?!^)"))){
+                           mFormulaList.add(str);
+                       }
+                    }
+                      formulaAdapter.notifyDataSetChanged();
+                    btNextQuestion.setText("Next");
+                }
+                else {
+                    mFormulaList.clear();
+                    mNumberList.clear();
+                    for(String str: QuesionAndAnswerUtils.provide24GameQuestion())
+                            mNumberList.add(str);
+                    btNextQuestion .setText("Submit");
+                    numberAdapter.notifyDataSetChanged();
+                    formulaAdapter.notifyDataSetChanged();
+                }
         }
     }
+    public boolean judgeAnswer(){
+           String formulaString="";
+            int length = mFormulaList.size();
+            for(int i=0; i<length; i++){
+                formulaString+=mFormulaList.get(i);
+            }
+            return QuesionAndAnswerUtils.isCorrectAnswer(formulaString);
+
+    }
+
     private void deleteSource(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
         listData.remove(clickPos);
         sourceAdapter.notifyDataSetChanged();

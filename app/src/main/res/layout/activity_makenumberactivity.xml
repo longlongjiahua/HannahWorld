@@ -35,7 +35,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_weight="1">
-        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        <GridView
             android:layout_gravity="center"
             android:id="@+id/grid_view_formula"
             android:numColumns="11"
@@ -47,10 +47,15 @@
         </GridView>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/lv_operator"
         android:layout_width="fill_parent"
         android:layout_weight="1"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/lv_operator"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="50dp">
         <GridView
             android:id="@+id/gv_operators"
             android:numColumns="6"
@@ -61,7 +66,16 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
         </GridView>
-
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="50dp">
+                <Button android:id="@+id/bt_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Submit" />
+            </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
