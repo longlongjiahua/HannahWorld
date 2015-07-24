@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -32,12 +32,10 @@ requirement analysis
 four way drop: number-><-formula
                operator-><-formula
  the fifth way drop: switch strings within formula
-
 if drop to the formula line, insert position dependent on the drop site
 if drop to number line, always add the number to the end(append)
 if drop to operator line, the operator keep same;
 the common part is to drag and drop
-
 using an interface DragDropIt as callback;
  */
 // this is a base class
@@ -71,18 +69,16 @@ public class DragDropHelp {
         this.mDragDropIt = mDragDropIt;
         this.sourceAdapter = sourceAdapter;
         this.droppedAdapter = droppedAdapter;
-        sourceGridView.setOnItemClickListener(sourceGridViewItemClickListener);
-
+        sourceGridView.setOnItemLongClickListener(sourceGridViewItemLongClickListener);
 
     }
 
-    public OnItemClickListener sourceGridViewItemClickListener
-            = new OnItemClickListener() {
+    public OnItemLongClickListener sourceGridViewItemLongClickListener
+            = new OnItemLongClickListener() {
 
         @Override
-        public void onItemClick(AdapterView<?> l, View v,
-                                       int position,  long id) {
-            Log.i(TAG, sourceGridViewData.get(position));
+        public boolean onItemLongClick(AdapterView<?> l, View v,
+                                       int position, long id) {
             ClipData.Item item = new ClipData.Item("" + sourceGridViewData.get(position));
             clickPos = position;
             String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
@@ -108,8 +104,8 @@ public class DragDropHelp {
                     myShadow,  //View.DragShadowBuilder
                     sourceGridViewData.get(position),  //Object myLocalState
                     0);    //flags
-            //return true will be prevent click event to be continue. It will be perform only OnItemClickListener.
-
+            //return true will be prevent click event to be continue. It will be perform only OnItemLongClickListener.
+            return true;
         }
     };
 

@@ -17,6 +17,8 @@ public class FormulaParser {
     private boolean validFormula = true;
     private String formulaWithoutExtraParentheses;
     private int currPos;
+    private static final String TAG ="FormulaParser";
+    public static final String NOTVALID = TAG + ".not valid";
 
     public FormulaParser(String input) {
         this.input = input + EOF; // mark the end
@@ -39,7 +41,7 @@ public class FormulaParser {
             return formulaWithoutExtraParentheses;
         }
         else {
-            return "Not Valid";
+            return NOTVALID;
         }
     }
  
@@ -57,7 +59,7 @@ public class FormulaParser {
             rightArg = addParentheses(rightArg);
         }
 
-        return new Result(leftArg.getText() + " " + operator + " " + rightArg.getText(), operator);
+        return new Result(leftArg.getText()  + operator  + rightArg.getText(), operator);
     }
 
     private Result term() {
@@ -76,7 +78,7 @@ public class FormulaParser {
         if(rightArg.getOp() == '+' || rightArg.getOp() == '-' || (operator == '/' && (rightArg.getOp() == '/' || rightArg.getOp() == '*'))) {
             rightArg = addParentheses(rightArg);
         }
-        return new Result(leftArg.getText() + " " + operator + " " + rightArg.getText(), operator);
+        return new Result(leftArg.getText() + operator +  rightArg.getText(), operator);
     }
    // factor → ( expr ) | number
     private Result factor()  {

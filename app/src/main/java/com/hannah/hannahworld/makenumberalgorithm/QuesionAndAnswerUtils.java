@@ -1,5 +1,6 @@
 package com.hannah.hannahworld.makenumberalgorithm;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -33,7 +34,10 @@ public class QuesionAndAnswerUtils {
             t.setString(s);
             double outputCalculate = t.calResult();
             if (t.almostEqual(outputCalculate, 24)) {
-                return s;
+                FormulaParser parser = new FormulaParser(s);
+                parser.parse();
+                return parser.getFormulaWithoutExtraParentheses();
+
             }
 
         }
