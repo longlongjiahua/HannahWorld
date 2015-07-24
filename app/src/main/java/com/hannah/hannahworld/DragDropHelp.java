@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -71,16 +71,18 @@ public class DragDropHelp {
         this.mDragDropIt = mDragDropIt;
         this.sourceAdapter = sourceAdapter;
         this.droppedAdapter = droppedAdapter;
-        sourceGridView.setOnItemLongClickListener(sourceGridViewItemLongClickListener);
+        sourceGridView.setOnItemClickListener(sourceGridViewItemClickListener);
+
 
     }
 
-    public OnItemLongClickListener sourceGridViewItemLongClickListener
-            = new OnItemLongClickListener() {
+    public OnItemClickListener sourceGridViewItemClickListener
+            = new OnItemClickListener() {
 
         @Override
-        public boolean onItemLongClick(AdapterView<?> l, View v,
-                                       int position, long id) {
+        public void onItemClick(AdapterView<?> l, View v,
+                                       int position,  long id) {
+            Log.i(TAG, sourceGridViewData.get(position));
             ClipData.Item item = new ClipData.Item("" + sourceGridViewData.get(position));
             clickPos = position;
             String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
@@ -106,8 +108,8 @@ public class DragDropHelp {
                     myShadow,  //View.DragShadowBuilder
                     sourceGridViewData.get(position),  //Object myLocalState
                     0);    //flags
-            //return true will be prevent click event to be continue. It will be perform only OnItemLongClickListener.
-            return true;
+            //return true will be prevent click event to be continue. It will be perform only OnItemClickListener.
+
         }
     };
 

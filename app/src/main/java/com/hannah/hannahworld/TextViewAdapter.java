@@ -41,9 +41,18 @@ public class TextViewAdapter extends BaseAdapter {
         } else {
             textview = (Button) convertView;
         }
-        textview.setText(texts.get(position));
-        textview.setTextColor(Color.GREEN);
+        String str = texts.get(position);
+        textview.setText(str);
+        textview.setTextColor(setColor(str));
         textview.setId(position);
         return textview;
+    }
+    private int setColor(String str){
+        if("+-*/)(".contains(str)){
+            return Color.BLUE;
+        }
+        else {
+            return Color.RED;
+        }
     }
 }
