@@ -28,8 +28,9 @@ public class Utils {
         }
         int pos = 0;
         for (int i = 1; i < lastPosition; i++) {
+            View last = gridView.getChildAt(i-1 - firstPosition);
             View curr = gridView.getChildAt(i - firstPosition);
-            float left = curr.getLeft();
+            float left = last.getLeft();
             float right = curr.getRight();
             if (left < insert && right > insert) {
                 Log.i("getInsertPosition", "dropplace" + i + ":" + left + " " + right);

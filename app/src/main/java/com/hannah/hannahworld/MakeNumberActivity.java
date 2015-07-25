@@ -69,6 +69,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         btNextQuestion.setOnClickListener(this);
         questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provide24GameQuestion();
         mNumberList = new ArrayList<String> (questionNumbers);
+        mFormulaList = new ArrayList<String>(Arrays.asList(" ", " ", " ", " "," "));
         init();
         number2Formula = new DragDropHelp(numberGridView, formulaGridView,lvFormula, this, mNumberList, mFormulaList, numberAdapter,formulaAdapter, new DragDropIt() {
             @Override
@@ -178,7 +179,16 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     private void insertIntoTarget(GridView mGridView,float x,String str,TextViewAdapter targetAdapter, List<String> listData) {
         int insertPos = Utils.getInsertPosition(mGridView, x, listData);
         Log.i("handleTargetData", "POS:"+insertPos);
-        listData.add(insertPos, str);
+        if(listData.size()>insertPos && listData.get(insertPos).equals(" ")){
+            listData.set(insertPos, str);
+        }
+        else {
+            listData.add(insertPos, str);
+        }
+        if(listData.size()>7 && listData.contains(" ")){
+            while(listData.remove(" ")) {}
+           }
+        formulaGridView.setNumColumns(listData.size()+1);
         targetAdapter.notifyDataSetChanged();
     }
 
