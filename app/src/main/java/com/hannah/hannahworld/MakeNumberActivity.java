@@ -55,11 +55,13 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     private boolean mServiceBound =false;
     private BroadcastTimeCountService mService;
     private boolean mBound = false;
+    private TextView tvCheckAnswer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_makenumberactivity);
+        tvCheckAnswer = (TextView) findViewById(R.id.tv_judge_answer);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
         tvTimeCountDown = (TextView) findViewById(R.id.tv_time_countdown);
         spTimeResource = (Spinner) findViewById(R.id.sp_timesource);
@@ -138,9 +140,12 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
 
                   }
                 else if(btNextQuestion.getText().toString().equals("Submit")) {
+                      numberGridView.setVisibility(View.GONE);
+                      tvCheckAnswer.setVisibility(View.VISIBLE);
                     if (judgeAnswer()) {
-
+                        tvCheckAnswer.setText("Correct!");
                     } else {
+                        tvCheckAnswer.setText("Incorrect!");
                         String correctString = QuesionAndAnswerUtils.giveAnswer(questionNumbers);
                         mFormulaList.clear();
                        for(String str:Arrays.asList(correctString.split("(?!^)"))){
@@ -152,6 +157,8 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                 }
                 else {
                       if (btNextQuestion.getText().toString().equals("Next")) {
+                          tvCheckAnswer.setVisibility(View.GONE);
+                          numberGridView.setVisibility(View.VISIBLE);
                           mFormulaList.clear();
                           mNumberList.clear();
                           questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provide24GameQuestion();

@@ -16,7 +16,7 @@ import android.widget.ImageView;
 
 public class SplashScreenActivity extends Activity {
 
-	public static final long TIME = 1000;
+	public static final long TIME = 100;
 	private static final String TAG = "SplashScreenActivity";
 	  private ImageView mImageView;
 
@@ -39,7 +39,7 @@ public class SplashScreenActivity extends Activity {
     }
     Runnable fadeIn = new Runnable() {
         public void run() {
-            mImageView.animate().setDuration(1*1000)
+            mImageView.animate().setDuration(1*100)
                     .setInterpolator(new LinearInterpolator()).alpha(1.0f);
             //.withEndAction(rotate);
         }

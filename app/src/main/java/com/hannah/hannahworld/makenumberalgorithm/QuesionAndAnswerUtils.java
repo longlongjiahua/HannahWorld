@@ -11,6 +11,10 @@ import java.util.Random;
 public class QuesionAndAnswerUtils {
 
     public static boolean isCorrectAnswer(String str) {
+        FormulaParser parser = new FormulaParser(str);
+        parser.parse();
+        if(!parser.isValidFormula())
+            return false;
         FormulaConvert t = new FormulaConvert();
         t.setString(str);
         String out = t.getOutput();

@@ -14,9 +14,10 @@
                 android:id="@+id/tv_your_score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:textSize="15dp"
                 android:text="Score:"
+                android:layout_gravity="center"
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
@@ -33,7 +34,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Time"
-                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_weight="1.5"
                 android:textSize="15dp"
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"
@@ -57,6 +59,15 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
         </GridView>
+        <TextView
+            android:id="@+id/tv_judge_answer"
+            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
     </LinearLayout>
 
@@ -74,7 +85,7 @@
             android:gravity="center"
             android:columnWidth="30dp"
             android:stretchMode="columnWidth"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent" >
         </GridView>
     </LinearLayout>
