@@ -27,7 +27,7 @@ public class Utils {
             return list.size();
         }
         int pos = 0;
-        for (int i = 1; i < lastPosition; i++) {
+        for (int i = 1; i <=lastPosition; i++) {
             View last = gridView.getChildAt(i-1 - firstPosition);
             View curr = gridView.getChildAt(i - firstPosition);
             float left = last.getLeft();
@@ -41,4 +41,30 @@ public class Utils {
         }
         return pos;
     }
+    public static int getTouchPosition(GridView gridView, float touchX, float touchY, List<String> list) {
+        int firstPosition = gridView.getFirstVisiblePosition();
+        int lastPosition = gridView.getLastVisiblePosition();
+        float leftMost = gridView.getChildAt(firstPosition).getLeft();
+        float rightMost = gridView.getChildAt(lastPosition).getRight();
+        float top = gridView.getChildAt(firstPosition).getTop();
+        float bottom  = gridView.getChildAt(firstPosition).getBottom();
+        Log.i("getTouchPosition", "place:" + touchX + ":" +touchY +":" +top + " " + bottom+":" + leftMost);
+        if(touchY >bottom || touchY <top)
+            return -1;
+        if(touchX <leftMost || touchX >rightMost)
+            return -1;
+        int pos = -1;
+        for (int i = 0; i <= lastPosition; i++) {
+            View curr = gridView.getChildAt(i - firstPosition);
+            float left = curr.getLeft();
+            float right = curr.getRight();
+            if (touchX >left && touchX <right){
+                return i;
+            }
+            //Log.i(TAG, "place" + i + ":" + left + " " + right);
+            //Toast.makeText(getApplication(), "place" + left + right, Toast.LENGTH_LONG);
+        }
+        return pos;
+    }
+
 }

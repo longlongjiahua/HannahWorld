@@ -71,6 +71,22 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         mNumberList = new ArrayList<String> (questionNumbers);
         mFormulaList = new ArrayList<String>(Arrays.asList(" ", " ", " ", " "," "));
         init();
+        formulaGridView.setOnTouchListener(new TouchSwipeListen(this, new OnSwipeDecteted() {
+            @Override
+            public void onSwipeDecteted(float distance, float downPosX, float downPosY) {
+                int pos = Utils.getTouchPosition(formulaGridView, downPosX, downPosY, mFormulaList);
+                Log.i(TAG, "pos:" +pos);
+                if(pos<0)
+                    return;
+                String str = mFormulaList.get(pos);
+                char mChar =str.charAt(0);
+                deleteSource(formulaAdapter, pos, mFormulaList);
+                if(distance < 0.0 && mChar>='0' && mChar<='9'){
+                     mNumberList.add(str);
+                     numberAdapter.notifyDataSetChanged();
+                }
+            }
+        }));
         number2Formula = new DragDropHelp(numberGridView, formulaGridView,lvFormula, this, mNumberList, mFormulaList, numberAdapter,formulaAdapter, new DragDropIt() {
             @Override
             public void handleSourceData(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
@@ -81,19 +97,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                 insertIntoTarget(mGridView, x, str, targetAdapter, listData);
             }
         });
-        formula2NumberOrOperator = new DragDropHelp(formulaGridView,numberGridView,lvNumber, this, mFormulaList,mNumberList, formulaAdapter, numberAdapter, new DragDropIt() {
-            @Override
-            public void handleSourceData(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
-                deleteSource(sourceAdapter,clickPos,listData);
-            }
-            @Override
-            public void handleTargetData(GridView mGridView,float x,String str,TextViewAdapter targetAdapter, ArrayList<String> listData) {
-                if(listData==null || listData.size()<4 ||! listData.get(0).equals("+")) {
-                    insertIntoTarget(mGridView, x, str, targetAdapter, listData);
-                }
-            }
-        });
-        operator2Formula = new DragDropHelp(operatorGridView,formulaGridView,lvFormula, this, mOperatorList, mFormulaList,operatorAdapter, formulaAdapter, new DragDropIt() {
+         operator2Formula = new DragDropHelp(operatorGridView,formulaGridView,lvFormula, this, mOperatorList, mFormulaList,operatorAdapter, formulaAdapter, new DragDropIt() {
             @Override
             public void handleSourceData(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){
 
