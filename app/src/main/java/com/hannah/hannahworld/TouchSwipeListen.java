@@ -51,32 +51,20 @@ public class TouchSwipeListen implements View.OnTouchListener {
 
                 float deltaX = downX - upX;
                 float deltaY = downY - upY;
-                if (Math.abs(deltaX) > MIN_DISTANCE) {
-                    if (deltaX < 0) {
-                       Log.i(TAG, "Swipe Left to Right");
-                        mTouchSwipeListen = Action.LR;
 
-                        return true;
-                    }
-                    if (deltaX > 0) {
-                       Log.i(TAG, "Swipe Right to Left");
-                        mTouchSwipeListen = Action.RL;
-                        return true;
-                    }
-                } else
-                    if (Math.abs(deltaY) > MIN_DISTANCE) {
+                    if (Math.abs(deltaY) > MIN_DISTANCE && mTouchSwipeListen==Action.None) {
                                 callback.onSwipeDecteted(deltaY, downX, downY);
                         // top or down
                         if (deltaY < 0) {
                            Log.i(TAG, "Swipe Top to Bottom");
                             mTouchSwipeListen = Action.TB;
-                            return false;
+                            return true;
                         }
                         if (deltaY > 0) {
                            Log.i(TAG, "Swipe Bottom to Top");
                             mTouchSwipeListen = Action.BT;
 
-                            return false;
+                            return true;
                         }
                     }
                 return true;

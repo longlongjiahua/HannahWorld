@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.hannah.hannahworld.TextViewAdapter;
+import com.hannah.hannahworld.util.Utils;
 /*
 requirement analysis
 four way drop: number-><-formula
@@ -56,6 +58,8 @@ public class DragDropHelp {
     private static final String TAG = "DragDropHelp";
     private int clickPos;
     private final static String operators = ")(+-*/";
+    private float downX, downY, upX, upY;
+    //private Action mTouchSwipeListen = Action.None;
 
     public DragDropHelp(GridView sourceView,GridView targetGridView, LinearLayout targetView, Activity activity,
                         ArrayList<String> sourceGridViewData, ArrayList<String> targetViewData,
@@ -69,44 +73,54 @@ public class DragDropHelp {
         this.mDragDropIt = mDragDropIt;
         this.sourceAdapter = sourceAdapter;
         this.droppedAdapter = droppedAdapter;
-        sourceGridView.setOnItemLongClickListener(sourceGridViewItemLongClickListener);
+        sourceGridView.setOnTouchListener(sourceGridViewItemLongClickListener);
 
     }
 
-    public OnItemLongClickListener sourceGridViewItemLongClickListener
-            = new OnItemLongClickListener() {
+    public View.OnTouchListener sourceGridViewItemLongClickListener
+            = new View.OnTouchListener() {
 
         @Override
-        public boolean onItemLongClick(AdapterView<?> l, View v,
-                                       int position, long id) {
-            ClipData.Item item = new ClipData.Item("" + sourceGridViewData.get(position));
-            clickPos = position;
-            String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-            ClipData dragData = new ClipData((CharSequence) v.getTag(),
-                    clipDescription,
-                    item);
-            DragShadowBuilder myShadow = new MyDragShadowBuilder(v);
-            if (sourceGridView.getId() == R.id.grid_view_formula)
-                if (operators.contains(sourceGridViewData.get(position))) {
-                    targetView = activity.lvOperator;
-                    targetViewData = activity.mOperatorList;
-                    droppedAdapter = activity.formulaAdapter;
-                } else {
-                    targetView = activity.lvNumber;
-                    targetViewData = activity.mNumberList;
-                    droppedAdapter = activity.numberAdapter;
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    downX = event.getX();
+                    downY = event.getY();
+                    int position = Utils.getTouchPosition(sourceGridView, downX, downY, sourceGridViewData);
+                    //return false; // allow other events like Click to be processed
+                    ClipData.Item item = new ClipData.Item("" + sourceGridViewData.get(position));
+                    clickPos = position;
+                    String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
+                    ClipData dragData = new ClipData((CharSequence) v.getTag(),
+                            clipDescription,
+                            item);
+                    DragShadowBuilder myShadow = new MyDragShadowBuilder(sourceAdapter.getView(position, null, null));
+                    if (sourceGridView.getId() == R.id.grid_view_formula)
+                        if (operators.contains(sourceGridViewData.get(position))) {
+                            targetView = activity.lvOperator;
+                            targetViewData = activity.mOperatorList;
+                            droppedAdapter = activity.formulaAdapter;
+                        } else {
+                            targetView = activity.lvNumber;
+                            targetViewData = activity.mNumberList;
+                            droppedAdapter = activity.numberAdapter;
+                        }
+                    //Selected item is passed as item in dragData
+                    sourceGridView.setOnDragListener(myDragEventListener);
+                    targetView.setOnDragListener(myDragEventListener);
+                    Log.i(TAG, sourceGridViewData.get(position) + "fromsource");
+                    v.startDrag(dragData, //ClipData
+                            myShadow,  //View.DragShadowBuilder
+                            sourceGridViewData.get(position),  //Object myLocalState
+                            0);    //flags
+                    //return true will be prevent click event to be continue. It will be perform only OnItemLongClickListener.
+                    return true;
                 }
-            //Selected item is passed as item in dragData
-            sourceGridView.setOnDragListener(myDragEventListener);
-            targetView.setOnDragListener(myDragEventListener);
-            Log.i(TAG, sourceGridViewData.get(position) + "fromsource");
-            v.startDrag(dragData, //ClipData
-                    myShadow,  //View.DragShadowBuilder
-                    sourceGridViewData.get(position),  //Object myLocalState
-                    0);    //flags
-            //return true will be prevent click event to be continue. It will be perform only OnItemLongClickListener.
+
+            }
             return true;
         }
+
     };
 
     private static class MyDragShadowBuilder extends View.DragShadowBuilder {

@@ -81,7 +81,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                 String str = mFormulaList.get(pos);
                 char mChar =str.charAt(0);
                 deleteSource(formulaAdapter, pos, mFormulaList);
-                if(distance < 0.0 && mChar>='0' && mChar<='9'){
+                if(distance>0.0 && mChar>='0' && mChar<='9'){
                      mNumberList.add(str);
                      numberAdapter.notifyDataSetChanged();
                 }
