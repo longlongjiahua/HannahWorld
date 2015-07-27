@@ -131,7 +131,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         switch (v.getId()) {
               case R.id.bt_submit:
                   if(btNextQuestion.getText().toString().equals("Start")) {
-                      final Intent mServiceIntent = new Intent(MakeNumberActivity .this, BroadcastTimeCountService.class);
+                      final Intent mServiceIntent = new Intent(MakeNumberActivity.this, BroadcastTimeCountService.class);
                       mServiceIntent.putExtra(MathActivity.INTENT_EXTRA_MINUTES, selectedTime);
                       Log.i("Time", ""+selectedTime);
                       MakeNumberActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
@@ -176,14 +176,14 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                   break;
         }
     }
-    public boolean judgeAnswer(){
-           String formulaString="";
-            int length = mFormulaList.size();
-            for(int i=0; i<length; i++){
-                formulaString+=mFormulaList.get(i);
-            }
-            return QuesionAndAnswerUtils.isCorrectAnswer(formulaString);
-
+    public boolean judgeAnswer() {
+        String formulaString = "";
+        int length = mFormulaList.size();
+        for (int i = 0; i < length; i++) {
+            formulaString += mFormulaList.get(i);
+        }
+        Log.i(TAG, formulaString);
+        return QuesionAndAnswerUtils.isCorrectAnswer(formulaString);
     }
 
     private void deleteSource(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){

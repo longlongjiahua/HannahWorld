@@ -17,7 +17,6 @@ public class BroadcastTimeCountService extends Service {
     private static final String FORMAT = "%02d:%02d";
     private Intent intent;
     private final IBinder mBinder = new MathBinder();
-
     int minutes;
     long mMillSecond;
 
@@ -30,7 +29,7 @@ public class BroadcastTimeCountService extends Service {
 
     @Override
     public void onDestroy() {
-
+        timer.cancel();
     }
 
     // Can't bind to this Service
@@ -67,27 +66,25 @@ public class BroadcastTimeCountService extends Service {
         }
     }
 
+
     private void beginBroadcast(int minutes) {
         minutes = intent.getIntExtra(MathActivity.INTENT_EXTRA_MINUTES, 0);
         mMillSecond = minutes * 60 * 1000;
-        if (minutes == 0) mMillSecond = 3 * 60 * 1000;
-        // Don't automatically restart this Service if it is killed
-        new CountDownTimer(mMillSecond, 1000) { // adjust the milli seconds here
+        timer.start();
+     }
+    CountDownTimer timer =  new CountDownTimer(mMillSecond, 1000) {
 
-            public void onTick(long millisUntilFinished) {
-                Log.i("COUNTTIME::", "" + millisUntilFinished);
-                broadcastToUI(millisUntilFinished);
-            }
+        public void onTick(long millisUntilFinished) {
+            Log.i("COUNTTIME::", "" + millisUntilFinished);
+            broadcastToUI(millisUntilFinished);
+        }
 
-            public void onFinish() {
-                // stop Service if it was started with this ID
-                // Otherwise let other start commands proceed
-                Log.i("COUNTTIME::", "yyyfinished");
-                broadcastToUI(0L);
-                //stopSelf(mStartID);
-            }
-        }.start();
-
-    }
-
-}
+        public void onFinish() {
+            // stop Service if it was started with this ID
+            // Otherwise let other start commands proceed
+            Log.i("COUNTTIME::", "yyyfinished");
+            broadcastToUI(0L);
+            //stopSelf(mStartID);
+        }
+    };
+ }
