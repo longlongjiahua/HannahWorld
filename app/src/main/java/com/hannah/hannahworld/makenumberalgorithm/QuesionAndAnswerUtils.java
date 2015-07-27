@@ -1,5 +1,7 @@
 package com.hannah.hannahworld.makenumberalgorithm;
 
+import android.util.Log;
+
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class QuesionAndAnswerUtils {
     public static boolean isCorrectAnswer(String str) {
         FormulaParser parser = new FormulaParser(str);
         parser.parse();
+        Log.i("ParseValideFor", parser.getFormulaWithoutExtraParentheses());
         if(!parser.isValidFormula())
             return false;
         FormulaConvert t = new FormulaConvert();

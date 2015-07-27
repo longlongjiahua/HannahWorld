@@ -147,6 +147,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                     } else {
                         tvCheckAnswer.setText("Incorrect!");
                         String correctString = QuesionAndAnswerUtils.giveAnswer(questionNumbers);
+                        formulaGridView.setNumColumns(correctString.length());
                         mFormulaList.clear();
                        for(String str:Arrays.asList(correctString.split("(?!^)"))){
                            mFormulaList.add(str);
@@ -164,6 +165,8 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                           questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provide24GameQuestion();
                           for (String str : questionNumbers)
                               mNumberList.add(str);
+                          for(int i=0; i<4; i++)
+                              mFormulaList.add(" ");
                           btNextQuestion.setText("Submit");
                           numberAdapter.notifyDataSetChanged();
                           formulaAdapter.notifyDataSetChanged();
