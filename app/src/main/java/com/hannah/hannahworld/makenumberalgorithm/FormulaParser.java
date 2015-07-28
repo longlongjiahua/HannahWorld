@@ -48,37 +48,46 @@ public class FormulaParser {
     private Result expression() {
         if(!validFormula)
             return new Result("", ' ');
-        Result leftArg = term();
-        char operator = currToken();
-        if (operator != '+' && operator != '-') {
-            return leftArg;
-        }
-        nextToken();
-        Result rightArg = term();
-        if(operator == '-' && (rightArg.getOp() == '-' || rightArg.getOp() == '+')) {
-            rightArg = addParentheses(rightArg);
-        }
+        Result result = term();
 
-        return new Result(leftArg.getText()  + operator  + rightArg.getText(), operator);
+        char operator = currToken();
+        while (operator == '+' || operator == '-') {
+            nextToken();
+
+            Result rightArg = term();
+
+            if(operator == '-' && (rightArg.getOp() == '-' || rightArg.getOp() == '+')) {
+                rightArg = addParentheses(rightArg);
+            }
+
+            result= new Result(result.getText() + " " + operator + " " + rightArg.getText(), operator);
+            operator = currToken();
+        }
+        return result;
     }
 
     private Result term() {
         if(!validFormula)
             return new Result("", ' ');
-        Result leftArg = factor();
+        Result result = factor();
+
         char operator = currToken();
-        if (operator != '*' && operator != '/') {
-            return leftArg; 
+        while (operator == '*' || operator == '/') {
+            nextToken();
+
+            Result rightArg = factor();
+
+            if(result.getOp() == '+' || result.getOp() == '-') {
+                result = addParentheses(result);
+            }
+            if(rightArg.getOp() == '+' || rightArg.getOp() == '-' || (operator == '/' && (rightArg.getOp() == '/' || rightArg.getOp() == '*'))) {
+                rightArg = addParentheses(rightArg);
+            }
+            result =  new Result(result.getText() + " " + operator + " " + rightArg.getText(), operator);
+            operator = currToken();
         }
-        nextToken();
-        Result rightArg = factor();
-        if(leftArg.getOp() == '+' || leftArg.getOp() == '-') {
-            leftArg = addParentheses(leftArg);
-        }
-        if(rightArg.getOp() == '+' || rightArg.getOp() == '-' || (operator == '/' && (rightArg.getOp() == '/' || rightArg.getOp() == '*'))) {
-            rightArg = addParentheses(rightArg);
-        }
-        return new Result(leftArg.getText() + operator +  rightArg.getText(), operator);
+        return result;
+
     }
    // factor → ( expr ) | number
     private Result factor()  {
