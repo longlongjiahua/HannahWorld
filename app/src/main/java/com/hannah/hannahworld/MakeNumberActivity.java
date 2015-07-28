@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -56,10 +57,12 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     private BroadcastTimeCountService mService;
     private boolean mBound = false;
     private TextView tvCheckAnswer;
+    private Intent broadcastIntent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        broadcastIntent = new Intent(this, BroadcastTimeCountService.class);
         setContentView(R.layout.activity_makenumberactivity);
         tvCheckAnswer = (TextView) findViewById(R.id.tv_judge_answer);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
@@ -110,7 +113,34 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             }
         });
      }
-
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "ONRESUME");
+        // startService(intent);
+        registerReceiver(broadcastReceiver, new IntentFilter(BroadcastTimeCountService.BROADCAST_ACTION));
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "ONPAUSE");
+        stopService(broadcastIntent);
+        unbindService(mConnection);
+        if(!unRegistered) {
+            unregisterReceiver(broadcastReceiver);
+            //stopService(broadcastIntent);
+            unRegistered = true;
+        }
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.i(TAG, "ONSTOP");
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "ONDESTROY");
+    }
 
     private void init() {
         lvNumber = (LinearLayout) findViewById(R.id.lv_number);
@@ -231,6 +261,8 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             BroadcastTimeCountService.MathBinder binder = (BroadcastTimeCountService.MathBinder) service;
             mService = binder.getService();
+            Log.i(TAG, "beginBroadcast");
+            mService.beginBroadcast(3);
             mBound = true;
         }
         @Override

@@ -19,6 +19,7 @@ public class BroadcastTimeCountService extends Service {
     private final IBinder mBinder = new MathBinder();
     int minutes;
     long mMillSecond;
+    private MCountDownTimer timer;
 
     @Override
     public void onCreate() {
@@ -29,6 +30,7 @@ public class BroadcastTimeCountService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.i(TAG, "destroy");
         timer.cancel();
     }
 
@@ -42,17 +44,15 @@ public class BroadcastTimeCountService extends Service {
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
                 ));
 
-
         intent.putExtra(TIMELEFT, text);
         sendBroadcast(intent);
-
     }
 
 
     @Override
     public IBinder onBind(Intent intent) {
         int time = intent.getExtras().getInt(MathActivity.INTENT_EXTRA_MINUTES);
-        beginBroadcast(time);
+        //beginBroadcast(time);
         Log.i(TAG, "time" + time);
         return mBinder;
 
@@ -67,12 +67,16 @@ public class BroadcastTimeCountService extends Service {
     }
 
 
-    private void beginBroadcast(int minutes) {
-        minutes = intent.getIntExtra(MathActivity.INTENT_EXTRA_MINUTES, 0);
+    public void beginBroadcast(int minutes) {
+        //minutes = intent.getIntExtra(MathActivity.INTENT_EXTRA_MINUTES, 0);
         mMillSecond = minutes * 60 * 1000;
+        timer = new MCountDownTimer(mMillSecond);
         timer.start();
      }
-    CountDownTimer timer =  new CountDownTimer(mMillSecond, 1000) {
+    class MCountDownTimer  extends  CountDownTimer{
+        MCountDownTimer(long mMillSecond) {
+            super(mMillSecond, 1000);
+        }
 
         public void onTick(long millisUntilFinished) {
             Log.i("COUNTTIME::", "" + millisUntilFinished);
