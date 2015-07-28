@@ -124,8 +124,9 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         super.onPause();
         Log.i(TAG, "ONPAUSE");
         stopService(broadcastIntent);
-        unbindService(mConnection);
-        if(!unRegistered) {
+        if (mBound)
+            unbindService(mConnection);
+        if (!unRegistered) {
             unregisterReceiver(broadcastReceiver);
             //stopService(broadcastIntent);
             unRegistered = true;
@@ -206,6 +207,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                   break;
         }
     }
+
     public boolean judgeAnswer() {
         String formulaString = "";
         int length = mFormulaList.size();
@@ -262,7 +264,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             BroadcastTimeCountService.MathBinder binder = (BroadcastTimeCountService.MathBinder) service;
             mService = binder.getService();
             Log.i(TAG, "beginBroadcast");
-            mService.beginBroadcast(3);
+            mService.beginBroadcast(selectedTime);
             mBound = true;
         }
         @Override

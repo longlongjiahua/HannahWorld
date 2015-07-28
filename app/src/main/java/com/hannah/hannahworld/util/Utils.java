@@ -20,7 +20,7 @@ public class Utils {
         int lastPosition = gridView.getLastVisiblePosition();
         float leftMost = gridView.getChildAt(firstPosition).getLeft();
         float rightMost = gridView.getChildAt(lastPosition).getRight();
-        if (insert < leftMost) {
+        if (insert < gridView.getChildAt(firstPosition).getRight()) {
             return 0;
         }
         if (insert > rightMost) {

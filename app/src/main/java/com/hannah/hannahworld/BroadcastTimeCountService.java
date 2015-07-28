@@ -73,13 +73,16 @@ public class BroadcastTimeCountService extends Service {
         timer = new MCountDownTimer(mMillSecond);
         timer.start();
      }
+    public void stopBroadcast(){
+        timer.cancel();
+    }
     class MCountDownTimer  extends  CountDownTimer{
         MCountDownTimer(long mMillSecond) {
             super(mMillSecond, 1000);
         }
 
         public void onTick(long millisUntilFinished) {
-            Log.i("COUNTTIME::", "" + millisUntilFinished);
+           // Log.i("COUNTTIME::", "" + millisUntilFinished);
             broadcastToUI(millisUntilFinished);
         }
 
