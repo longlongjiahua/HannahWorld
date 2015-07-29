@@ -60,7 +60,7 @@ public class FormulaParser {
                 rightArg = addParentheses(rightArg);
             }
 
-            result= new Result(result.getText() + " " + operator + " " + rightArg.getText(), operator);
+            result= new Result(result.getText() +  operator +  rightArg.getText(), operator);
             operator = currToken();
         }
         return result;
@@ -83,7 +83,7 @@ public class FormulaParser {
             if(rightArg.getOp() == '+' || rightArg.getOp() == '-' || (operator == '/' && (rightArg.getOp() == '/' || rightArg.getOp() == '*'))) {
                 rightArg = addParentheses(rightArg);
             }
-            result =  new Result(result.getText() + " " + operator + " " + rightArg.getText(), operator);
+            result =  new Result(result.getText() + operator  + rightArg.getText(), operator);
             operator = currToken();
         }
         return result;

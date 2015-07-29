@@ -34,7 +34,7 @@ import java.text.DecimalFormat;
 public class MathActivity extends FragmentActivity {
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
 
-    private  String keys[] = {"1", "2", "3", "*",
+    private String keys[] = {"1", "2", "3", "*",
             "4", "5", "6", "-",
             "7", "8", "9", "+",
             "0", "start", "X", "/",
@@ -54,14 +54,14 @@ public class MathActivity extends FragmentActivity {
     public int currentPageNo = 0;
     private int rightN;
     private Intent broadcastIntent;
-    private ButtonAdapter  mBtAdapter;
+    private ButtonAdapter mBtAdapter;
     private int selectedTime;
-    private int selectedTimePos=1;
+    private int selectedTimePos = 1;
     private Spinner spTimeResource;
     private GridView gridView;
     private boolean unRegistered = false;
     private static final String TAG = "MathActivity::";
-    private boolean mServiceBound =false;
+    private boolean mServiceBound = false;
     private BroadcastTimeCountService mService;
     private boolean mBound = false;
 
@@ -70,18 +70,20 @@ public class MathActivity extends FragmentActivity {
      * The {@link android.support.v4.view.ViewPager} that will display the object collection.
      */
     ViewPager mViewPager;
-    public TextView tvScore,tvTimeCountDown;
-    /** Defines callbacks for service binding, passed to bindService() */
+    public TextView tvScore, tvTimeCountDown;
+    /**
+     * Defines callbacks for service binding, passed to bindService()
+     */
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
             BroadcastTimeCountService.MathBinder binder = (BroadcastTimeCountService.MathBinder) service;
             mService = binder.getService();
             mBound = true;
         }
+
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             mService = null;
@@ -89,6 +91,7 @@ public class MathActivity extends FragmentActivity {
             mBound = false;
         }
     };
+
     void doUnbindService() {
         if (mBound) {
             // Detach our existing connection.
@@ -103,7 +106,7 @@ public class MathActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         broadcastIntent = new Intent(this, BroadcastTimeCountService.class);
         operation = getIntent().getExtras().getInt(MainPageViewActivity.MATHOPERATION);
-          //Toast.makeText(getBaseContext(), "Operation:" + operation, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getBaseContext(), "Operation:" + operation, Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_math);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
         tvTimeCountDown = (TextView) findViewById(R.id.tv_time_countdown);
@@ -119,17 +122,17 @@ public class MathActivity extends FragmentActivity {
                 String pre = mathFragments[currentPageNo].mTv5.getText().toString();
                 char add = keys[position].charAt(0);
                 String cur = pre;
-                if(add=='s') {
+                if (add == 's') {
                     final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
                     mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, selectedTime);
-                    Log.i("Time", ""+selectedTime);
+                    Log.i("Time", "" + selectedTime);
                     MathActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
                     //MathActivity.this.startServce(mServiceIntent);
-                    keys[13]="done";
+                    keys[13] = "done";
                     mBtAdapter.notifyDataSetChanged();
                 }
-                if(add=='d'){
-                    if(!unRegistered) {
+                if (add == 'd') {
+                    if (!unRegistered) {
                         gridView.setEnabled(false);
                         unregisterReceiver(broadcastReceiver);
                         stopService(broadcastIntent);
@@ -153,13 +156,13 @@ public class MathActivity extends FragmentActivity {
 //Toast.makeText(getBaseContext(),"Cselected" +curNum +" "+(mNums[currentPageNo][0] * mNums[currentPageNo][1]),Toast.LENGTH_SHORT).show();
 
                     if ((operation == 0 && curNum == mNums[currentPageNo][0] * mNums[currentPageNo][1])
-                    ||(operation == 1 && curNum == mNums[currentPageNo][0] / mNums[currentPageNo][1] &&
-                            mNums[currentPageNo][0] % mNums[currentPageNo][1] == 0)){
+                            || (operation == 1 && curNum == mNums[currentPageNo][0] / mNums[currentPageNo][1] &&
+                            mNums[currentPageNo][0] % mNums[currentPageNo][1] == 0)) {
                         mathFragments[currentPageNo].mTv5.setBackgroundResource(R.drawable.rectangle_back2);
                         rightN++;
                         DecimalFormat df = new DecimalFormat("#.0");
                         tvScore.setText("Score: " + df.format(100.00 * rightN / NQS));
-                        if(currentPageNo!=NQS) {
+                        if (currentPageNo != NQS) {
                             mViewPager.setCurrentItem(currentPageNo + 1);
                         }
                     }
@@ -194,10 +197,11 @@ public class MathActivity extends FragmentActivity {
             }
         });
     }
+
     public void onResume() {
         super.onResume();
         Log.i(TAG, "ONRESUME");
-       // startService(intent);
+        // startService(intent);
         registerReceiver(broadcastReceiver, new IntentFilter(BroadcastTimeCountService.BROADCAST_ACTION));
     }
 
@@ -207,17 +211,19 @@ public class MathActivity extends FragmentActivity {
         Log.i(TAG, "ONPAUSE");
         stopService(broadcastIntent);
         unbindService(mConnection);
-        if(!unRegistered) {
+        if (!unRegistered) {
             unregisterReceiver(broadcastReceiver);
             //stopService(broadcastIntent);
             unRegistered = true;
         }
     }
+
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         Log.i(TAG, "ONSTOP");
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -230,13 +236,14 @@ public class MathActivity extends FragmentActivity {
 
             String time = intent.getStringExtra(BroadcastTimeCountService.TIMELEFT);
             Log.i("BroadcastReceiver:::", time);
-            if(time.equals("00:00")){
+            if (time.equals("00:00")) {
                 gridView.setEnabled(false);
             }
             //mathFragments[currentPageNo].tvTimeCountDown.setText(time);
-           tvTimeCountDown.setText(time);
+            tvTimeCountDown.setText(time);
         }
     };
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putSerializable(NUMBERS, mNums);
@@ -315,22 +322,27 @@ public class MathActivity extends FragmentActivity {
         }
     }
 
-    public  class ButtonAdapter extends BaseAdapter {
+    public class ButtonAdapter extends BaseAdapter {
         private Context context;
         private String[] keys;
+
         public ButtonAdapter(Context c, String[] keys) {
             context = c;
-            this.keys= keys;
+            this.keys = keys;
         }
+
         public int getCount() {
             return keys.length;
         }
+
         public Object getItem(int position) {
             return position;
         }
+
         public long getItemId(int position) {
             return position;
         }
+
         public View getView(int position, View convertView, ViewGroup parent) {
             Button btn;
             if (convertView == null) {
@@ -348,10 +360,11 @@ public class MathActivity extends FragmentActivity {
             return btn;
         }
     }
-   private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
-       private int[] times = {1,2,3,4};
 
-        public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+    private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+        private int[] times = {1, 2, 3, 4};
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             // parent.getItemAtPosition(pos).toString();
             selectedTime = times[pos];
         }

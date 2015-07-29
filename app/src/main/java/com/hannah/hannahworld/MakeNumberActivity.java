@@ -10,7 +10,10 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -58,10 +61,13 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     private boolean mBound = false;
     private TextView tvCheckAnswer;
     private Intent broadcastIntent;
+    private String mCountTime="";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().setHomeButtonEnabled(true);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         broadcastIntent = new Intent(this, BroadcastTimeCountService.class);
         setContentView(R.layout.activity_makenumberactivity);
         tvCheckAnswer = (TextView) findViewById(R.id.tv_judge_answer);
@@ -113,12 +119,59 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             }
         });
      }
+    /*
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case android.R.id.home:
+                DialogHelp.page(getFragmentManager(), R.string.quit_game);
+                if(operatorGridView.isEnabled()){
+                    DialogHelp.page(getFragmentManager(), R.string.quit_game);
+                }
+                break;
+        }
+
+        return true;
+    }
+    */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //Handle the back button
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(numberGridView.isEnabled()) {
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle(R.string.quit_game)
+                        .setMessage(R.string.quit_game)
+                        .setPositiveButton(R.string.button_yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Stop the activity
+                                MakeNumberActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton(R.string.button_no, null)
+                        .show();
+            }
+            else {
+                MakeNumberActivity.this.finish();
+            }
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+
+    }
+    
     public void onResume() {
         super.onResume();
         Log.i(TAG, "ONRESUME");
         // startService(intent);
         registerReceiver(broadcastReceiver, new IntentFilter(BroadcastTimeCountService.BROADCAST_ACTION));
     }
+    
     @Override
     public void onPause() {
         super.onPause();
@@ -162,7 +215,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         switch (v.getId()) {
               case R.id.bt_submit:
                   if(btNextQuestion.getText().toString().equals("Start")) {
-                      final Intent mServiceIntent = new Intent(MakeNumberActivity.this, BroadcastTimeCountService.class);
+                       final Intent mServiceIntent = new Intent(MakeNumberActivity.this, BroadcastTimeCountService.class);
                       mServiceIntent.putExtra(MathActivity.INTENT_EXTRA_MINUTES, selectedTime);
                       Log.i("Time", ""+selectedTime);
                       MakeNumberActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
@@ -287,13 +340,15 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            String time = intent.getStringExtra(BroadcastTimeCountService.TIMELEFT);
-            Log.i("BroadcastReceiver:::", time);
-            if(time.equals("00:00")){
-                //gridView.setEnabled(false);
+            mCountTime = intent.getStringExtra(BroadcastTimeCountService.TIMELEFT);
+            Log.i("BroadcastReceiver:::", mCountTime);
+            if(mCountTime.equals("00:00")){
+                formulaGridView.setEnabled(false);
+                numberGridView.setEnabled(false);
+                operatorGridView.setEnabled(false);
             }
             //mathFragments[currentPageNo].tvTimeCountDown.setText(time);
-            tvTimeCountDown.setText(time);
+            tvTimeCountDown.setText(mCountTime);
         }
     };
 

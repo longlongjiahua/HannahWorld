@@ -17,14 +17,7 @@ import android.widget.Toast;
 
 import com.hannah.hannahworld.R;
 
-/**
- * This is demo code to accompany the Mobiletuts+ tutorial series:
- * - Android SDK: Create a Drawing App
- * 
- * Sue Smith
- * August 2013
- *
- */
+
 public class PaintDrawActivity extends Activity implements OnClickListener {
 
 	//custom drawing view
