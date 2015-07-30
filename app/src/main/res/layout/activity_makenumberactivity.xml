@@ -21,19 +21,11 @@
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
-
-            <Spinner
-                android:id="@+id/sp_timesource"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/time_source_array"
-                android:prompt="@string/time_source"/>
             <TextView
                 android:id="@+id/tv_time_countdown"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Time"
+                android:text="5:00"
                 android:layout_gravity="center"
                 android:layout_weight="1.5"
                 android:textSize="15dp"

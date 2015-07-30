@@ -54,17 +54,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_width="0dp">
-            <Spinner
-                android:id="@+id/sp_timesource"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/time_source_array"
-                android:prompt="@string/time_source"/>
-        <TextView
+         <TextView
             android:id="@+id/tv_time_countdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="4:00"
             android:textSize="28dp"
             android:textStyle="bold"
             android:layout_alignParentTop="true"

@@ -34,10 +34,10 @@ import java.text.DecimalFormat;
 public class MathActivity extends FragmentActivity {
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
 
-    private String keys[] = {"1", "2", "3", "*",
-            "4", "5", "6", "-",
-            "7", "8", "9", "+",
-            "0", "start", "X", "/",
+    private String keys[] = {"1", "2", "3",   "4",
+           "5", "6","7", "8",
+             "9", "0","X",
+             "start",
     };
     public int operation; //0: x, 1 : *, 2 +, 3: -;
 
@@ -55,9 +55,6 @@ public class MathActivity extends FragmentActivity {
     private int rightN;
     private Intent broadcastIntent;
     private ButtonAdapter mBtAdapter;
-    private int selectedTime;
-    private int selectedTimePos = 1;
-    private Spinner spTimeResource;
     private GridView gridView;
     private boolean unRegistered = false;
     private static final String TAG = "MathActivity::";
@@ -65,10 +62,6 @@ public class MathActivity extends FragmentActivity {
     private BroadcastTimeCountService mService;
     private boolean mBound = false;
 
-
-    /**
-     * The {@link android.support.v4.view.ViewPager} that will display the object collection.
-     */
     ViewPager mViewPager;
     public TextView tvScore, tvTimeCountDown;
     /**
@@ -110,9 +103,6 @@ public class MathActivity extends FragmentActivity {
         setContentView(R.layout.activity_math);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
         tvTimeCountDown = (TextView) findViewById(R.id.tv_time_countdown);
-        spTimeResource = (Spinner) findViewById(R.id.sp_timesource);
-        spTimeResource.setSelection(selectedTimePos);
-        spTimeResource.setOnItemSelectedListener(new CustomOnItemSelectedListener());
         gridView = (GridView) findViewById(R.id.grid_view);
         mBtAdapter = new ButtonAdapter(this, keys);
         gridView.setAdapter(mBtAdapter);
@@ -124,8 +114,7 @@ public class MathActivity extends FragmentActivity {
                 String cur = pre;
                 if (add == 's') {
                     final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
-                    mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, selectedTime);
-                    Log.i("Time", "" + selectedTime);
+                    mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, Constants.MATHTIME);
                     MathActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
                     //MathActivity.this.startServce(mServiceIntent);
                     keys[13] = "done";
@@ -361,18 +350,4 @@ public class MathActivity extends FragmentActivity {
         }
     }
 
-    private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
-        private int[] times = {1, 2, 3, 4};
-
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            // parent.getItemAtPosition(pos).toString();
-            selectedTime = times[pos];
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> arg0) {
-            // TODO Auto-generated method stub
-        }
-
-    }
 }

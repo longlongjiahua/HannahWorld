@@ -49,9 +49,6 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     private DragDropHelp formula2NumberOrOperator;
     private DragDropHelp operator2Formula;
     private Button btNextQuestion;
-    private int selectedTime;
-    private int selectedTimePos=1;
-    private Spinner spTimeResource;
     private TextView tvScore;
     private TextView tvTimeCountDown;
     private boolean unRegistered = false;
@@ -73,9 +70,6 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         tvCheckAnswer = (TextView) findViewById(R.id.tv_judge_answer);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
         tvTimeCountDown = (TextView) findViewById(R.id.tv_time_countdown);
-        spTimeResource = (Spinner) findViewById(R.id.sp_timesource);
-        spTimeResource.setSelection(selectedTimePos);
-        spTimeResource.setOnItemSelectedListener(new CustomOnItemSelectedListener());
         btNextQuestion = (Button) findViewById(R.id.bt_submit);
         btNextQuestion.setOnClickListener(this);
         questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provide24GameQuestion();
@@ -216,8 +210,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
               case R.id.bt_submit:
                   if(btNextQuestion.getText().toString().equals("Start")) {
                        final Intent mServiceIntent = new Intent(MakeNumberActivity.this, BroadcastTimeCountService.class);
-                      mServiceIntent.putExtra(MathActivity.INTENT_EXTRA_MINUTES, selectedTime);
-                      Log.i("Time", ""+selectedTime);
+                      mServiceIntent.putExtra(MathActivity.INTENT_EXTRA_MINUTES, Constants.MAKENUMBERTIME);
                       MakeNumberActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
                       //MathActivity.this.startServce(mServiceIntent);
                       btNextQuestion.setText("Submit");
@@ -291,21 +284,6 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         targetAdapter.notifyDataSetChanged();
     }
 
-    private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
-        private int[] times = {1,2,3,4};
-
-        public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-            // parent.getItemAtPosition(pos).toString();
-            selectedTime = times[pos];
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> arg0) {
-            // TODO Auto-generated method stub
-        }
-
-    }
-
 
     /** Defines callbacks for service binding, passed to bindService() */
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -317,7 +295,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             BroadcastTimeCountService.MathBinder binder = (BroadcastTimeCountService.MathBinder) service;
             mService = binder.getService();
             Log.i(TAG, "beginBroadcast");
-            mService.beginBroadcast(selectedTime);
+            mService.beginBroadcast(Constants.MAKENUMBERTIME);
             mBound = true;
         }
         @Override
