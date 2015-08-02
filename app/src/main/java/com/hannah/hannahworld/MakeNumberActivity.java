@@ -8,8 +8,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -222,15 +228,14 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                     if (judgeAnswer()) {
                         tvCheckAnswer.setText("Correct!");
                     } else {
-                        tvCheckAnswer.setText("Incorrect!");
-                        String correctString = QuesionAndAnswerUtils.giveAnswer(questionNumbers);
-                        formulaGridView.setNumColumns(correctString.length());
-                        mFormulaList.clear();
-                       for(String str:Arrays.asList(correctString.split("(?!^)"))){
-                           mFormulaList.add(str);
-                       }
+                        String str1 = "Incorrect! One solution: ";
+                        String str2 = QuesionAndAnswerUtils.giveAnswer(questionNumbers);
+                        String str = str1+ str2;
+                        SpannableString span2 = new SpannableString(str);
+                        span2.setSpan(new ForegroundColorSpan(Color.RED), str1.length(), str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        span2.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), str1.length(), str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        tvCheckAnswer.setText(span2);
                     }
-                      formulaAdapter.notifyDataSetChanged();
                     btNextQuestion.setText("Next");
                 }
                 else {

@@ -5,22 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="Hannah World"
         android:theme="@style/AppTheme" >
+
         <activity android:name=".SplashScreenActivity"
             android:noHistory="true"
             android:theme="@style/My.Theme.Start">
@@ -61,15 +55,12 @@
         </activity>
         <activity
             android:name=".MathActivity"
+            android:screenOrientation="portrait"
             android:label="Math">
         </activity>
         <activity
             android:name=".MakeNumberActivity"
             android:screenOrientation="landscape"
-            android:label="Make Number">
-        </activity>
-        <activity
-            android:name=".DrapandDropActivity"
             android:label="Make Number">
         </activity>
 

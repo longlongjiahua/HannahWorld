@@ -36,7 +36,28 @@
         <Button android:id="@+id/bt_makenumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Make 24 Game" />
+            android:text="Make Number" />
+        <RadioGroup
+            android:id="@+id/radiogroup_makenumber"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton android:id="@+id/rd_make12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make 12"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/rd_make18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make 18"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/rd_make24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="make 24"
+                android:onClick="onRadioButtonClicked"/>
+        </RadioGroup>
 
     </LinearLayout>
 
