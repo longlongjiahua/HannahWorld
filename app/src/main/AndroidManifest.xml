@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainPageViewActivity"
+            android:name=".MainMathActivity"
             android:label="Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -65,11 +65,15 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     private TextView tvCheckAnswer;
     private Intent broadcastIntent;
     private String mCountTime="";
+    public int target;  // final number to make // 12, 18, 24
+    public int numberOfInput;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setHomeButtonEnabled(true);
+        target = getIntent().getExtras().getInt(MainMathActivity.MAMKNUMBERMETHODS);
+        numberOfInput = getIntent().getExtras().getInt(MainMathActivity.NUMBEROFINPUT);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         broadcastIntent = new Intent(this, BroadcastTimeCountService.class);
         setContentView(R.layout.activity_makenumberactivity);
@@ -78,7 +82,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         tvTimeCountDown = (TextView) findViewById(R.id.tv_time_countdown);
         btNextQuestion = (Button) findViewById(R.id.bt_submit);
         btNextQuestion.setOnClickListener(this);
-        questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provide24GameQuestion();
+        questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provideGameQuestion(target,numberOfInput);
         mNumberList = new ArrayList<String> (questionNumbers);
         mFormulaList = new ArrayList<String>(Arrays.asList(" ", " ", " ", " "," "));
         init();
@@ -229,7 +233,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                         tvCheckAnswer.setText("Correct!");
                     } else {
                         String str1 = "Incorrect! One solution: ";
-                        String str2 = QuesionAndAnswerUtils.giveAnswer(questionNumbers);
+                        String str2 = QuesionAndAnswerUtils.giveAnswer(questionNumbers,target);
                         String str = str1+ str2;
                         SpannableString span2 = new SpannableString(str);
                         span2.setSpan(new ForegroundColorSpan(Color.RED), str1.length(), str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -244,7 +248,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                           numberGridView.setVisibility(View.VISIBLE);
                           mFormulaList.clear();
                           mNumberList.clear();
-                          questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provide24GameQuestion();
+                          questionNumbers = (ArrayList<String>) QuesionAndAnswerUtils.provideGameQuestion(target,numberOfInput );
                           for (String str : questionNumbers)
                               mNumberList.add(str);
                           for(int i=0; i<4; i++)
@@ -266,7 +270,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             formulaString += mFormulaList.get(i);
         }
         Log.i(TAG, formulaString);
-        return QuesionAndAnswerUtils.isCorrectAnswer(formulaString);
+        return QuesionAndAnswerUtils.isCorrectAnswer(formulaString, target);
     }
 
     private void deleteSource(TextViewAdapter sourceAdapter, int clickPos, ArrayList<String> listData){

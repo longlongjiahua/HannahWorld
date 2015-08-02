@@ -12,10 +12,10 @@ import java.util.Random;
  */
 public class QuesionAndAnswerUtils {
 
-    public static boolean isCorrectAnswer(String str) {
+    public static boolean isCorrectAnswer(final String str, final int target) {
         FormulaParser parser = new FormulaParser(str);
         parser.parse();
-        Log.i("ParseValideFor", parser.getFormulaWithoutExtraParentheses());
+        //Log.i("ParseValideFor", parser.getFormulaWithoutExtraParentheses());
         if(!parser.isValidFormula())
             return false;
         FormulaConvert t = new FormulaConvert();
@@ -24,7 +24,7 @@ public class QuesionAndAnswerUtils {
         if (t.isValidFormula()) {
             double result = t.calResult();
             if (t.isValidFormula()) {
-                if (t.almostEqual(result, 24)) {
+                if (t.almostEqual(result, target)) {
                     return true;
                 }
             }
@@ -32,7 +32,7 @@ public class QuesionAndAnswerUtils {
         return false;
     }
 
-    public static String giveAnswer(List<String> numberList) {
+    public static String giveAnswer(final List<String> numberList, final int target) {
         FullTree fullTree = new FullTree();
         //System.out.println(t1.toString());
         for (String s : fullTree.makeTree(numberList)) {
@@ -40,7 +40,7 @@ public class QuesionAndAnswerUtils {
             FormulaConvert t = new FormulaConvert();
             t.setString(s);
             double outputCalculate = t.calResult();
-            if (t.almostEqual(outputCalculate, 24)) {
+            if (t.almostEqual(outputCalculate, target)) {
                 FormulaParser parser = new FormulaParser(s);
                 parser.parse();
                 return parser.getFormulaWithoutExtraParentheses();
@@ -55,17 +55,17 @@ public class QuesionAndAnswerUtils {
      *
      * @return four nummbers having solution
      */
-    public static List<String> provide24GameQuestion(){
+    public static List<String> provideGameQuestion(final int target, final int numberOfInput){
         while(true){
-            List<String> numberList = fourRandomInt();
-            if(!giveAnswer(numberList).equals("No Answer")){
+            List<String> numberList = RandomInts(numberOfInput);
+            if(!giveAnswer(numberList, target).equals("No Answer")){
                 return numberList;
             }
         }
      }
-    private static List<String> fourRandomInt() {
+    private static List<String> RandomInts(final int numberOfInput) {
         List<String> numberList = new ArrayList<String>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < numberOfInput; i++) {
             numberList.add("" + randInt(0, 9));
         }
         return numberList;
