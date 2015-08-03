@@ -74,6 +74,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         getActionBar().setHomeButtonEnabled(true);
         target = getIntent().getExtras().getInt(MainMathActivity.MAMKNUMBERMETHODS);
         numberOfInput = getIntent().getExtras().getInt(MainMathActivity.NUMBEROFINPUT);
+        setTitle("Make "+target);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         broadcastIntent = new Intent(this, BroadcastTimeCountService.class);
         setContentView(R.layout.activity_makenumberactivity);
@@ -86,6 +87,8 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         mNumberList = new ArrayList<String> (questionNumbers);
         mFormulaList = new ArrayList<String>(Arrays.asList(" ", " ", " ", " "," "));
         init();
+        disableViewClick();
+        btNextQuestion.setEnabled(true);
         formulaGridView.setOnTouchListener(new TouchSwipeListen(this, new OnSwipeDecteted() {
             @Override
             public void onSwipeDecteted(float distance, float downPosX, float downPosY) {
@@ -215,10 +218,25 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         formulaGridView.setAdapter(formulaAdapter);
     }
 
+    private void disableViewClick(){
+        formulaGridView.setEnabled(false);
+        numberGridView.setEnabled(false);
+        operatorGridView.setEnabled(false);
+        btNextQuestion.setEnabled(false);
+
+    }
+    private void enableViewClick(){
+        formulaGridView.setEnabled(true);
+        numberGridView.setEnabled(true);
+        operatorGridView.setEnabled(true);
+        btNextQuestion.setEnabled(true);
+    }
+
     public void onClick(View v) {
         switch (v.getId()) {
               case R.id.bt_submit:
                   if(btNextQuestion.getText().toString().equals("Start")) {
+                      enableViewClick();
                        final Intent mServiceIntent = new Intent(MakeNumberActivity.this, BroadcastTimeCountService.class);
                       mServiceIntent.putExtra(MathActivity.INTENT_EXTRA_MINUTES, Constants.MAKENUMBERTIME);
                       MakeNumberActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
@@ -314,7 +332,6 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             mBound = false;
         }
     };
-
     void doUnbindService() {
         if (mBound) {
             // Detach our existing connection.
@@ -322,7 +339,6 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             mBound = false;
         }
     }
-
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -330,9 +346,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             mCountTime = intent.getStringExtra(BroadcastTimeCountService.TIMELEFT);
             Log.i("BroadcastReceiver:::", mCountTime);
             if(mCountTime.equals("00:00")){
-                formulaGridView.setEnabled(false);
-                numberGridView.setEnabled(false);
-                operatorGridView.setEnabled(false);
+                disableViewClick();
             }
             //mathFragments[currentPageNo].tvTimeCountDown.setText(time);
             tvTimeCountDown.setText(mCountTime);
