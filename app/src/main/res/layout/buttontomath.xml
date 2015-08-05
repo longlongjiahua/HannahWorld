@@ -1,46 +1,50 @@
-
-
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="5dp"
+    android:orientation="vertical" >
         <Button android:id="@+id/bt_multification"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="Multification"/>
 
         <Button android:id="@+id/bt_division"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Division" />
-        <Button android:id="@+id/bt_makenumber"
-            android:layout_width="match_parent"
+        <TextView android:id="@+id/tv_makenumber"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Make Number" />
+            android:text="Choose number to make" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:orientation="vertical" >
+
         <RadioGroup
             android:id="@+id/radiogroup_makenumber"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RadioButton android:id="@+id/rd_maketwo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Make 12" />
+                android:text="Make 12 with 3 numbers" />
             <RadioButton android:id="@+id/rd_makeeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Make 18" />
+                android:text="Make 18 with 3 numbers" />
             <RadioButton android:id="@+id/rd_makefour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="make 24" />
+                android:text="make 24 with 4 numbers" />
         </RadioGroup>
+
         <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

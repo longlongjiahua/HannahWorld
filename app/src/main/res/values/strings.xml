@@ -32,4 +32,5 @@
         <item>3 mins</item>
         <item>4 mins</item>
     </string-array>
+    <string name="title_activity_main_activity2">MainActivity2Activity</string>
 </resources>

@@ -47,6 +47,8 @@ public class MainMathActivity extends Activity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
             }
         });
+        //ToDo
+        //Any target and number of digits
         btChoose = (Button) findViewById(R.id.chooseBtn);
         btChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +56,6 @@ public class MainMathActivity extends Activity {
                 int checkedId = rgMath.getCheckedRadioButtonId();
                 Intent intent = new Intent(MainMathActivity.this, MakeNumberActivity.class);
 
-                startActivity(intent);
                 if (checkedId == R.id.rd_maketwo) {
                     intent.putExtra(MAMKNUMBERMETHODS, 12);
                     intent.putExtra(NUMBEROFINPUT, 3);

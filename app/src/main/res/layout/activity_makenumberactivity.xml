@@ -32,6 +32,14 @@
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
+        <Button android:id="@+id/bt_submit"
+            android:textSize="15dp"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Start" />
         </LinearLayout>
 
 
@@ -84,12 +92,12 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_weight="1"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:layout_height="50dp">
         <LinearLayout
             android:id="@+id/lv_operator"
-            android:layout_width="0dp"
-            android:layout_weight="0.85"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_height="50dp">
         <GridView
             android:id="@+id/gv_operators"
@@ -102,16 +110,6 @@
             android:layout_height="fill_parent">
         </GridView>
         </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="0.15"
-                android:layout_height="50dp">
-                <Button android:id="@+id/bt_submit"
-                    android:textSize="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Start" />
-            </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

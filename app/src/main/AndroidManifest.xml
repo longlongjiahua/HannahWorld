@@ -5,78 +5,38 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="Hannah World"
         android:theme="@style/AppTheme" >
 
-        <activity android:name=".SplashScreenActivity"
-            android:noHistory="true"
-            android:theme="@style/My.Theme.Start">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-                <category android:name="android.intent.category.LAUNCHER"></category>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainMathActivity"
-            android:label="Main">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <!-- <category android:name="android.intent.category.LAUNCHER" />  -->
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="EditActivity" >
-        </activity>
-        <activity
-            android:name=".OneDayActivity"
-            android:label="OneDay"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity
-            android:name=".WordTestActivity"
-            android:label="Test"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
-
-
-        <activity
-            android:name=".AlarmActivity"
-            android:label="alarmTest" >
-        </activity>
-        <activity
-            android:name=".draw.PaintDrawActivity"
-            android:label="Draw" >
-        </activity>
         <activity
             android:name=".MathActivity"
-            android:screenOrientation="portrait"
-            android:label="Math">
+            android:label="Math"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".MakeNumberActivity"
-            android:screenOrientation="landscape"
-            android:label="Make Number">
+            android:label="Make Number"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMathActivity" />
         </activity>
 
         <service android:name=".BroadcastTimeCountService" />
 
-        <receiver android:name=".AlarmNotificationReceiver" >
-        </receiver>
-        <receiver android:name=".AlarmLoggerReceiver" >
-        </receiver>
         <activity
-            android:name=".PostDataActivity"
-            android:label="PostData" >
-        </activity>
-        <activity
-            android:name=".GraphyAniminationActivity"
-            android:label="@string/title_activity_graphy_animination" >
+            android:name=".MainMathActivity"
+            android:label="Hannah World"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

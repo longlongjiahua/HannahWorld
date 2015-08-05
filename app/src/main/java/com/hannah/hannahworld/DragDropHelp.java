@@ -59,6 +59,7 @@ public class DragDropHelp {
     private int clickPos;
     private final static String operators = ")(+-*/";
     private float downX, downY, upX, upY;
+    private View clickedView;
     //private Action mTouchSwipeListen = Action.None;
 
     public DragDropHelp(GridView sourceView,GridView targetGridView, LinearLayout targetView, Activity activity,
@@ -80,6 +81,7 @@ public class DragDropHelp {
     public View.OnTouchListener sourceGridViewItemLongClickListener
             = new View.OnTouchListener() {
 
+
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
@@ -88,7 +90,12 @@ public class DragDropHelp {
                     downY = event.getY();
                     int position = Utils.getTouchPosition(sourceGridView, downX, downY, sourceGridViewData);
                     //return false; // allow other events like Click to be processed
-                    ClipData.Item item = new ClipData.Item("" + sourceGridViewData.get(position));
+                    String str="";
+                    if(position>sourceGridViewData.size() || position<0 )
+                        return true;
+                   clickedView = sourceGridView.getChildAt(position - sourceGridView.getFirstVisiblePosition());
+                    clickedView.setBackgroundColor(Color.GREEN);
+                    ClipData.Item item = new ClipData.Item("" + sourceGridViewData.get(position));  //TODO : catch exception
                     clickPos = position;
                     String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
                     ClipData dragData = new ClipData((CharSequence) v.getTag(),
@@ -167,6 +174,8 @@ public class DragDropHelp {
                 case DragEvent.ACTION_DROP:
                     // Gets the item containing the dragged data
                     Log.i(TAG, "dropxxx");
+                   if(clickedView!=null)
+                       clickedView.setBackgroundColor(Color.GREEN);
                     ClipData.Item item = event.getClipData().getItemAt(0);
                     //If apply only if drop on buttonTarget
                     float x = event.getX();

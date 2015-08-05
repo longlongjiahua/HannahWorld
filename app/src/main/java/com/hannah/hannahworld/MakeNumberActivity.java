@@ -17,6 +17,8 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,7 +49,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     public ArrayList<String> mFormulaList = new ArrayList<String>();
     private  ArrayList<String> questionNumbers;
     public ArrayList<String> mNumberList = new ArrayList<String>(Arrays.asList("1", "2", "3", "4"));
-    public ArrayList<String> mOperatorList = new ArrayList<String>(Arrays.asList("+", "-", "*","/",")","("));
+    public ArrayList<String> mOperatorList = new ArrayList<String>(Arrays.asList("(","+", "-", "*","/",")"));
     public TextViewAdapter numberAdapter;
     public TextViewAdapter formulaAdapter;
     public TextViewAdapter operatorAdapter;
@@ -67,17 +69,19 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
     private String mCountTime="";
     public int target;  // final number to make // 12, 18, 24
     public int numberOfInput;
-
+    private Menu menu;
+    private int quesionsGiven = 0;
+    private int correctNumbers = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_makenumberactivity);
         getActionBar().setHomeButtonEnabled(true);
         target = getIntent().getExtras().getInt(MainMathActivity.MAMKNUMBERMETHODS);
         numberOfInput = getIntent().getExtras().getInt(MainMathActivity.NUMBEROFINPUT);
-        setTitle("Make "+target);
+        setTitle("Make " + target);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         broadcastIntent = new Intent(this, BroadcastTimeCountService.class);
-        setContentView(R.layout.activity_makenumberactivity);
         tvCheckAnswer = (TextView) findViewById(R.id.tv_judge_answer);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
         tvTimeCountDown = (TextView) findViewById(R.id.tv_time_countdown);
@@ -126,23 +130,15 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             }
         });
      }
-    /*
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-
-        int itemId = item.getItemId();
-        switch (itemId) {
-            case android.R.id.home:
-                DialogHelp.page(getFragmentManager(), R.string.quit_game);
-                if(operatorGridView.isEnabled()){
-                    DialogHelp.page(getFragmentManager(), R.string.quit_game);
-                }
-                break;
-        }
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_makenumber_activity, menu);
+      this.menu = menu;
         return true;
     }
-    */
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Handle the back button
@@ -157,6 +153,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                             public void onClick(DialogInterface dialog, int which) {
                                 //Stop the activity
                                 MakeNumberActivity.this.finish();
+                                return;
                             }
                         })
                         .setNegativeButton(R.string.button_no, null)
@@ -171,7 +168,8 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         }
 
     }
-    
+
+
     public void onResume() {
         super.onResume();
         Log.i(TAG, "ONRESUME");
@@ -184,7 +182,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
         super.onPause();
         Log.i(TAG, "ONPAUSE");
         stopService(broadcastIntent);
-        if (mBound)
+        if (mBound && mConnection!=null)
             unbindService(mConnection);
         if (!unRegistered) {
             unregisterReceiver(broadcastReceiver);
@@ -242,6 +240,8 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                       MakeNumberActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
                       //MathActivity.this.startServce(mServiceIntent);
                       btNextQuestion.setText("Submit");
+                      quesionsGiven++;
+                      updateMenuTitles();
 
                   }
                 else if(btNextQuestion.getText().toString().equals("Submit")) {
@@ -249,6 +249,7 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                       tvCheckAnswer.setVisibility(View.VISIBLE);
                     if (judgeAnswer()) {
                         tvCheckAnswer.setText("Correct!");
+                        correctNumbers++;
                     } else {
                         String str1 = "Incorrect! One solution: ";
                         String str2 = QuesionAndAnswerUtils.giveAnswer(questionNumbers,target);
@@ -258,7 +259,25 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                         span2.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), str1.length(), str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         tvCheckAnswer.setText(span2);
                     }
-                    btNextQuestion.setText("Next");
+                      if(quesionsGiven==5){
+                          disableViewClick();
+                          btNextQuestion.setText("Done");
+                          stopService(broadcastIntent);
+                          if (mBound)
+                              unbindService(mConnection);
+                                mBound = false;
+                          if (!unRegistered) {
+                              unregisterReceiver(broadcastReceiver);
+                              //stopService(broadcastIntent);
+                              unRegistered = true;
+                          }
+                      }
+                      else {
+                          btNextQuestion.setText("Next");
+
+                      }
+                      double score = correctNumbers*100.0/5;
+                      tvScore.setText(""+score);
                 }
                 else {
                       if (btNextQuestion.getText().toString().equals("Next")) {
@@ -274,6 +293,8 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
                           btNextQuestion.setText("Submit");
                           numberAdapter.notifyDataSetChanged();
                           formulaAdapter.notifyDataSetChanged();
+                          quesionsGiven++;
+                          updateMenuTitles();
                       }
                   }
 
@@ -352,5 +373,8 @@ public class MakeNumberActivity extends Activity implements View.OnClickListener
             tvTimeCountDown.setText(mCountTime);
         }
     };
-
+    private void updateMenuTitles() {
+            MenuItem mMenuItem = menu.findItem(R.id.action_question);
+             mMenuItem.setTitle(""+quesionsGiven+"/5 questions");
+    }
 }
