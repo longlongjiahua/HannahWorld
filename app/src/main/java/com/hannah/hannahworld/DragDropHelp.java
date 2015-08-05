@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -17,17 +16,11 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
+
 import android.widget.LinearLayout;
 import android.widget.GridView;
-import android.widget.TextView;
 
-import com.hannah.hannahworld.TextViewAdapter;
+
 import com.hannah.hannahworld.util.Utils;
 /*
 requirement analysis
@@ -165,6 +158,7 @@ public class DragDropHelp {
 
                     return true;
                 case DragEvent.ACTION_DRAG_ENTERED:
+
                     return true;
                 case DragEvent.ACTION_DRAG_LOCATION:  //
                     //commentMsg += v.getTag() + " : ACTION_DRAG_LOCATION - " + event.getX() + " : " + event.getY() + "\n";
@@ -172,16 +166,17 @@ public class DragDropHelp {
                 case DragEvent.ACTION_DRAG_EXITED:
                     return true;
                 case DragEvent.ACTION_DROP:
+                    if(clickedView!=null) {
+                        //clickedView.setBackgroundColor(Color.GRAY);
+                        clickedView.setBackgroundResource(android.R.drawable.btn_default);
+                    }
                     // Gets the item containing the dragged data
-                    Log.i(TAG, "dropxxx");
-                   if(clickedView!=null)
-                       clickedView.setBackgroundColor(Color.GREEN);
+
                     ClipData.Item item = event.getClipData().getItemAt(0);
                     //If apply only if drop on buttonTarget
                     float x = event.getX();
                     if (v == targetView) {
                         String droppedItem = item.getText().toString();
-                        Log.i(TAG, droppedItem + "xxx");
                         mDragDropIt.handleSourceData(sourceAdapter, clickPos, sourceGridViewData);
                         mDragDropIt.handleTargetData(targetGridView, x, droppedItem, droppedAdapter, targetViewData);
                         return true;

@@ -61,37 +61,10 @@ public class MathActivity extends FragmentActivity {
     private boolean mServiceBound = false;
     private BroadcastTimeCountService mService;
     private boolean mBound = false;
+    private String mCountTime="";
 
     ViewPager mViewPager;
     public TextView tvScore, tvTimeCountDown;
-    /**
-     * Defines callbacks for service binding, passed to bindService()
-     */
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            BroadcastTimeCountService.MathBinder binder = (BroadcastTimeCountService.MathBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mService = null;
-
-            mBound = false;
-        }
-    };
-
-    void doUnbindService() {
-        if (mBound) {
-            // Detach our existing connection.
-            unbindService(mConnection);
-            mBound = false;
-        }
-    }
 
 
     @Override
@@ -116,17 +89,21 @@ public class MathActivity extends FragmentActivity {
                     final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
                     mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, Constants.MATHTIME);
                     MathActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-                    //MathActivity.this.startServce(mServiceIntent);
-                    keys[13] = "done";
+                     keys[11] = "done";
                     mBtAdapter.notifyDataSetChanged();
                 }
                 if (add == 'd') {
+                    gridView.setEnabled(false);
+                    stopService(broadcastIntent);
+                    if (mBound)
+                        unbindService(mConnection);
+                    mBound = false;
                     if (!unRegistered) {
-                        gridView.setEnabled(false);
                         unregisterReceiver(broadcastReceiver);
-                        stopService(broadcastIntent);
+                        //stopService(broadcastIntent);
                         unRegistered = true;
                     }
+
 
                 }
                 if (add == 'X' || (add >= '0' && add <= '9')) {
@@ -189,7 +166,6 @@ public class MathActivity extends FragmentActivity {
 
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "ONRESUME");
         // startService(intent);
         registerReceiver(broadcastReceiver, new IntentFilter(BroadcastTimeCountService.BROADCAST_ACTION));
     }
@@ -197,9 +173,9 @@ public class MathActivity extends FragmentActivity {
     @Override
     public void onPause() {
         super.onPause();
-        Log.i(TAG, "ONPAUSE");
         stopService(broadcastIntent);
-        unbindService(mConnection);
+        if (mBound && mConnection!=null)
+            unbindService(mConnection);
         if (!unRegistered) {
             unregisterReceiver(broadcastReceiver);
             //stopService(broadcastIntent);
@@ -210,28 +186,15 @@ public class MathActivity extends FragmentActivity {
     @Override
     public void onStop() {
         super.onStop();
-        Log.i(TAG, "ONSTOP");
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "ONDESTROY");
+        
     }
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String time = intent.getStringExtra(BroadcastTimeCountService.TIMELEFT);
-            Log.i("BroadcastReceiver:::", time);
-            if (time.equals("00:00")) {
-                gridView.setEnabled(false);
-            }
-            //mathFragments[currentPageNo].tvTimeCountDown.setText(time);
-            tvTimeCountDown.setText(time);
-        }
-    };
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -349,5 +312,39 @@ public class MathActivity extends FragmentActivity {
             return btn;
         }
     }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            BroadcastTimeCountService.MathBinder binder = (BroadcastTimeCountService.MathBinder) service;
+            mService = binder.getService();
+            Log.i(TAG, "beginBroadcast");
+            mService.beginBroadcast(Constants.MAKENUMBERTIME);
+            mBound = true;
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mService = null;
+
+            mBound = false;
+        }
+    };
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            mCountTime = intent.getStringExtra(BroadcastTimeCountService.TIMELEFT);
+            Log.i("BroadcastReceiver:::", mCountTime);
+            if(mCountTime.equals("00:00")){
+                gridView.setEnabled(false);
+            }
+            //mathFragments[currentPageNo].tvTimeCountDown.setText(time);
+            tvTimeCountDown.setText(mCountTime);
+        }
+    };
 
 }
