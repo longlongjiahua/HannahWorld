@@ -71,7 +71,7 @@ public class MathActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         broadcastIntent = new Intent(this, BroadcastTimeCountService.class);
-        operation = getIntent().getExtras().getInt(MainPageViewActivity.MATHOPERATION);
+        operation = getIntent().getExtras().getInt(MainMathActivity.MAMKNUMBERMETHODS);
         //Toast.makeText(getBaseContext(), "Operation:" + operation, Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_math);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
@@ -192,7 +192,7 @@ public class MathActivity extends FragmentActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        
+
     }
 
 
@@ -322,7 +322,7 @@ public class MathActivity extends FragmentActivity {
             BroadcastTimeCountService.MathBinder binder = (BroadcastTimeCountService.MathBinder) service;
             mService = binder.getService();
             Log.i(TAG, "beginBroadcast");
-            mService.beginBroadcast(Constants.MAKENUMBERTIME);
+            mService.beginBroadcast(Constants.MATHTIME);
             mBound = true;
         }
         @Override

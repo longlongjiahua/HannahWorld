@@ -1,15 +1,20 @@
 package com.hannah.hannahworld;
 import android.app.Activity;
 import android.app.UiAutomation;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
 
+import com.hannah.hannahworld.util.Utils;
+
 import java.util.List;
 
 public class TouchSwipeListen implements View.OnTouchListener {
     private static final String TAG= "TouchSwipeListen";
+    private GridView sourceGridView;
+    private List<String> sourceGridViewData;
     public static enum Action {
         LR, // Left to Right
         RL, // Right to Left
@@ -26,10 +31,13 @@ public class TouchSwipeListen implements View.OnTouchListener {
     public boolean swipeDetected() {
         return mTouchSwipeListen != Action.None;
     }
+    private View clickedView;
     public TouchSwipeListen(
             Activity activity,OnSwipeDecteted callback ) {
         this.activity = activity;
         this.callback = callback;
+        sourceGridView =((MakeNumberActivity) activity).formulaGridView;
+        sourceGridViewData=((MakeNumberActivity)activity).mFormulaList;
     }
 
 
@@ -42,12 +50,23 @@ public class TouchSwipeListen implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
                 downY = event.getY();
+                int position = Utils.getTouchPosition(sourceGridView, downX, downY, sourceGridViewData);
+                //return false; // allow other events like Click to be processed
+                String str="";
+                if(position>sourceGridViewData.size() || position<0 )
+                    return false;
+                clickedView = sourceGridView.getChildAt(position - sourceGridView.getFirstVisiblePosition());
+                clickedView.setBackgroundColor(Color.GREEN);
                 mTouchSwipeListen = Action.None;
                 return false; // allow other events like Click to be processed
             }
             case MotionEvent.ACTION_MOVE: {
                 upX = event.getX();
                 upY = event.getY();
+                if(clickedView!=null) {
+                    //clickedView.setBackgroundColor(Color.GRAY);
+                    clickedView.setBackgroundResource(android.R.drawable.btn_default);
+                }
 
                 float deltaX = downX - upX;
                 float deltaY = downY - upY;
