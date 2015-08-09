@@ -16,32 +16,51 @@ import android.widget.ImageView;
 
 public class SplashScreenActivity extends Activity {
 
-	public static final long TIME = 100;
-	private static final String TAG = "SplashScreenActivity";
-	  private ImageView mImageView;
+    public static final long TIME = 100;
+    private static final String TAG = "SplashScreenActivity";
+    private ImageView mImageView;
 
-	public void onCreate(Bundle savedInstanceState) {
-		Log.i(TAG,"SPLASHSCREEN");
-		super.onCreate(savedInstanceState);
-		 //setContentView(R.layout.activity_splash_animination);
-		//setContentView(R.layout.splash_screen);
-		startActivity(new Intent(SplashScreenActivity.this,MainMathActivity.class));
-	}
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
+    public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "SPLASHSCREEN");
+        super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_splash_animination);
+        //setContentView(R.layout.splash_screen);
 
-        mImageView = (ImageView) findViewById(R.id.icon);
-
-        if (hasFocus) {
-            //fadeIn.run();
-        }
+        extraTimer.start();
+        Log.i(TAG, "SPLASHSCREEN3");
     }
-    Runnable fadeIn = new Runnable() {
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "destroy::");
+
+    }
+
+    Thread extraTimer = new Thread() {
+
         public void run() {
-            mImageView.animate().setDuration(1*100)
-                    .setInterpolator(new LinearInterpolator()).alpha(1.0f);
-            //.withEndAction(rotate);
+
+            try {
+                int lTimer1 = 0;
+                while (lTimer1 < 8000) {
+                    sleep(100);
+                    lTimer1 = lTimer1 + 100;
+                }
+                startActivity(new Intent(SplashScreenActivity.this, MainMathActivity.class));
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                finish();
+            }
         }
     };
 

@@ -12,6 +12,12 @@
         android:icon="@drawable/ic_launcher"
         android:label="Make Numbers"
         android:theme="@style/AppTheme" >
+        <activity android:name=".SplashScreenActivity"
+            android:noHistory="true"
+            android:theme="@style/My.Theme.Start">
+
+
+        </activity>
 
         <activity
             android:name=".MathActivity"
@@ -35,9 +41,10 @@
             android:label="Hannah World"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
+
         </activity>
     </application>
 

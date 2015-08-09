@@ -168,7 +168,7 @@ public class DragDropHelp {
                 case DragEvent.ACTION_DROP:
                     if(clickedView!=null) {
                         //clickedView.setBackgroundColor(Color.GRAY);
-                        clickedView.setBackgroundResource(android.R.drawable.btn_default);
+                        clickedView.setBackgroundResource(R.drawable.button_enabled);
                     }
                     // Gets the item containing the dragged data
 
