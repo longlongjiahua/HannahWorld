@@ -56,7 +56,7 @@ public class TouchSwipeListen implements View.OnTouchListener {
                 if(position>sourceGridViewData.size() || position<0 )
                     return false;
                 clickedView = sourceGridView.getChildAt(position - sourceGridView.getFirstVisiblePosition());
-                clickedView.setBackgroundColor(Color.GREEN);
+                clickedView.setBackgroundResource(R.drawable.button_focused);
                 mTouchSwipeListen = Action.None;
                 return false; // allow other events like Click to be processed
             }
@@ -65,7 +65,8 @@ public class TouchSwipeListen implements View.OnTouchListener {
                 upY = event.getY();
                 if(clickedView!=null) {
                     //clickedView.setBackgroundColor(Color.GRAY);
-                    clickedView.setBackgroundResource(android.R.drawable.btn_default);
+                    clickedView.setBackgroundResource(R.drawable.button_enabled);
+                    clickedView = null;
                 }
 
                 float deltaX = downX - upX;

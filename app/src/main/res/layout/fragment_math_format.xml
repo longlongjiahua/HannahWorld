@@ -43,6 +43,7 @@ android:orientation="horizontal" >
         android:layout_height="50sp"
         android:background="@drawable/rectangle_back1"
         android:textSize="40sp"
+
         android:paddingLeft="5dp" />
     </LinearLayout>
 

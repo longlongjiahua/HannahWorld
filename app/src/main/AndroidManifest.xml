@@ -12,25 +12,17 @@
         android:icon="@drawable/ic_launcher"
         android:label="Make Numbers"
         android:theme="@style/AppTheme" >
-        <activity android:name=".SplashScreenActivity"
-            android:noHistory="true"
-            android:theme="@style/My.Theme.Start">
-
-
-        </activity>
-
         <activity
             android:name=".MathActivity"
             android:label="Math"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".MakeNumberActivity"
-            android:label="Make Number"
+            android:label="Make Numbers"
             android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:screenOrientation="portrait"
                 android:value=".MainMathActivity" />
         </activity>
 
@@ -38,7 +30,7 @@
 
         <activity
             android:name=".MainMathActivity"
-            android:label="Hannah World"
+            android:label="Make Numbers"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>

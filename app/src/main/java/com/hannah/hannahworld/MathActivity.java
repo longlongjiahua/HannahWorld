@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -30,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MathActivity extends FragmentActivity {
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
@@ -62,16 +65,20 @@ public class MathActivity extends FragmentActivity {
     private BroadcastTimeCountService mService;
     private boolean mBound = false;
     private String mCountTime="";
+    public boolean isStart= false;
 
     ViewPager mViewPager;
     public TextView tvScore, tvTimeCountDown;
+    public Map<String, Integer> questionsGiven;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         broadcastIntent = new Intent(this, BroadcastTimeCountService.class);
         operation = getIntent().getExtras().getInt(MainMathActivity.MAMKNUMBERMETHODS);
+        questionsGiven = new HashMap<String, Integer>();
         //Toast.makeText(getBaseContext(), "Operation:" + operation, Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_math);
         tvScore = (TextView) findViewById(R.id.tv_your_score);
@@ -79,6 +86,9 @@ public class MathActivity extends FragmentActivity {
         gridView = (GridView) findViewById(R.id.grid_view);
         mBtAdapter = new ButtonAdapter(this, keys);
         gridView.setAdapter(mBtAdapter);
+        setAdapterPage();
+        mViewPager.setOnTouchListener(null);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
                                     View v, int position, long id) {
@@ -86,6 +96,10 @@ public class MathActivity extends FragmentActivity {
                 char add = keys[position].charAt(0);
                 String cur = pre;
                 if (add == 's') {
+                    isStart=true;
+                    mViewPager.setEnabled(true);
+                    mathFragments[currentPageNo].mTv5.setVisibility(View.VISIBLE);
+                    gridView.setEnabled(true);
                     final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
                     mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, Constants.MATHTIME);
                     MathActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
@@ -103,8 +117,6 @@ public class MathActivity extends FragmentActivity {
                         //stopService(broadcastIntent);
                         unRegistered = true;
                     }
-
-
                 }
                 if (add == 'X' || (add >= '0' && add <= '9')) {
                 } else return;
@@ -113,7 +125,9 @@ public class MathActivity extends FragmentActivity {
                 } else if (add >= '0' && add <= '9') {
                     cur += add;
                 }
-                mathFragments[currentPageNo].mTv5.setText(cur);
+                if(isStart) {
+                    mathFragments[currentPageNo].mTv5.setText(cur);
+                }
                 if (cur.length() == 0) {
                     mNums[currentPageNo][2] = null;
                 } else {
@@ -136,32 +150,7 @@ public class MathActivity extends FragmentActivity {
                 }
             }
         });
-        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
-        // Set up action bar.
-        final ActionBar actionBar = getActionBar();
 
-        // Specify that the Home button should show an "Up" caret, indicating that touching the
-        // button will take the user one step up in the application's hierarchy.
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        // Set up the ViewPager, attaching the adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
-        Log.i(TAG, "ONCREATE::");
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int arg0) {
-                currentPageNo = arg0;
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
     }
 
     public void onResume() {
@@ -346,5 +335,45 @@ public class MathActivity extends FragmentActivity {
             tvTimeCountDown.setText(mCountTime);
         }
     };
+
+    private void setStartEnable(){
+
+        //does not work
+
+        int firstPosition = gridView.getFirstVisiblePosition();
+        int childPosition = firstPosition + 10;
+        gridView.getChildAt(childPosition);
+        //gridView.getChildAt(childPosition).setClickable(true);
+
+
+    }
+    private void setAdapterPage(){
+        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
+        // Set up action bar.
+        final ActionBar actionBar = getActionBar();
+
+        // Specify that the Home button should show an "Up" caret, indicating that touching the
+        // button will take the user one step up in the application's hierarchy.
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // Set up the ViewPager, attaching the adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        Log.i(TAG, "ONCREATE::");
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int arg0) {
+                currentPageNo = arg0;
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+    }
 
 }

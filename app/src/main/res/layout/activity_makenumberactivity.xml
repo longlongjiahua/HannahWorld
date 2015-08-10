@@ -81,10 +81,11 @@
         <GridView
             android:layout_gravity="center"
             android:id="@+id/grid_view_formula"
-            android:numColumns="6"
+            android:numColumns="5"
             android:gravity="center"
             android:columnWidth="30dp"
             android:stretchMode="columnWidth"
+            android:layout_centerInParent="true"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
         </GridView>

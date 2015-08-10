@@ -78,7 +78,7 @@ public class DragDropHelp {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN: {
+                case MotionEvent.ACTION_DOWN:
                     downX = event.getX();
                     downY = event.getY();
                     int position = Utils.getTouchPosition(sourceGridView, downX, downY, sourceGridViewData);
@@ -87,7 +87,7 @@ public class DragDropHelp {
                     if(position>sourceGridViewData.size() || position<0 )
                         return true;
                    clickedView = sourceGridView.getChildAt(position - sourceGridView.getFirstVisiblePosition());
-                    clickedView.setBackgroundColor(Color.GREEN);
+                    clickedView.setBackgroundResource(R.drawable.button_focused);
                     ClipData.Item item = new ClipData.Item("" + sourceGridViewData.get(position));  //TODO : catch exception
                     clickPos = position;
                     String[] clipDescription = {ClipDescription.MIMETYPE_TEXT_PLAIN};
@@ -115,7 +115,13 @@ public class DragDropHelp {
                             0);    //flags
                     //return true will be prevent click event to be continue. It will be perform only OnItemLongClickListener.
                     return true;
-                }
+
+                case MotionEvent.ACTION_UP:
+                    if(clickedView!=null){
+                        clickedView.setBackgroundResource(R.drawable.button_enabled);
+                        clickedView=null;
+                    }
+                    return true;
 
             }
             return true;
@@ -169,6 +175,7 @@ public class DragDropHelp {
                     if(clickedView!=null) {
                         //clickedView.setBackgroundColor(Color.GRAY);
                         clickedView.setBackgroundResource(R.drawable.button_enabled);
+                        clickedView = null;
                     }
                     // Gets the item containing the dragged data
 
