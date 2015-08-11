@@ -55,13 +55,6 @@ import android.os.CountDownTimer;
         mTv2 = ((TextView) rootView.findViewById(R.id.text2));
         mTv3 = ((TextView) rootView.findViewById(R.id.text3));
         mTv5 = ((TextView) rootView.findViewById(R.id.text5));
-        if(activity.isStart){
-            mTv5.setVisibility(View.VISIBLE);
-        }
-        else {
-            mTv5.setVisibility(View.INVISIBLE);
-        }
-
         if (activity.operation == 0) {
             mTv2.setText("x");
         } else if (activity.operation == 1) {

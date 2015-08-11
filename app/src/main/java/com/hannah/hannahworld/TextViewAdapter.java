@@ -1,5 +1,6 @@
 package com.hannah.hannahworld;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
@@ -13,10 +14,12 @@ import java.util.ArrayList;
 
 public class TextViewAdapter extends BaseAdapter {
     private Context context;
+    private Activity activity;
     private ArrayList<String> texts;
 
     public TextViewAdapter(Context c, ArrayList<String> texts) {
         this.context = c;
+        activity = (Activity) c;
         this.texts = texts;
     }
     public int getCount() {
@@ -31,6 +34,7 @@ public class TextViewAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+
         TextView textview;
         if (convertView == null) {
             textview = new Button(context);
@@ -38,6 +42,7 @@ public class TextViewAdapter extends BaseAdapter {
             textview.setPadding(1, 1, 1, 1);
             textview.setFocusable(false);
             textview.setClickable(false);
+
         } else {
             textview = (Button) convertView;
         }

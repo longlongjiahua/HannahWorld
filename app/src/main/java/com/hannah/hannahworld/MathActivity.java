@@ -66,6 +66,8 @@ public class MathActivity extends FragmentActivity {
     private boolean mBound = false;
     private String mCountTime="";
     public boolean isStart= false;
+    private boolean isDone =false;
+
 
     ViewPager mViewPager;
     public TextView tvScore, tvTimeCountDown;
@@ -87,7 +89,6 @@ public class MathActivity extends FragmentActivity {
         mBtAdapter = new ButtonAdapter(this, keys);
         gridView.setAdapter(mBtAdapter);
         setAdapterPage();
-        mViewPager.setOnTouchListener(null);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
@@ -98,16 +99,19 @@ public class MathActivity extends FragmentActivity {
                 if (add == 's') {
                     isStart=true;
                     mViewPager.setEnabled(true);
-                    mathFragments[currentPageNo].mTv5.setVisibility(View.VISIBLE);
-                    gridView.setEnabled(true);
-                    final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
+                       final Intent mServiceIntent = new Intent(MathActivity.this, BroadcastTimeCountService.class);
                     mServiceIntent.putExtra(INTENT_EXTRA_MINUTES, Constants.MATHTIME);
                     MathActivity.this.bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-                     keys[11] = "done";
+
+                    keys[11]="done";
                     mBtAdapter.notifyDataSetChanged();
+                    gridView.setEnabled(true);
+
                 }
                 if (add == 'd') {
                     gridView.setEnabled(false);
+                    isDone=true;
+                    mBtAdapter.notifyDataSetChanged();
                     stopService(broadcastIntent);
                     if (mBound)
                         unbindService(mConnection);
@@ -284,17 +288,28 @@ public class MathActivity extends FragmentActivity {
             return position;
         }
 
+        /**
+         *
+       when call notifyDatassetChanged(), always redraw whole viev
+         */
         public View getView(int position, View convertView, ViewGroup parent) {
             Button btn;
-            if (convertView == null) {
+            //if (convertView == null) {
                 btn = new Button(context);
                 btn.setLayoutParams(new GridView.LayoutParams(75, 75));
                 btn.setPadding(3, 4, 3, 4);
                 btn.setFocusable(false);
                 btn.setClickable(false);
-            } else {
-                btn = (Button) convertView;
+                if(!isStart && position!=11){
+                    btn.setEnabled(false);
+                    btn.setBackgroundResource(R.drawable.button_disabled);
+                }
+            if(isDone){
+                btn.setBackgroundResource(R.drawable.button_disabled);
             }
+           // } else {
+            //    btn = (Button) convertView;
+           // }
             btn.setText(keys[position]);
             btn.setTextColor(Color.WHITE);
             btn.setId(position);
